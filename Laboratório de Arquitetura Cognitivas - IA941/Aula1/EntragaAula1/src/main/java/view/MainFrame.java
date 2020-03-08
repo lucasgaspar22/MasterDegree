@@ -5,19 +5,33 @@
  */
 package view;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import ws3dproxy.CommandExecException;
+import ws3dproxy.WS3DProxy;
+import ws3dproxy.model.World;
 
 /**
  *
  * @author lucas
  */
 public class MainFrame extends javax.swing.JFrame {
+    WS3DProxy proxy;
+    World world;
 
-    /**
-     * Creates new form MainFrame
-     */
     public MainFrame() {
-        initComponents();
+        try {
+            this.proxy = new WS3DProxy();
+            this.world = World.getInstance();
+            World.createFood(0, 350, 75);
+            World.createFood(0, 100, 220);
+            World.createFood(0, 250, 210);
+            
+            initComponents();
+        } catch (CommandExecException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -29,20 +43,48 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jButton1 = new javax.swing.JButton();
-
-        jMenuItem1.setText("jMenuItem1");
+        creatureButton = new javax.swing.JButton();
+        appleButton = new javax.swing.JButton();
+        nutButton = new javax.swing.JButton();
+        jewelButton = new javax.swing.JToggleButton();
+        resetButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Controler");
+        setAlwaysOnTop(true);
 
-        jButton1.setText("New Creature");
-        jButton1.setToolTipText("Create a new creature");
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jButton1.setName("createCriature Button"); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        creatureButton.setText("Creature");
+        creatureButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                createNewCreatureAction(evt);
+                creatureButtonActionPerformed(evt);
+            }
+        });
+
+        appleButton.setText("Apple");
+        appleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                appleButtonActionPerformed(evt);
+            }
+        });
+
+        nutButton.setText("Nut");
+        nutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nutButtonActionPerformed(evt);
+            }
+        });
+
+        jewelButton.setText("Jewel");
+        jewelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jewelButtonActionPerformed(evt);
+            }
+        });
+
+        resetButton.setText("Reset");
+        resetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetButtonActionPerformed(evt);
             }
         });
 
@@ -52,52 +94,64 @@ public class MainFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(385, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(creatureButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(appleButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jewelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(resetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jButton1)
-                .addContainerGap(290, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(creatureButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(appleButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nutButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jewelButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(resetButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void createNewCreatureAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createNewCreatureAction
-       JOptionPane.showMessageDialog(this, "Hi");       // TODO add your handling code her
-    }//GEN-LAST:event_createNewCreatureAction
+    private void creatureButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creatureButtonActionPerformed
+        CreatureFrame creatureFrame = new CreatureFrame(proxy, world);
+        creatureFrame.setVisible(true);
+    }//GEN-LAST:event_creatureButtonActionPerformed
+
+    private void appleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appleButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_appleButtonActionPerformed
+
+    private void nutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nutButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nutButtonActionPerformed
+
+    private void jewelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jewelButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jewelButtonActionPerformed
+
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+        try {
+            world.reset();
+        } catch (CommandExecException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Something went wrong when trying to reset world!");
+        }
+        
+    }//GEN-LAST:event_resetButtonActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MainFrame().setVisible(true);
@@ -106,7 +160,10 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JButton appleButton;
+    private javax.swing.JButton creatureButton;
+    private javax.swing.JToggleButton jewelButton;
+    private javax.swing.JButton nutButton;
+    private javax.swing.JButton resetButton;
     // End of variables declaration//GEN-END:variables
 }

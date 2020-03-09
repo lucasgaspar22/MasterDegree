@@ -16,11 +16,8 @@ import util.Constants;
 import ws3dproxy.CommandExecException;
 import ws3dproxy.WS3DProxy;
 import ws3dproxy.model.Creature;
-import ws3dproxy.model.Thing;
 import ws3dproxy.model.World;
-import ws3dproxy.model.WorldPoint;
 
-import static ws3dproxy.util.Constants.M_PI;
 /**
  *
  * @author lucas
@@ -182,7 +179,7 @@ public class CreatureFrame extends javax.swing.JFrame {
 
         moveCreaturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Move", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        moveUpButton.setIcon(new javax.swing.ImageIcon("/home/lucas/Área de Trabalho/Codes/MasterDegree/Laboratório de Arquitetura Cognitivas - IA941/Aula1/EntregaAula1/Resources/upArrow.png")); // NOI18N
+        moveUpButton.setText("Move Forward");
         moveUpButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 moveUpButtonMousePressed(evt);
@@ -192,7 +189,7 @@ public class CreatureFrame extends javax.swing.JFrame {
             }
         });
 
-        clockwiseRotationButton.setIcon(new javax.swing.ImageIcon("/home/lucas/Área de Trabalho/Codes/MasterDegree/Laboratório de Arquitetura Cognitivas - IA941/Aula1/EntregaAula1/Resources/rightRotation.png")); // NOI18N
+        clockwiseRotationButton.setText("Rotate Right");
         clockwiseRotationButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 clockwiseRotationButtonMousePressed(evt);
@@ -202,7 +199,7 @@ public class CreatureFrame extends javax.swing.JFrame {
             }
         });
 
-        moveDownButton.setIcon(new javax.swing.ImageIcon("/home/lucas/Área de Trabalho/Codes/MasterDegree/Laboratório de Arquitetura Cognitivas - IA941/Aula1/EntregaAula1/Resources/downArrow.png")); // NOI18N
+        moveDownButton.setText("Move Backward");
         moveDownButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 moveDownButtonMousePressed(evt);
@@ -212,7 +209,7 @@ public class CreatureFrame extends javax.swing.JFrame {
             }
         });
 
-        antiClockwiseRotationButton.setIcon(new javax.swing.ImageIcon("/home/lucas/Área de Trabalho/Codes/MasterDegree/Laboratório de Arquitetura Cognitivas - IA941/Aula1/EntregaAula1/Resources/leftRotation.png")); // NOI18N
+        antiClockwiseRotationButton.setText("Rotate Left");
         antiClockwiseRotationButton.setToolTipText("");
         antiClockwiseRotationButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -228,13 +225,12 @@ public class CreatureFrame extends javax.swing.JFrame {
         moveCreaturePanelLayout.setHorizontalGroup(
             moveCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, moveCreaturePanelLayout.createSequentialGroup()
-                .addContainerGap(46, Short.MAX_VALUE)
-                .addGroup(moveCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(moveUpButton)
-                    .addGroup(moveCreaturePanelLayout.createSequentialGroup()
-                        .addComponent(antiClockwiseRotationButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(moveDownButton)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(antiClockwiseRotationButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(moveCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(moveUpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(moveDownButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(clockwiseRotationButton)
                 .addGap(38, 38, 38))
@@ -242,9 +238,9 @@ public class CreatureFrame extends javax.swing.JFrame {
         moveCreaturePanelLayout.setVerticalGroup(
             moveCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(moveCreaturePanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(moveUpButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(moveCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(antiClockwiseRotationButton)
                     .addComponent(moveDownButton)
@@ -385,7 +381,6 @@ public class CreatureFrame extends javax.swing.JFrame {
     private void stopSelectedCreature(){
         try{ 
             selectedCreature.stop();
-            System.out.println(selectedCreature.getPitch());
         } catch (CommandExecException ex) {
             Logger.getLogger(CreatureFrame.class.getName()).log(Level.SEVERE, null, ex);
         }

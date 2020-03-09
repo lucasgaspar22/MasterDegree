@@ -8,14 +8,14 @@ Esse pequeno software tem por objetivo controlar o WS3D tornando possivel a cria
 ## Telas
 
 ### WS3D Com objetos Criados pelo Contolador
-![Tela WS3D](src/main/Resources/WS3DObjetosCriados.png)
+![Tela WS3D](Resources/WS3DObjetosCriados.png)
 ### Principal
-![Tela Principal](src/main/Resources/TelaPrincipal.png)
+![Tela Principal](Resources/TelaPrincipal.png)
 ### Criatura
-![Tela Criatura](src/main/Resources/TelaCriatura.png)
+![Tela Criatura](Resources/TelaCriatura.png)
 ### Comida
-![Tela Comida](src/main/Resources/TelaComida.png)
+![Tela Comida](Resources/TelaComida.png)
 ### Joia
-![Tela Joia](src/main/Resources/TelaJoia.png)
+![Tela Joia](Resources/TelaJoia.png)
 ### Parede
-![Tela Parede](src/main/Resources/TelaParede.png)
+![Tela Parede](Resources/TelaParede.png)

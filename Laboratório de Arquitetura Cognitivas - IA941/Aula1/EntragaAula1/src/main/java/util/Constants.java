@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author lucas
  */
 public class Constants {
-    public static final double CREATURE_VELOCITY = 1.00;
+    public static final double CREATURE_VELOCITY = 2.00;
     public static final double PI = Math.PI;
     public static final double PI_2 = PI / 2.0;
     public static final String COLOR_RED = "Red";

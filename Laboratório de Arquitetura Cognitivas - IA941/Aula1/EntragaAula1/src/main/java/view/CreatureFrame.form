@@ -38,11 +38,11 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="updateCreaturePanel" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="newCreaturePanel" max="32767" attributes="0"/>
+                  <Component id="updateCreaturePanel" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -64,28 +64,33 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="creatureColorLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="17" max="32767" attributes="0"/>
-                          <Component id="creatureColorComboBox" min="-2" pref="142" max="-2" attributes="0"/>
+                          <Component id="pitchLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="zeroLabel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="thsLabel" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="createCreatureButton" pref="159" max="32767" attributes="0"/>
+                              <Component id="pitchSlider" pref="0" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="creatureXPositionLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="creatureYPositionLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="creatureColorLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="creatureXPositionTextField" max="32767" attributes="0"/>
-                              <Component id="creatureYPositionTextField" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="creatureColorComboBox" alignment="0" pref="159" max="32767" attributes="0"/>
+                              <Component id="creatureXPositionTextField" alignment="0" max="32767" attributes="0"/>
+                              <Component id="creatureYPositionTextField" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="createCreatureButton" min="-2" pref="159" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                      </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -93,21 +98,33 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="creatureColorComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="creatureColorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="creatureXPositionLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="creatureXPositionTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="creatureYPositionLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="creatureYPositionTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="pitchSlider" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="pitchLabel" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="creatureColorComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="creatureColorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="zeroLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="thsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="creatureXPositionLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="creatureXPositionTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="creatureYPositionLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="creatureYPositionTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="createCreatureButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -161,6 +178,27 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createCreatureButtonActionPerformed"/>
           </Events>
         </Component>
+        <Component class="javax.swing.JSlider" name="pitchSlider">
+          <Properties>
+            <Property name="maximum" type="int" value="360"/>
+            <Property name="value" type="int" value="0"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="pitchLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Pitch"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="zeroLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="0&#xba;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="thsLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="360&#xba;"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="updateCreaturePanel">
@@ -199,7 +237,7 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="moveCreaturePanel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="28" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -236,33 +274,33 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="24" max="32767" attributes="0"/>
-                      <Component id="moveLeftButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="moveUpButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="moveDownButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="46" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="moveUpButton" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="antiClockwiseRotationButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="moveRightButton" min="-2" max="-2" attributes="0"/>
+                              <Component id="moveDownButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="clockwiseRotationButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="moveUpButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="antiClockwiseRotationButton" min="-2" max="-2" attributes="0"/>
                           <Component id="moveDownButton" min="-2" max="-2" attributes="0"/>
-                          <Component id="moveRightButton" min="-2" max="-2" attributes="0"/>
-                          <Component id="moveLeftButton" min="-2" max="-2" attributes="0"/>
+                          <Component id="clockwiseRotationButton" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="13" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -271,7 +309,7 @@
             <Component class="javax.swing.JButton" name="moveUpButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="/home/lucas/&#xc1;rea de Trabalho/Codes/MasterDegree/Laborat&#xf3;rio de Arquitetura Cognitivas - IA941/Aula1/EntragaAula1/src/main/Resources/upArrow.png"/>
+                  <Image iconType="2" name="/home/lucas/&#xc1;rea de Trabalho/Codes/MasterDegree/Laborat&#xf3;rio de Arquitetura Cognitivas - IA941/Aula1/EntragaAula1/Resources/upArrow.png"/>
                 </Property>
               </Properties>
               <Events>
@@ -279,21 +317,21 @@
                 <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="moveUpButtonMouseReleased"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="moveRightButton">
+            <Component class="javax.swing.JButton" name="clockwiseRotationButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="/home/lucas/&#xc1;rea de Trabalho/Codes/MasterDegree/Laborat&#xf3;rio de Arquitetura Cognitivas - IA941/Aula1/EntragaAula1/src/main/Resources/rightArrow.png"/>
+                  <Image iconType="2" name="/home/lucas/&#xc1;rea de Trabalho/Codes/MasterDegree/Laborat&#xf3;rio de Arquitetura Cognitivas - IA941/Aula1/EntragaAula1/Resources/rightRotation.png"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="moveRightButtonMousePressed"/>
-                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="moveRightButtonMouseReleased"/>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="clockwiseRotationButtonMousePressed"/>
+                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="clockwiseRotationButtonMouseReleased"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="moveDownButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="/home/lucas/&#xc1;rea de Trabalho/Codes/MasterDegree/Laborat&#xf3;rio de Arquitetura Cognitivas - IA941/Aula1/EntragaAula1/src/main/Resources/downArrow.png"/>
+                  <Image iconType="2" name="/home/lucas/&#xc1;rea de Trabalho/Codes/MasterDegree/Laborat&#xf3;rio de Arquitetura Cognitivas - IA941/Aula1/EntragaAula1/Resources/downArrow.png"/>
                 </Property>
               </Properties>
               <Events>
@@ -301,16 +339,16 @@
                 <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="moveDownButtonMouseReleased"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="moveLeftButton">
+            <Component class="javax.swing.JButton" name="antiClockwiseRotationButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="/home/lucas/&#xc1;rea de Trabalho/Codes/MasterDegree/Laborat&#xf3;rio de Arquitetura Cognitivas - IA941/Aula1/EntragaAula1/src/main/Resources/leftArrow.png"/>
+                  <Image iconType="2" name="/home/lucas/&#xc1;rea de Trabalho/Codes/MasterDegree/Laborat&#xf3;rio de Arquitetura Cognitivas - IA941/Aula1/EntragaAula1/Resources/leftRotation.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
               <Events>
-                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="moveLeftButtonMousePressed"/>
-                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="moveLeftButtonMouseReleased"/>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="antiClockwiseRotationButtonMousePressed"/>
+                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="antiClockwiseRotationButtonMouseReleased"/>
               </Events>
             </Component>
           </SubComponents>

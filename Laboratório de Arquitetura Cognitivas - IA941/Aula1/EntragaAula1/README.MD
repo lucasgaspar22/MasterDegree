@@ -11,7 +11,7 @@ Esse pequeno software tem por objetivo controlar o WS3D tornando possivel a cria
 ![Tela WS3D](src/main/Resources/WS3DObjetosCriados.png)
 ### Principal
 ![Tela Principal](src/main/Resources/TelaPrincipal.png)
-### Criatura (Ainda em Construção)
+### Criatura
 ![Tela Criatura](src/main/Resources/TelaCriatura.png)
 ### Comida
 ![Tela Comida](src/main/Resources/TelaComida.png)

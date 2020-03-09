@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Template;
+package control;
 
 import ws3dproxy.CommandExecException;
 import ws3dproxy.WS3DProxy;

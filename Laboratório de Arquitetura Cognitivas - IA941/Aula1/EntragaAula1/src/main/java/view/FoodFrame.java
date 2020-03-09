@@ -43,7 +43,7 @@ public class FoodFrame extends javax.swing.JFrame {
         foodTypeComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Food");
+        setTitle("Apple");
         setAlwaysOnTop(true);
 
         createPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Create Food", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));

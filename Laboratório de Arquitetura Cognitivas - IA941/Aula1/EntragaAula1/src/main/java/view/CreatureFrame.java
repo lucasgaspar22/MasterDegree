@@ -5,14 +5,20 @@
  */
 package view;
 
+import java.awt.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import util.Constants;
 import ws3dproxy.CommandExecException;
 import ws3dproxy.WS3DProxy;
 import ws3dproxy.model.Creature;
+import ws3dproxy.model.Thing;
 import ws3dproxy.model.World;
+import ws3dproxy.model.WorldPoint;
 
 /**
  *
@@ -22,6 +28,9 @@ public class CreatureFrame extends javax.swing.JFrame {
     
     WS3DProxy proxy;
     World world;
+    Map<String,String> creaturesCreated = new HashMap<String,String>();
+    Creature selectedCreature;
+    
     /**
      * Creates new form CreatureFrame
      */
@@ -29,6 +38,12 @@ public class CreatureFrame extends javax.swing.JFrame {
         this.proxy = proxy;
         this.world = world;
         initComponents();
+        addCreaturesToComboBox(selectCreatureComboBox);
+    }
+    
+    private void addCreaturesToComboBox( JComboBox<String> comboBox ){
+        comboBox.removeAllItems();
+        creaturesCreated.entrySet().forEach((pair) -> comboBox.addItem(pair.getValue()));
     }
 
     /**
@@ -48,6 +63,25 @@ public class CreatureFrame extends javax.swing.JFrame {
         creatureXPositionTextField = new javax.swing.JTextField();
         creatureYPositionTextField = new javax.swing.JTextField();
         createCreatureButton = new javax.swing.JButton();
+        updateCreaturePanel = new javax.swing.JPanel();
+        updateCreatureLabel = new javax.swing.JLabel();
+        selectCreatureComboBox = new javax.swing.JComboBox<>();
+        moveToCreaturePanel = new javax.swing.JPanel();
+        moveToXPositionLabel = new javax.swing.JLabel();
+        moveToXPositionTextField = new javax.swing.JTextField();
+        moveToYPositionTextField = new javax.swing.JTextField();
+        moveToYPositionLabel = new javax.swing.JLabel();
+        moveToButton = new javax.swing.JButton();
+        moveCreaturePanel = new javax.swing.JPanel();
+        moveUpButton = new javax.swing.JButton();
+        moveRightButton = new javax.swing.JButton();
+        moveDownButton = new javax.swing.JButton();
+        moveLeftButton = new javax.swing.JButton();
+        rotateLeftButton = new javax.swing.JButton();
+        rotateRightButton = new javax.swing.JButton();
+        deleteCreaturePanel = new javax.swing.JPanel();
+        deleteCreatureButton = new javax.swing.JButton();
+        creatureInfoPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Creature");
@@ -119,21 +153,236 @@ public class CreatureFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        updateCreaturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Update Creature", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+
+        updateCreatureLabel.setText("Creature");
+
+        selectCreatureComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectCreatureComboBoxActionPerformed(evt);
+            }
+        });
+
+        moveToCreaturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Move To", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+
+        moveToXPositionLabel.setText("X position");
+
+        moveToXPositionTextField.setText("0");
+
+        moveToYPositionTextField.setText("0");
+
+        moveToYPositionLabel.setText("Y Position");
+
+        moveToButton.setText("Move To");
+        moveToButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                moveToButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout moveToCreaturePanelLayout = new javax.swing.GroupLayout(moveToCreaturePanel);
+        moveToCreaturePanel.setLayout(moveToCreaturePanelLayout);
+        moveToCreaturePanelLayout.setHorizontalGroup(
+            moveToCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(moveToCreaturePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(moveToCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(moveToXPositionLabel)
+                    .addComponent(moveToYPositionLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(moveToCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(moveToYPositionTextField)
+                    .addComponent(moveToXPositionTextField))
+                .addContainerGap())
+            .addGroup(moveToCreaturePanelLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(moveToButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        moveToCreaturePanelLayout.setVerticalGroup(
+            moveToCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(moveToCreaturePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(moveToCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(moveToXPositionLabel)
+                    .addComponent(moveToXPositionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(moveToCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(moveToYPositionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(moveToYPositionLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(moveToButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        moveCreaturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Move", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+
+        moveUpButton.setIcon(new javax.swing.ImageIcon("/home/lucas/Área de Trabalho/Codes/MasterDegree/Laboratório de Arquitetura Cognitivas - IA941/Aula1/EntragaAula1/src/main/Resources/upArrow.png")); // NOI18N
+
+        moveRightButton.setIcon(new javax.swing.ImageIcon("/home/lucas/Área de Trabalho/Codes/MasterDegree/Laboratório de Arquitetura Cognitivas - IA941/Aula1/EntragaAula1/src/main/Resources/rightArrow.png")); // NOI18N
+        moveRightButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                moveRightButtonMouseReleased(evt);
+            }
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                moveRightButtonMouseClicked(evt);
+            }
+        });
+        moveRightButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                moveRightButtonActionPerformed(evt);
+            }
+        });
+
+        moveDownButton.setIcon(new javax.swing.ImageIcon("/home/lucas/Área de Trabalho/Codes/MasterDegree/Laboratório de Arquitetura Cognitivas - IA941/Aula1/EntragaAula1/src/main/Resources/downArrow.png")); // NOI18N
+        moveDownButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                moveDownButtonActionPerformed(evt);
+            }
+        });
+
+        moveLeftButton.setIcon(new javax.swing.ImageIcon("/home/lucas/Área de Trabalho/Codes/MasterDegree/Laboratório de Arquitetura Cognitivas - IA941/Aula1/EntragaAula1/src/main/Resources/leftArrow.png")); // NOI18N
+        moveLeftButton.setToolTipText("");
+
+        rotateLeftButton.setIcon(new javax.swing.ImageIcon("/home/lucas/Área de Trabalho/Codes/MasterDegree/Laboratório de Arquitetura Cognitivas - IA941/Aula1/EntragaAula1/src/main/Resources/leftRotation.png")); // NOI18N
+
+        rotateRightButton.setIcon(new javax.swing.ImageIcon("/home/lucas/Área de Trabalho/Codes/MasterDegree/Laboratório de Arquitetura Cognitivas - IA941/Aula1/EntragaAula1/src/main/Resources/rightRotation.png")); // NOI18N
+
+        javax.swing.GroupLayout moveCreaturePanelLayout = new javax.swing.GroupLayout(moveCreaturePanel);
+        moveCreaturePanel.setLayout(moveCreaturePanelLayout);
+        moveCreaturePanelLayout.setHorizontalGroup(
+            moveCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, moveCreaturePanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(moveCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rotateLeftButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(moveLeftButton, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(18, 18, 18)
+                .addGroup(moveCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(moveUpButton)
+                    .addGroup(moveCreaturePanelLayout.createSequentialGroup()
+                        .addComponent(moveDownButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(moveCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rotateRightButton)
+                            .addComponent(moveRightButton))))
+                .addGap(26, 26, 26))
+        );
+        moveCreaturePanelLayout.setVerticalGroup(
+            moveCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(moveCreaturePanelLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(moveCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(moveCreaturePanelLayout.createSequentialGroup()
+                        .addComponent(moveUpButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(moveCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(moveRightButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(moveDownButton, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(moveCreaturePanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(moveLeftButton)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(moveCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rotateLeftButton)
+                    .addComponent(rotateRightButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout updateCreaturePanelLayout = new javax.swing.GroupLayout(updateCreaturePanel);
+        updateCreaturePanel.setLayout(updateCreaturePanelLayout);
+        updateCreaturePanelLayout.setHorizontalGroup(
+            updateCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, updateCreaturePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(updateCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(moveCreaturePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(moveToCreaturePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, updateCreaturePanelLayout.createSequentialGroup()
+                        .addComponent(updateCreatureLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(selectCreatureComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        updateCreaturePanelLayout.setVerticalGroup(
+            updateCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(updateCreaturePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(updateCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(updateCreatureLabel)
+                    .addComponent(selectCreatureComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(moveToCreaturePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(moveCreaturePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(7, 7, 7))
+        );
+
+        deleteCreaturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Delete Creature", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+
+        deleteCreatureButton.setText("Delete Creature");
+        deleteCreatureButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteCreatureButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout deleteCreaturePanelLayout = new javax.swing.GroupLayout(deleteCreaturePanel);
+        deleteCreaturePanel.setLayout(deleteCreaturePanelLayout);
+        deleteCreaturePanelLayout.setHorizontalGroup(
+            deleteCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, deleteCreaturePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(deleteCreatureButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        deleteCreaturePanelLayout.setVerticalGroup(
+            deleteCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(deleteCreaturePanelLayout.createSequentialGroup()
+                .addComponent(deleteCreatureButton)
+                .addGap(0, 12, Short.MAX_VALUE))
+        );
+
+        creatureInfoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Info", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+
+        javax.swing.GroupLayout creatureInfoPanelLayout = new javax.swing.GroupLayout(creatureInfoPanel);
+        creatureInfoPanel.setLayout(creatureInfoPanelLayout);
+        creatureInfoPanelLayout.setHorizontalGroup(
+            creatureInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        creatureInfoPanelLayout.setVerticalGroup(
+            creatureInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(newCreaturePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(155, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(newCreaturePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(deleteCreaturePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(creatureInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(updateCreaturePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(newCreaturePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(updateCreaturePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(newCreaturePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deleteCreaturePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(creatureInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
@@ -143,58 +392,112 @@ public class CreatureFrame extends javax.swing.JFrame {
         try {
             int xPosition = Integer.parseInt(creatureXPositionTextField.getText());
             int yPosition = Integer.parseInt(creatureYPositionTextField.getText());
+            
             int color = creatureColorComboBox.getSelectedIndex();
-            JOptionPane.showMessageDialog(this, color);
-            Creature c = this.proxy.createCreature(xPosition,yPosition,0,color);
-            c.start();
+            
+            Creature creature = this.proxy.createCreature(xPosition,yPosition,0,color);
+            creaturesCreated.put(creature.getIndex(), creature.getName());
+            selectCreatureComboBox.addItem(creature.getName());
+            JOptionPane.showMessageDialog(this, "Creature created with name: "+creature.getName());    
         } catch (CommandExecException ex) {
             Logger.getLogger(CreatureFrame.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Failed to create a creature!");
         }
     }//GEN-LAST:event_createCreatureButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    private void moveToButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveToButtonActionPerformed
+        
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+            double xPosition = Double.parseDouble(moveToXPositionTextField.getText());
+            double yPosition = Double.parseDouble(moveToYPositionTextField.getText());
+            WorldPoint desPoint = new WorldPoint(xPosition,yPosition,0);
+            selectedCreature.start();
+            double curXPosition = selectedCreature.getPosition().getX();
+            double curYPosition = selectedCreature.getPosition().getY();
+            while( !selectedCreature.ifIsAt(desPoint)) {
+                selectedCreature.moveto(Constants.CREATURE_VELOCITY, xPosition, yPosition);
+                if (selectedCreature.ifIsAt(desPoint)) break;
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CreatureFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CreatureFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CreatureFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CreatureFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            selectedCreature.stop();
+        } catch (CommandExecException ex) {
+            JOptionPane.showMessageDialog(this, "Falied to move creature!");
+            Logger.getLogger(CreatureFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+    }//GEN-LAST:event_moveToButtonActionPerformed
 
-        /* Create and display the form s
-        java.awt.EventQueue.invokeLater(new Runnable() {;;
-            public void run() {
-                new CreatureFrame().setVisible(true);
-            }
-        }); */
-    }
+    private void moveRightButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveRightButtonActionPerformed
+
+    }//GEN-LAST:event_moveRightButtonActionPerformed
+
+    private void moveDownButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveDownButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_moveDownButtonActionPerformed
+
+    private void selectCreatureComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectCreatureComboBoxActionPerformed
+        try {
+            selectedCreature = proxy.getCreature(Integer.toString(selectCreatureComboBox.getSelectedIndex()));
+        } catch (CommandExecException ex) {
+            JOptionPane.showMessageDialog(this, "Falied to select creature!");
+            Logger.getLogger(CreatureFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    }//GEN-LAST:event_selectCreatureComboBoxActionPerformed
+
+    private void deleteCreatureButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteCreatureButtonActionPerformed
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure?");
+        if(confirm==0) {
+            System.out.println(selectedCreature.getName());
+            world.removeThingFromMap(selectedCreature.getName());
+        }
+    }//GEN-LAST:event_deleteCreatureButtonActionPerformed
+
+    private void moveRightButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_moveRightButtonMouseReleased
+        try {
+            selectedCreature.stop();
+            selectedCreature.stop();
+        } catch (CommandExecException ex) {
+            Logger.getLogger(CreatureFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_moveRightButtonMouseReleased
+
+    private void moveRightButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_moveRightButtonMouseClicked
+        try {
+            selectedCreature.start();
+            System.out.println(selectedCreature.toString());
+            //selectedCreature.move(5, 5, 5);
+        } catch (CommandExecException ex) {
+            Logger.getLogger(CreatureFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }//GEN-LAST:event_moveRightButtonMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton createCreatureButton;
     private javax.swing.JComboBox<String> creatureColorComboBox;
     private javax.swing.JLabel creatureColorLabel;
+    private javax.swing.JPanel creatureInfoPanel;
     private javax.swing.JLabel creatureXPositionLabel;
     private javax.swing.JTextField creatureXPositionTextField;
     private javax.swing.JLabel creatureYPositionLabel;
     private javax.swing.JTextField creatureYPositionTextField;
+    private javax.swing.JButton deleteCreatureButton;
+    private javax.swing.JPanel deleteCreaturePanel;
+    private javax.swing.JPanel moveCreaturePanel;
+    private javax.swing.JButton moveDownButton;
+    private javax.swing.JButton moveLeftButton;
+    private javax.swing.JButton moveRightButton;
+    private javax.swing.JButton moveToButton;
+    private javax.swing.JPanel moveToCreaturePanel;
+    private javax.swing.JLabel moveToXPositionLabel;
+    private javax.swing.JTextField moveToXPositionTextField;
+    private javax.swing.JLabel moveToYPositionLabel;
+    private javax.swing.JTextField moveToYPositionTextField;
+    private javax.swing.JButton moveUpButton;
     private javax.swing.JPanel newCreaturePanel;
+    private javax.swing.JButton rotateLeftButton;
+    private javax.swing.JButton rotateRightButton;
+    private javax.swing.JComboBox<String> selectCreatureComboBox;
+    private javax.swing.JLabel updateCreatureLabel;
+    private javax.swing.JPanel updateCreaturePanel;
     // End of variables declaration//GEN-END:variables
 }

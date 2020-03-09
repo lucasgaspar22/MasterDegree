@@ -182,7 +182,7 @@ public class CreatureFrame extends javax.swing.JFrame {
 
         moveCreaturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Move", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        moveUpButton.setIcon(new javax.swing.ImageIcon("/home/lucas/Área de Trabalho/Codes/MasterDegree/Laboratório de Arquitetura Cognitivas - IA941/Aula1/EntragaAula1/Resources/upArrow.png")); // NOI18N
+        moveUpButton.setIcon(new javax.swing.ImageIcon("/home/lucas/Área de Trabalho/Codes/MasterDegree/Laboratório de Arquitetura Cognitivas - IA941/Aula1/EntregaAula1/Resources/upArrow.png")); // NOI18N
         moveUpButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 moveUpButtonMousePressed(evt);
@@ -192,7 +192,7 @@ public class CreatureFrame extends javax.swing.JFrame {
             }
         });
 
-        clockwiseRotationButton.setIcon(new javax.swing.ImageIcon("/home/lucas/Área de Trabalho/Codes/MasterDegree/Laboratório de Arquitetura Cognitivas - IA941/Aula1/EntragaAula1/Resources/rightRotation.png")); // NOI18N
+        clockwiseRotationButton.setIcon(new javax.swing.ImageIcon("/home/lucas/Área de Trabalho/Codes/MasterDegree/Laboratório de Arquitetura Cognitivas - IA941/Aula1/EntregaAula1/Resources/rightRotation.png")); // NOI18N
         clockwiseRotationButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 clockwiseRotationButtonMousePressed(evt);
@@ -202,7 +202,7 @@ public class CreatureFrame extends javax.swing.JFrame {
             }
         });
 
-        moveDownButton.setIcon(new javax.swing.ImageIcon("/home/lucas/Área de Trabalho/Codes/MasterDegree/Laboratório de Arquitetura Cognitivas - IA941/Aula1/EntragaAula1/Resources/downArrow.png")); // NOI18N
+        moveDownButton.setIcon(new javax.swing.ImageIcon("/home/lucas/Área de Trabalho/Codes/MasterDegree/Laboratório de Arquitetura Cognitivas - IA941/Aula1/EntregaAula1/Resources/downArrow.png")); // NOI18N
         moveDownButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 moveDownButtonMousePressed(evt);
@@ -212,7 +212,7 @@ public class CreatureFrame extends javax.swing.JFrame {
             }
         });
 
-        antiClockwiseRotationButton.setIcon(new javax.swing.ImageIcon("/home/lucas/Área de Trabalho/Codes/MasterDegree/Laboratório de Arquitetura Cognitivas - IA941/Aula1/EntragaAula1/Resources/leftRotation.png")); // NOI18N
+        antiClockwiseRotationButton.setIcon(new javax.swing.ImageIcon("/home/lucas/Área de Trabalho/Codes/MasterDegree/Laboratório de Arquitetura Cognitivas - IA941/Aula1/EntregaAula1/Resources/leftRotation.png")); // NOI18N
         antiClockwiseRotationButton.setToolTipText("");
         antiClockwiseRotationButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {

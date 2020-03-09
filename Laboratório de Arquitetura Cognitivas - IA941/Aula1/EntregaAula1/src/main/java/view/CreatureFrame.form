@@ -309,7 +309,7 @@
             <Component class="javax.swing.JButton" name="moveUpButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="/home/lucas/&#xc1;rea de Trabalho/Codes/MasterDegree/Laborat&#xf3;rio de Arquitetura Cognitivas - IA941/Aula1/EntragaAula1/Resources/upArrow.png"/>
+                  <Image iconType="2" name="/home/lucas/&#xc1;rea de Trabalho/Codes/MasterDegree/Laborat&#xf3;rio de Arquitetura Cognitivas - IA941/Aula1/EntregaAula1/Resources/upArrow.png"/>
                 </Property>
               </Properties>
               <Events>
@@ -320,7 +320,7 @@
             <Component class="javax.swing.JButton" name="clockwiseRotationButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="/home/lucas/&#xc1;rea de Trabalho/Codes/MasterDegree/Laborat&#xf3;rio de Arquitetura Cognitivas - IA941/Aula1/EntragaAula1/Resources/rightRotation.png"/>
+                  <Image iconType="2" name="/home/lucas/&#xc1;rea de Trabalho/Codes/MasterDegree/Laborat&#xf3;rio de Arquitetura Cognitivas - IA941/Aula1/EntregaAula1/Resources/rightRotation.png"/>
                 </Property>
               </Properties>
               <Events>
@@ -331,7 +331,7 @@
             <Component class="javax.swing.JButton" name="moveDownButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="/home/lucas/&#xc1;rea de Trabalho/Codes/MasterDegree/Laborat&#xf3;rio de Arquitetura Cognitivas - IA941/Aula1/EntragaAula1/Resources/downArrow.png"/>
+                  <Image iconType="2" name="/home/lucas/&#xc1;rea de Trabalho/Codes/MasterDegree/Laborat&#xf3;rio de Arquitetura Cognitivas - IA941/Aula1/EntregaAula1/Resources/downArrow.png"/>
                 </Property>
               </Properties>
               <Events>
@@ -342,7 +342,7 @@
             <Component class="javax.swing.JButton" name="antiClockwiseRotationButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="/home/lucas/&#xc1;rea de Trabalho/Codes/MasterDegree/Laborat&#xf3;rio de Arquitetura Cognitivas - IA941/Aula1/EntragaAula1/Resources/leftRotation.png"/>
+                  <Image iconType="2" name="/home/lucas/&#xc1;rea de Trabalho/Codes/MasterDegree/Laborat&#xf3;rio de Arquitetura Cognitivas - IA941/Aula1/EntregaAula1/Resources/leftRotation.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>

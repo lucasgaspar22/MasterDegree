@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * @author lucas
  */
 public class Constants {
+    public static final int CREATURE_VELOCITY = 5;
     public static final String COLOR_RED = "Red";
     public static final String COLOR_GREEN = "Green";
     public static final String COLOR_BLUE = "Blue";

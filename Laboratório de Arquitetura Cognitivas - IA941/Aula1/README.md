@@ -24,7 +24,7 @@ e preencha https://github.com/CST-Group/ws3d.git em "URL do Repositório". Preen
 
 ### Atividade 2: Geração de um Controlador Manual para o Ambiente Virtual
 
-ara finalizar as atividades desta aula, desenvolveremos um template de um sistema de controle de uma criatura virtual, para gerar um controlador manual que possa operar uma criatura no WS3D, e da mesma maneira geraremos uma Aplicação Java com esse controlador. Ao final da aula de hoje, deve ser enviado ao professor, via e-mail, um arquivo ZIP contendo o seguinte:
+Para finalizar as atividades desta aula, desenvolveremos um template de um sistema de controle de uma criatura virtual, para gerar um controlador manual que possa operar uma criatura no WS3D, e da mesma maneira geraremos uma Aplicação Java com esse controlador. Ao final da aula de hoje, deve ser enviado ao professor, via e-mail, um arquivo ZIP contendo o seguinte:
 * Código Fonte (Java) da aplicação de controle manual do WS3D
 * Código Executável (arquivo JAR) com sua versão compilada do WS3D
 * Código Executável (arquivo JAR) com sua versão compilada da aplicação de controle manual do WS3D

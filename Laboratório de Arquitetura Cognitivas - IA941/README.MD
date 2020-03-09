@@ -12,3 +12,6 @@ Neste curso, desenvolveremos um laboratório introdutório sobre o uso de arquit
 * SUN, R. (2003) A Tutorial on Clarion 5.0 - Technical Report
 * FRANKLIN, S.;MADL, T.; D'MELLO, S. - LIDA: A systems-level architecture for cognition, emotion, and learning - IEEE Transactions on Autonomous Mental Development, 2014
 * FRANKLIN, S; MADL, T.; STRAIN, S.; CHEN, S. A LIDA cognitive model tutorial - Biologically Inspired Cognitive Architectures 16 · April 2016
+
+### Professor
+Ricardo Gudwin - Unicamp

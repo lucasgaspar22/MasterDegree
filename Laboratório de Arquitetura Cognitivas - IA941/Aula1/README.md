@@ -56,3 +56,6 @@ try {
 Inicialmente criamos uma instância do Proxy, capturamos uma instância para o mundo virtual na forma de um objeto da classe World, e a partir desse objeto podemos efetuar uma série de ações, tais como resetar o mundo, criar instâncias de comidas, jóias e criaturas. Tendo-se uma referência para uma criatura, é possível iniciar a mesma, ler seus sensores e enviar comandos via atuadores. Há diversos outros comandos para sensores e atuadores além dos mostrados acima. Veja o código fonte do WS3DProxy para ver as opções disponíveis.
 
 Para finalizar o exercício da aula de hoje, deve-se utilizar o WS3DProxy para se gerenciar a movimentação da criatura manualmente, através do uso do teclado e/ou do mouse. No relatório desta atividade, devem estar disponibilizados tanto o código fonte gerado como o executável do programa de controle, na forma de uma AppJava. Os alunos devem gerar um shell script que inicialize tanto o WS3D como seu software de controle e disponibilizar tudo em um arquivo ZIP em seu repositório de atividades, conforme indicado acima.
+
+### Professor
+Ricardo Gudwin - Unicamp

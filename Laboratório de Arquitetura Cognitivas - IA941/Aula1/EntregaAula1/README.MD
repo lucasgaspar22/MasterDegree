@@ -4,6 +4,13 @@
 
 Esse pequeno software tem por objetivo controlar o WS3D tornando possivel a criação de objetos, bem como ter o controle deles
 
+### Para Rodar
+
+Abra o terminal na pasta e digite o seguinte comando
+
+```
+$> sh app.sh
+```
 ---
 ## Telas
 

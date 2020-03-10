@@ -5,7 +5,7 @@
  */
 package view;
 
-import java.awt.List;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -16,7 +16,9 @@ import util.Constants;
 import ws3dproxy.CommandExecException;
 import ws3dproxy.WS3DProxy;
 import ws3dproxy.model.Creature;
+import ws3dproxy.model.Thing;
 import ws3dproxy.model.World;
+
 
 /**
  *
@@ -41,6 +43,18 @@ public class CreatureFrame extends javax.swing.JFrame {
     }
     
     private void addCreaturesToComboBox( JComboBox<String> comboBox ){
+        List<Thing> things;
+		try {
+			things = World.getWorldEntities();
+			things.forEach(thing -> {
+				if(thing.getName().contains("Creature")) {
+					creaturesCreated.put(Integer.toString(things.indexOf(thing)), thing.getName());
+				}
+	    	});
+		} catch (CommandExecException ex) {
+			Logger.getLogger(CreatureFrame.class.getName()).log(Level.SEVERE, null, ex);
+		}
+    	
         comboBox.removeAllItems();
         creaturesCreated.entrySet().forEach((pair) -> comboBox.addItem(pair.getValue()));
     }
@@ -370,7 +384,6 @@ public class CreatureFrame extends javax.swing.JFrame {
     private void selectCreatureComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectCreatureComboBoxActionPerformed
         try {
             selectedCreature = proxy.getCreature(Integer.toString(selectCreatureComboBox.getSelectedIndex()));
-            selectedCreature.start();
         } catch (CommandExecException ex) {
             JOptionPane.showMessageDialog(this, "Falied to select creature!");
             Logger.getLogger(CreatureFrame.class.getName()).log(Level.SEVERE, null, ex);

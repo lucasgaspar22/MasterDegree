@@ -1,5 +1,2 @@
-./Laboratório de Arquitetura Cognitivas - IA941/Template/.gradle/
-./Laboratório de Arquitetura Cognitivas - IA941/Template/build/
-./Laboratório de Arquitetura Cognitivas - IA941/Aula1/EntregaAula1/.gradle/
-./Laboratório de Arquitetura Cognitivas - IA941/Aula1/EntregaAula1/build/
-*.class
+*/.gradle
+*/build

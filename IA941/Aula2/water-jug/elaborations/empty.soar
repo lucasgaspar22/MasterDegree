@@ -1,0 +1,11 @@
+# Calculate how mutch a jug has avaliable 
+# If the state is named water-jug and a jug can hold volume v and currently has
+# contents c, then add that it has v – c available (empty) space.
+sp {water-jug*elaborate*empty
+   (state <s> ^name water-jug
+              ^jug <j>)
+   (<j> ^volume <v>
+        ^contents <c>)
+-->
+   (<j> ^empty (- <v> <c>))
+}

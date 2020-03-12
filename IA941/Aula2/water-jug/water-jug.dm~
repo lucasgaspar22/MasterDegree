@@ -1,4 +1,4 @@
-9
+13
 SOAR_ID 0
 SOAR_ID 1
 SOAR_ID 2
@@ -8,8 +8,13 @@ ENUMERATION 5 1 state
 ENUMERATION 6 1 nil
 ENUMERATION 7 1 water-jug
 ENUMERATION 8 1 initialize-water-jug
-9
+SOAR_ID 9
+INTEGER_RANGE 10 -2147483648 2147483647
+INTEGER_RANGE 11 -2147483648 2147483647
+INTEGER_RANGE 12 -2147483648 2147483647
+13
 0 io 1
+0 jug 9
 0 name 7
 0 operator 4
 0 superstate 6
@@ -18,3 +23,6 @@ ENUMERATION 8 1 initialize-water-jug
 1 input-link 2
 1 output-link 3
 4 name 8
+9 contents 10
+9 empty 12
+9 volume 11

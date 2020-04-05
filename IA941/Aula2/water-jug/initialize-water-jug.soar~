@@ -20,4 +20,4 @@ sp {water-jug*apply*initialize-water-jug
          ^contents 0)
    (<j2> ^volume 3
          ^contents 0)
-}
+}  

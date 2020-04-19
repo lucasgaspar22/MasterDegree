@@ -16,8 +16,10 @@ import util.Constants;
 import ws3dproxy.CommandExecException;
 import ws3dproxy.WS3DProxy;
 import ws3dproxy.model.Creature;
+import ws3dproxy.model.CreatureState;
 import ws3dproxy.model.Thing;
 import ws3dproxy.model.World;
+import ws3dproxy.model.WorldPoint;
 
 
 /**
@@ -30,7 +32,10 @@ public class CreatureFrame extends javax.swing.JFrame {
     World world = null;
     Map<String,String> creaturesCreated = new HashMap<String,String>();
     Creature selectedCreature= null;
-    
+    WorldPoint selectedCreatureInitialPoint = null;
+    WorldPoint selectedCreatureFinalPoint = null;
+    double selectedCreatureInitialPitch = 0 ;
+    double selectedCreatureFinalPitch = 0 ;
     
     /**
      * Creates new form CreatureFrame
@@ -44,16 +49,16 @@ public class CreatureFrame extends javax.swing.JFrame {
     
     private void addCreaturesToComboBox( JComboBox<String> comboBox ){
         List<Thing> things;
-		try {
-			things = World.getWorldEntities();
-			things.forEach(thing -> {
-				if(thing.getName().contains("Creature")) {
-					creaturesCreated.put(Integer.toString(things.indexOf(thing)), thing.getName());
-				}
-	    	});
-		} catch (CommandExecException ex) {
-			Logger.getLogger(CreatureFrame.class.getName()).log(Level.SEVERE, null, ex);
-		}
+	try {
+            things = World.getWorldEntities();
+            things.forEach(thing -> {
+                if(thing.getName().contains("Creature")) {
+                    creaturesCreated.put(Integer.toString(things.indexOf(thing)), thing.getName());
+                }
+            });
+	} catch (CommandExecException ex) {
+            Logger.getLogger(CreatureFrame.class.getName()).log(Level.SEVERE, null, ex);
+	}
     	
         comboBox.removeAllItems();
         creaturesCreated.entrySet().forEach((pair) -> comboBox.addItem(pair.getValue()));
@@ -88,12 +93,14 @@ public class CreatureFrame extends javax.swing.JFrame {
         clockwiseRotationButton = new javax.swing.JButton();
         moveDownButton = new javax.swing.JButton();
         antiClockwiseRotationButton = new javax.swing.JButton();
+        fuelPane = new javax.swing.JPanel();
+        fuelProgressBar = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Creature");
         setAlwaysOnTop(true);
 
-        newCreaturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Create Creature", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        newCreaturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Create Creature", 2, 0));
 
         creatureColorComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Yellow", "Red" }));
 
@@ -181,7 +188,7 @@ public class CreatureFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        updateCreaturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Update Creature", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        updateCreaturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Update Creature", 2, 0));
 
         updateCreatureLabel.setText("Creature");
 
@@ -191,7 +198,7 @@ public class CreatureFrame extends javax.swing.JFrame {
             }
         });
 
-        moveCreaturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Move", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        moveCreaturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Move", 2, 0));
 
         moveUpButton.setText("Move Forward");
         moveUpButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -262,6 +269,27 @@ public class CreatureFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        fuelPane.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fuel", 2, 0));
+
+        fuelProgressBar.setMaximum(1000);
+
+        javax.swing.GroupLayout fuelPaneLayout = new javax.swing.GroupLayout(fuelPane);
+        fuelPane.setLayout(fuelPaneLayout);
+        fuelPaneLayout.setHorizontalGroup(
+            fuelPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(fuelPaneLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(fuelProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        fuelPaneLayout.setVerticalGroup(
+            fuelPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(fuelPaneLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(fuelProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout updateCreaturePanelLayout = new javax.swing.GroupLayout(updateCreaturePanel);
         updateCreaturePanel.setLayout(updateCreaturePanelLayout);
         updateCreaturePanelLayout.setHorizontalGroup(
@@ -273,7 +301,8 @@ public class CreatureFrame extends javax.swing.JFrame {
                     .addGroup(updateCreaturePanelLayout.createSequentialGroup()
                         .addComponent(updateCreatureLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(selectCreatureComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(selectCreatureComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(fuelPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         updateCreaturePanelLayout.setVerticalGroup(
@@ -285,6 +314,8 @@ public class CreatureFrame extends javax.swing.JFrame {
                     .addComponent(selectCreatureComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(moveCreaturePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fuelPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -303,10 +334,12 @@ public class CreatureFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(newCreaturePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(newCreaturePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 227, Short.MAX_VALUE))
                     .addComponent(updateCreaturePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -335,8 +368,8 @@ public class CreatureFrame extends javax.swing.JFrame {
 
     private void antiClockwiseRotationButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_antiClockwiseRotationButtonMousePressed
         try {
-            selectedCreature.rotate(-Constants.CREATURE_VELOCITY);
-            selectedCreature.start();
+            this.selectedCreature.rotate(-Constants.CREATURE_VELOCITY);
+            this.selectedCreature.start();
         } catch (CommandExecException ex) {
             Logger.getLogger(CreatureFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -348,8 +381,8 @@ public class CreatureFrame extends javax.swing.JFrame {
 
     private void moveDownButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_moveDownButtonMousePressed
         try {
-            selectedCreature.move(-Constants.CREATURE_VELOCITY, -Constants.CREATURE_VELOCITY, 0);
-            selectedCreature.start();
+            this.selectedCreature.move(-Constants.CREATURE_VELOCITY, -Constants.CREATURE_VELOCITY, 0);
+            this.selectedCreature.start();
         } catch (CommandExecException ex) {
             Logger.getLogger(CreatureFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -361,8 +394,8 @@ public class CreatureFrame extends javax.swing.JFrame {
 
     private void clockwiseRotationButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clockwiseRotationButtonMousePressed
         try {
-            selectedCreature.rotate(Constants.CREATURE_VELOCITY);
-            selectedCreature.start();
+            this.selectedCreature.rotate(Constants.CREATURE_VELOCITY);
+            this.selectedCreature.start();
         } catch (CommandExecException ex) {
             Logger.getLogger(CreatureFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -374,8 +407,8 @@ public class CreatureFrame extends javax.swing.JFrame {
 
     private void moveUpButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_moveUpButtonMousePressed
         try {
-            selectedCreature.move(Constants.CREATURE_VELOCITY, Constants.CREATURE_VELOCITY, 0);
-            selectedCreature.start();
+            this.selectedCreature.move(Constants.CREATURE_VELOCITY, Constants.CREATURE_VELOCITY, 0);
+            this.selectedCreature.start();
         } catch (CommandExecException ex) {
             Logger.getLogger(CreatureFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -383,21 +416,55 @@ public class CreatureFrame extends javax.swing.JFrame {
 
     private void selectCreatureComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectCreatureComboBoxActionPerformed
         try {
-            selectedCreature = proxy.getCreature(Integer.toString(selectCreatureComboBox.getSelectedIndex()));
+            this.selectedCreature = proxy.getCreature(Integer.toString(selectCreatureComboBox.getSelectedIndex()));
+            this.selectedCreatureInitialPoint = new WorldPoint(selectedCreature.getAttributes().getCOM().getX(), selectedCreature.getAttributes().getCOM().getY());
+            selectedCreatureInitialPitch =  selectedCreature.getAttributes().getPitch();
+            int fuel = (int) selectedCreature.getFuel();
+            fuelProgressBar.setValue(fuel);
         } catch (CommandExecException ex) {
             JOptionPane.showMessageDialog(this, "Falied to select creature!");
             Logger.getLogger(CreatureFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_selectCreatureComboBoxActionPerformed
-
+    
+    private void getGenearalCreatureInformationBeforeMove(){
+        this.selectedCreatureInitialPoint = new WorldPoint(selectedCreature.getAttributes().getCOM().getX(), selectedCreature.getAttributes().getCOM().getY());
+        selectedCreatureInitialPitch = selectedCreature.getPitch();
+    }
     private void stopSelectedCreature(){
         try{ 
-            selectedCreature.stop();
+            this.selectedCreature.stop();
+            this.selectedCreature.updateState();
+            this.selectedCreatureFinalPoint = new WorldPoint(selectedCreature.getAttributes().getCOM().getX(), selectedCreature.getAttributes().getCOM().getY());
+            this.selectedCreatureFinalPitch = selectedCreature.getAttributes().getPitch();
+            updateCreature();
         } catch (CommandExecException ex) {
             Logger.getLogger(CreatureFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    private void updateCreature(){
+        double fuel = selectedCreature.getAttributes().getFuel();
+        fuelProgressBar.setValue((int)fuel);
+        selectedCreature.update(selectedCreature.getIndex(), 
+                selectedCreature.getColor(), 
+                selectedCreature.getSpeed(), 
+                selectedCreature.getWheel(), 
+                selectedCreature.getAttributes().getPitch(), 
+                selectedCreature.getAttributes().getFuel(), 
+                selectedCreature.getAttributes().getSerotonin(), 
+                selectedCreature.getAttributes().getEndorphine(), 
+                selectedCreature.getAttributes().getScore(), 
+                selectedCreatureFinalPoint, 
+                selectedCreature.getAttributes().getX1(), 
+                selectedCreature.getAttributes().getY1(), 
+                selectedCreature.getAttributes().getX2(), 
+                selectedCreature.getAttributes().getY2(), 
+                selectedCreature.getLeaflets(),
+                0);
+    }
+    
     
 
 
@@ -411,6 +478,8 @@ public class CreatureFrame extends javax.swing.JFrame {
     private javax.swing.JTextField creatureXPositionTextField;
     private javax.swing.JLabel creatureYPositionLabel;
     private javax.swing.JTextField creatureYPositionTextField;
+    private javax.swing.JPanel fuelPane;
+    private javax.swing.JProgressBar fuelProgressBar;
     private javax.swing.JPanel moveCreaturePanel;
     private javax.swing.JButton moveDownButton;
     private javax.swing.JButton moveUpButton;

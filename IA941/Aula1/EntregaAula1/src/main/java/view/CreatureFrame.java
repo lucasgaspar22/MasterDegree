@@ -609,7 +609,7 @@ public class CreatureFrame extends javax.swing.JFrame{
     private void selectCreatureComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectCreatureComboBoxActionPerformed
         try {
             this.selectedCreature = proxy.getCreature(Integer.toString(selectCreatureComboBox.getSelectedIndex()));
-            this.selectedCreaturesBag = selectedCreature.getBag();
+            selectedCreaturesBag = selectedCreature.getBag();
             setUpBagPanel();
             setUpScorePanel();
             this.selectedCreatureInitialPoint = new WorldPoint(selectedCreature.getAttributes().getCOM().getX(), selectedCreature.getAttributes().getCOM().getY());
@@ -648,9 +648,23 @@ public class CreatureFrame extends javax.swing.JFrame{
             if(selectedCreature.calculateDistanceTo(firstThingSeen) <= Constants.MINIMUM_DISTANCE) 
                 try {
                     selectedCreature.putInSack(firstThingSeen.getName());
-                    selectedCreature.updateBag();
+                    selectedCreaturesBag = selectedCreature.updateBag();
+                    int totalMagentaJewel = selectedCreaturesBag.getNumberCrystalPerType(Constants.COLOR_MAGENTA);
+                    int totalBlueJewel = selectedCreaturesBag.getNumberCrystalPerType(Constants.COLOR_BLUE);
+                    int totalRedJewel = selectedCreaturesBag.getNumberCrystalPerType(Constants.COLOR_RED);
+                    int totalGreenJewel = selectedCreaturesBag.getNumberCrystalPerType(Constants.COLOR_GREEN);
+                    int totalWhiteJewel = selectedCreaturesBag.getNumberCrystalPerType(Constants.COLOR_WHITE);
+                    int totalYellowJewel = selectedCreaturesBag.getNumberCrystalPerType(Constants.COLOR_YELLOW);
+                    int totalJewel = selectedCreaturesBag.getTotalNumberCrystals();
+                    int totalFood = selectedCreaturesBag.getTotalNumberFood();
+                    int totalNPFood = selectedCreaturesBag.getNumberNPFood();
+                    int totalPFood = selectedCreaturesBag.getNumberPFood();
+                    updateCreaturesBag(totalFood, 
+                        totalJewel, 
+                        totalPFood, totalNPFood,
+                        totalRedJewel, totalGreenJewel, 
+                        totalBlueJewel, totalYellowJewel, totalMagentaJewel, totalWhiteJewel);
                     setUpBagPanel();
-                    setUpScorePanel();
             } catch (CommandExecException ex) {
                 Logger.getLogger(CreatureFrame.class.getName()).log(Level.SEVERE, null, ex);
             }

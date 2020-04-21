@@ -3,9 +3,11 @@
 #    propose move-to-food in the direction of that cell
 #    and indicate that this operator can be selected randomly.
 sp {propose*move-to-food
-    (state <s> ^io.input-link.my-location.<dir>.content << normalfood bonusfood >>)
+    (state <s> ^io.input-link.my-location.<dir>.content
+        { <type> << normalfood bonusfood >>})
 
 -->
+    (write (crlf) |Propose move | <dir> |, for | <type>)
     (<s> ^operator <o> + =)
     (<o> ^name move-to-food
          ^direction <dir>)

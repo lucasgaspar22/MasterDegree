@@ -22,6 +22,7 @@ import ws3dproxy.WS3DProxy;
 import ws3dproxy.model.Bag;
 import ws3dproxy.model.Creature;
 import ws3dproxy.model.CreatureState;
+import ws3dproxy.model.Leaflet;
 import ws3dproxy.model.Thing;
 import ws3dproxy.model.World;
 import ws3dproxy.model.WorldPoint;
@@ -109,11 +110,13 @@ public class CreatureFrame extends javax.swing.JFrame{
         bagPanel = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         bagTable = new javax.swing.JTable();
-        jewelToPointsButton = new javax.swing.JButton();
-        eatFromBagButton = new javax.swing.JButton();
         socrePanel = new javax.swing.JPanel();
         scoreLabel = new javax.swing.JLabel();
         scoreTextField = new javax.swing.JTextField();
+        leafletPanel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        leafletTable = new javax.swing.JTable();
+        leafletButton = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -132,7 +135,7 @@ public class CreatureFrame extends javax.swing.JFrame{
         setTitle("Creature");
         setAlwaysOnTop(true);
 
-        newCreaturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Create Creature", 2, 0));
+        newCreaturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Create Creature", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         creatureColorComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Yellow", "Red" }));
 
@@ -170,27 +173,28 @@ public class CreatureFrame extends javax.swing.JFrame{
                 .addContainerGap()
                 .addGroup(newCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(newCreaturePanelLayout.createSequentialGroup()
-                        .addComponent(pitchLabel)
-                        .addGap(38, 38, 38)
-                        .addGroup(newCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(newCreaturePanelLayout.createSequentialGroup()
-                                .addComponent(zeroLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
-                                .addComponent(thsLabel))
-                            .addComponent(pitchSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                    .addGroup(newCreaturePanelLayout.createSequentialGroup()
                         .addGroup(newCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(creatureXPositionLabel)
                             .addComponent(creatureYPositionLabel)
                             .addComponent(creatureColorLabel))
                         .addGap(4, 4, 4)
                         .addGroup(newCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(creatureColorComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 159, Short.MAX_VALUE)
                             .addComponent(creatureXPositionTextField, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(creatureYPositionTextField, javax.swing.GroupLayout.Alignment.LEADING))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(creatureColorComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 112, Short.MAX_VALUE)
+                            .addComponent(creatureYPositionTextField))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(newCreaturePanelLayout.createSequentialGroup()
+                        .addComponent(pitchLabel)
+                        .addGap(38, 38, 38)
+                        .addGroup(newCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(newCreaturePanelLayout.createSequentialGroup()
+                                .addComponent(zeroLabel)
+                                .addGap(73, 73, 73)
+                                .addComponent(thsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
+                            .addComponent(pitchSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, newCreaturePanelLayout.createSequentialGroup()
-                .addContainerGap(54, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(createCreatureButton, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43))
         );
@@ -223,7 +227,7 @@ public class CreatureFrame extends javax.swing.JFrame{
                 .addContainerGap())
         );
 
-        updateCreaturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Update Creature", 2, 0));
+        updateCreaturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Update Creature", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         updateCreatureLabel.setText("Creature");
 
@@ -233,7 +237,7 @@ public class CreatureFrame extends javax.swing.JFrame{
             }
         });
 
-        moveCreaturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Move", 2, 0));
+        moveCreaturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Move", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         moveUpButton.setText("Move Forward");
         moveUpButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -281,7 +285,7 @@ public class CreatureFrame extends javax.swing.JFrame{
         moveCreaturePanelLayout.setHorizontalGroup(
             moveCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, moveCreaturePanelLayout.createSequentialGroup()
-                .addContainerGap(95, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(antiClockwiseRotationButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(moveCreaturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -304,7 +308,7 @@ public class CreatureFrame extends javax.swing.JFrame{
                 .addContainerGap())
         );
 
-        fuelPane.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fuel", 2, 0));
+        fuelPane.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fuel", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         fuelProgressBar.setForeground(new java.awt.Color(233, 84, 32));
         fuelProgressBar.setMaximum(1000);
@@ -356,7 +360,7 @@ public class CreatureFrame extends javax.swing.JFrame{
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        actionPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Actions", 2, 0));
+        actionPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Actions", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         eatButton.setText("Eat!");
         eatButton.addActionListener(new java.awt.event.ActionListener() {
@@ -365,7 +369,7 @@ public class CreatureFrame extends javax.swing.JFrame{
             }
         });
 
-        putInBagButton.setText("Put in bag");
+        putInBagButton.setText("Bag!");
         putInBagButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 putInBagButtonActionPerformed(evt);
@@ -378,10 +382,10 @@ public class CreatureFrame extends javax.swing.JFrame{
             actionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(actionPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(eatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(putInBagButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(eatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(putInBagButton, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         actionPanelLayout.setVerticalGroup(
             actionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -393,18 +397,18 @@ public class CreatureFrame extends javax.swing.JFrame{
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        bagPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Bag", 2, 0));
+        bagPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Bag", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         bagTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"NP Food", null},
                 {"P Food", null},
-                {"Magenta Jewel", null},
-                {"Blue Jewel", null},
-                {"Red Jewel", null},
-                {"Green Jewel", null},
-                {"White Jewel", null},
-                {"Yellow Jewel", null}
+                {"Magenta", null},
+                {"Blue", null},
+                {"Red", null},
+                {"Green", null},
+                {"White", null},
+                {"Yellow", null}
             },
             new String [] {
                 "Name", "Quantity"
@@ -426,24 +430,14 @@ public class CreatureFrame extends javax.swing.JFrame{
             }
         });
         bagTable.setFocusable(false);
+        bagTable.setOpaque(false);
         bagTable.setRequestFocusEnabled(false);
         bagTable.getTableHeader().setResizingAllowed(false);
         bagTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(bagTable);
-
-        jewelToPointsButton.setText("Jewel to Points");
-        jewelToPointsButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jewelToPointsButtonActionPerformed(evt);
-            }
-        });
-
-        eatFromBagButton.setText("Eat from bag");
-        eatFromBagButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eatFromBagButtonActionPerformed(evt);
-            }
-        });
+        if (bagTable.getColumnModel().getColumnCount() > 0) {
+            bagTable.getColumnModel().getColumn(1).setResizable(false);
+        }
 
         javax.swing.GroupLayout bagPanelLayout = new javax.swing.GroupLayout(bagPanel);
         bagPanel.setLayout(bagPanelLayout);
@@ -451,29 +445,18 @@ public class CreatureFrame extends javax.swing.JFrame{
             bagPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bagPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(bagPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jewelToPointsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(eatFromBagButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         bagPanelLayout.setVerticalGroup(
             bagPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bagPanelLayout.createSequentialGroup()
-                .addGroup(bagPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(bagPanelLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(eatFromBagButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jewelToPointsButton))
-                    .addGroup(bagPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
-        socrePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Score", 2, 0));
+        socrePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Score", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         scoreLabel.setText("Score");
 
@@ -500,21 +483,97 @@ public class CreatureFrame extends javax.swing.JFrame{
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        leafletPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Leaflet", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+
+        leafletTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"Red", null, null, null},
+                {"Green", null, null, null},
+                {"Blue", null, null, null},
+                {"Magenta", null, null, null},
+                {"White", null, null, null},
+                {"Yellow", null, null, null},
+                {"Score", null, null, null},
+                {"Status", null, null, null}
+            },
+            new String [] {
+                "Object", "Leaflet1", "Leaflet2", "Leaflet3"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        leafletTable.setColumnSelectionAllowed(true);
+        leafletTable.setRowSelectionAllowed(false);
+        jScrollPane1.setViewportView(leafletTable);
+        if (leafletTable.getColumnModel().getColumnCount() > 0) {
+            leafletTable.getColumnModel().getColumn(0).setResizable(false);
+            leafletTable.getColumnModel().getColumn(1).setResizable(false);
+            leafletTable.getColumnModel().getColumn(2).setResizable(false);
+            leafletTable.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        leafletButton.setText("Deliver Leaflet");
+        leafletButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                leafletButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout leafletPanelLayout = new javax.swing.GroupLayout(leafletPanel);
+        leafletPanel.setLayout(leafletPanelLayout);
+        leafletPanelLayout.setHorizontalGroup(
+            leafletPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(leafletPanelLayout.createSequentialGroup()
+                .addGroup(leafletPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(leafletPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(leafletPanelLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(leafletButton, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        leafletPanelLayout.setVerticalGroup(
+            leafletPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(leafletPanelLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(leafletButton)
+                .addGap(0, 12, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(newCreaturePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(actionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(actionPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(newCreaturePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(socrePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(updateCreaturePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bagPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(bagPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(leafletPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(updateCreaturePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -529,7 +588,8 @@ public class CreatureFrame extends javax.swing.JFrame{
                         .addComponent(actionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(socrePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(bagPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bagPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(leafletPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -543,8 +603,14 @@ public class CreatureFrame extends javax.swing.JFrame{
             int color = creatureColorComboBox.getSelectedIndex();
             int pitch = pitchSlider.getValue();
             Creature creature = this.proxy.createCreature(xPosition, yPosition, pitch, color);
-            creature.genLeaflet();
             creature.updateBag();
+            creature.updateState();
+            //creature.genLeaflet();
+            creature.getLeaflets().forEach(l -> {
+                System.out.println(l.toString());
+                
+            });
+            
             creaturesCreated.put(creature.getIndex(), creature.getName());
             selectCreatureComboBox.addItem(creature.getName());
             JOptionPane.showMessageDialog(this, "Creature created with name: "+creature.getName());    
@@ -612,6 +678,7 @@ public class CreatureFrame extends javax.swing.JFrame{
             selectedCreaturesBag = selectedCreature.getBag();
             setUpBagPanel();
             setUpScorePanel();
+            setUpLeafletPanel();
             this.selectedCreatureInitialPoint = new WorldPoint(selectedCreature.getAttributes().getCOM().getX(), selectedCreature.getAttributes().getCOM().getY());
             selectedCreatureInitialPitch =  selectedCreature.getAttributes().getPitch();
             int fuel = (int) selectedCreature.getFuel();
@@ -644,7 +711,7 @@ public class CreatureFrame extends javax.swing.JFrame{
     private void putInBagButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_putInBagButtonActionPerformed
         Thing firstThingSeen = selectedCreature.getThingsInCameraFrustrum().get(0);
         String type = firstThingSeen.getName().split(Constants.UNDERSROCE)[Constants.ZERO];
-        if(type.equalsIgnoreCase(Constants.PFOOD) || type.equalsIgnoreCase(Constants.NPFOOD) || type.equalsIgnoreCase(Constants.JEWEL)){
+        if(type.equalsIgnoreCase(Constants.JEWEL)){
             if(selectedCreature.calculateDistanceTo(firstThingSeen) <= Constants.MINIMUM_DISTANCE) 
                 try {
                     selectedCreature.putInSack(firstThingSeen.getName());
@@ -673,97 +740,28 @@ public class CreatureFrame extends javax.swing.JFrame{
         }
     }//GEN-LAST:event_putInBagButtonActionPerformed
 
-    private void eatFromBagButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eatFromBagButtonActionPerformed
-        int selectedRow = bagTable.getSelectedRow();
-        int totalFood = selectedCreaturesBag.getTotalNumberFood();
-        int totalNPFood = selectedCreaturesBag.getNumberNPFood();
-        int totalPFood = selectedCreaturesBag.getNumberPFood();
-        int totalMagentaJewel = selectedCreaturesBag.getNumberCrystalPerType(Constants.COLOR_MAGENTA);
-        int totalBlueJewel = selectedCreaturesBag.getNumberCrystalPerType(Constants.COLOR_BLUE);
-        int totalRedJewel = selectedCreaturesBag.getNumberCrystalPerType(Constants.COLOR_RED);
-        int totalGreenJewel = selectedCreaturesBag.getNumberCrystalPerType(Constants.COLOR_GREEN);
-        int totalWhiteJewel = selectedCreaturesBag.getNumberCrystalPerType(Constants.COLOR_WHITE);
-        int totalYellowJewel = selectedCreaturesBag.getNumberCrystalPerType(Constants.COLOR_YELLOW);
-        double currentFuel = selectedCreature.getAttributes().getFuel();
-        
-        if (selectedRow == 0 && totalNPFood > 0){
-            totalNPFood --;
-            totalFood --;
-            selectedCreature.getAttributes().setFuel(currentFuel + Constants.NPFOOD_ENERGY);
-        }
-        else if(selectedRow == 1 && totalPFood > 0){
-            totalPFood --;
-            totalFood --;
-            selectedCreature.getAttributes().setFuel(currentFuel + Constants.PFOOD_ENERGY);
+    private void leafletButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leafletButtonActionPerformed
+        int columnSelected = leafletTable.getSelectedColumn();
+        if(columnSelected > 0){
+            try {
+                Leaflet leaflet = selectedCreature.getLeaflets().get(columnSelected-1);
+               
+                    String leafletId = Long.toString(leaflet.getID());
+                    leaflet.setSituation(1);
+                    selectedCreature.deliverLeaflet(leafletId);
 
-        }else{
-            JOptionPane.showMessageDialog(this, "You can't eat this");
-        }
-        
-        updateCreaturesBag(totalFood, 
-                selectedCreaturesBag.getTotalNumberCrystals(), 
-                totalPFood, totalNPFood,
-                totalRedJewel, totalGreenJewel, 
-                totalBlueJewel, totalYellowJewel, totalMagentaJewel, totalWhiteJewel);
-      setUpScorePanel();
-      setUpBagPanel();
-      fuelProgressBar.setValue((int)selectedCreature.getAttributes().getFuel());
-        
-    }//GEN-LAST:event_eatFromBagButtonActionPerformed
-
-    private void jewelToPointsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jewelToPointsButtonActionPerformed
-       int selectedRow = bagTable.getSelectedRow();
-       double currentScore = selectedCreature.getAttributes().getScore();
-       int totalMagentaJewel = selectedCreaturesBag.getNumberCrystalPerType(Constants.COLOR_MAGENTA);
-       int totalBlueJewel = selectedCreaturesBag.getNumberCrystalPerType(Constants.COLOR_BLUE);
-       int totalRedJewel = selectedCreaturesBag.getNumberCrystalPerType(Constants.COLOR_RED);
-       int totalGreenJewel = selectedCreaturesBag.getNumberCrystalPerType(Constants.COLOR_GREEN);
-       int totalWhiteJewel = selectedCreaturesBag.getNumberCrystalPerType(Constants.COLOR_WHITE);
-       int totalYellowJewel = selectedCreaturesBag.getNumberCrystalPerType(Constants.COLOR_YELLOW);
-       int pointsToAdd = 0 ;
-        
-       if(!bagTable.getValueAt(selectedRow, 1).equals(0)){
-            switch (selectedRow){
-                case 2:
-                    totalMagentaJewel--;
-                    pointsToAdd = Constants.getJewelPayment(Constants.COLOR_MAGENTA);
-                    break;
-                case 3:
-                    totalBlueJewel--;
-                    pointsToAdd = Constants.getJewelPayment(Constants.COLOR_BLUE);
-                    break;
-                case 4:
-                    totalRedJewel--;
-                    pointsToAdd = Constants.getJewelPayment(Constants.COLOR_RED);
-                    break;
-                case 5:
-                    totalGreenJewel--;
-                    pointsToAdd = Constants.getJewelPayment(Constants.COLOR_GREEN);
-                    break;
-                case 6:
-                    totalWhiteJewel--;
-                    pointsToAdd = Constants.getJewelPayment(Constants.COLOR_WHITE);
-                    break;
-                case 7:
-                    totalYellowJewel--; 
-                    pointsToAdd = Constants.getJewelPayment(Constants.COLOR_YELLOW);
-                    break;
-                default:
-                    JOptionPane.showMessageDialog(this,"You cant convert this to points");
+            } catch (CommandExecException ex) {
+                Logger.getLogger(CreatureFrame.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Failed to deliver leaflet");
             }
-            selectedCreature.getAttributes().setScore(currentScore + pointsToAdd);
-       }else{
-           JOptionPane.showMessageDialog(this,"You cant convert this to points");
-       }
-       
-        updateCreaturesBag(selectedCreaturesBag.getTotalNumberFood(), 
-                selectedCreaturesBag.getTotalNumberCrystals() - 1, 
-                selectedCreaturesBag.getNumberPFood(), selectedCreaturesBag.getNumberNPFood(),
-                totalRedJewel, totalGreenJewel, 
-                totalBlueJewel, totalYellowJewel, totalMagentaJewel, totalWhiteJewel);
-      setUpScorePanel();
-      setUpBagPanel();
-    }//GEN-LAST:event_jewelToPointsButtonActionPerformed
+        }else{
+            JOptionPane.showMessageDialog(this, "Select a valid column");
+        }
+       selectedCreature.updateState();
+       setUpBagPanel();
+       setUpLeafletPanel();
+       setUpScorePanel();
+    }//GEN-LAST:event_leafletButtonActionPerformed
 
     
     private void stopSelectedCreature(){
@@ -834,6 +832,29 @@ public class CreatureFrame extends javax.swing.JFrame{
         bagTable.setValueAt(totalGreenJewel, 5, 1);
         bagTable.setValueAt(totalWhiteJewel, 6, 1);
         bagTable.setValueAt(totalYellowJewel, 7, 1);
+    }
+     
+    public void setUpLeafletPanel(){
+        List<Leaflet> leaflets = selectedCreature.getLeaflets();
+        for (int index = 0; index<3; index++){
+            Leaflet leaflet = leaflets.get(index);
+            int totalMagentaJewel = leaflet.getTotalNumberOfType(Constants.COLOR_MAGENTA) == -1 ? 0 : leaflet.getTotalNumberOfType(Constants.COLOR_MAGENTA);
+            int totalBlueJewel =  leaflet.getTotalNumberOfType(Constants.COLOR_BLUE)== -1 ? 0 : leaflet.getTotalNumberOfType(Constants.COLOR_BLUE);
+            int totalRedJewel =  leaflet.getTotalNumberOfType(Constants.COLOR_RED)== -1 ? 0 : leaflet.getTotalNumberOfType(Constants.COLOR_RED);
+            int totalGreenJewel =  leaflet.getTotalNumberOfType(Constants.COLOR_GREEN)== -1 ? 0 : leaflet.getTotalNumberOfType(Constants.COLOR_GREEN);
+            int totalWhiteJewel =  leaflet.getTotalNumberOfType(Constants.COLOR_WHITE)== -1 ? 0 : leaflet.getTotalNumberOfType(Constants.COLOR_WHITE);
+            int totalYellowJewel = leaflet.getTotalNumberOfType(Constants.COLOR_YELLOW)== -1 ? 0 : leaflet.getTotalNumberOfType(Constants.COLOR_YELLOW);
+            int totalPayment = leaflet.getPayment();
+            int status = leaflet.getSituation();
+            leafletTable.setValueAt(totalRedJewel, 0, index+1);
+            leafletTable.setValueAt(totalGreenJewel, 1, index+1);
+            leafletTable.setValueAt(totalBlueJewel, 2, index+1);
+            leafletTable.setValueAt(totalMagentaJewel, 3, index+1);
+            leafletTable.setValueAt(totalWhiteJewel, 4, index+1);
+            leafletTable.setValueAt(totalYellowJewel, 5, index+1);
+            leafletTable.setValueAt(totalPayment, 6, index+1);
+            leafletTable.setValueAt(status, 7, index+1);
+        }
         
     }
      
@@ -860,13 +881,15 @@ public class CreatureFrame extends javax.swing.JFrame{
     private javax.swing.JLabel creatureYPositionLabel;
     private javax.swing.JTextField creatureYPositionTextField;
     private javax.swing.JButton eatButton;
-    private javax.swing.JButton eatFromBagButton;
     private javax.swing.JPanel fuelPane;
     private javax.swing.JProgressBar fuelProgressBar;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JButton jewelToPointsButton;
+    private javax.swing.JButton leafletButton;
+    private javax.swing.JPanel leafletPanel;
+    private javax.swing.JTable leafletTable;
     private javax.swing.JPanel moveCreaturePanel;
     private javax.swing.JButton moveDownButton;
     private javax.swing.JButton moveUpButton;

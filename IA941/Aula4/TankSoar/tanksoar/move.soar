@@ -39,3 +39,23 @@ sp {attack*propose*move
         ^actions.move.direction forward)
 }
 
+
+## Propose Move Sidestep Operator
+## If the state is named retreat then propose sidestep from the direction of a detected enemy, as
+## long as that direction is not blocked, is not the direction of another enemy or is a direction to avoid.
+sp {retreat*propose*move
+   (state <s> ^name retreat
+              ^direction <dir>
+              ^superstate.side-direction.<dir> <ndir>
+             -^direction <ndir>
+             -^avoid-direction <ndir>
+              ^io.input-link.blocked.<ndir> no)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name move
+        ^actions.move.direction <ndir>)
+}
+
+
+## Propose Wait
+## If the state is named retreat then propose wait, and make a worst preference for it.

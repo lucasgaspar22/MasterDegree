@@ -6,7 +6,7 @@ sp {propose*chase
    (state <s> ^name tanksoar
               ^io.input-link <io>
              -^missiles-energy low)
-   (<io> ^sount <> silent 
+   (<io> ^sound <> silent 
         -^radar.tank)
 -->
    (<s> ^operator <o> +)

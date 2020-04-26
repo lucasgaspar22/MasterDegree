@@ -1,4 +1,4 @@
-76
+78
 SOAR_ID 0
 SOAR_ID 1
 SOAR_ID 2
@@ -75,7 +75,9 @@ SOAR_ID 72
 ENUMERATION 73 1 attack
 SOAR_ID 74
 ENUMERATION 75 1 fire
-90
+SOAR_ID 76
+ENUMERATION 77 1 retreat
+92
 0 io 1
 0 name 6
 0 operator 44
@@ -87,6 +89,7 @@ ENUMERATION 75 1 fire
 0 operator 70
 0 operator 72
 0 operator 74
+0 operator 76
 0 superstate 5
 0 top-state 0
 0 type 4
@@ -166,3 +169,4 @@ ENUMERATION 75 1 fire
 70 name 71
 72 name 73
 74 name 75
+76 name 77

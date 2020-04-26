@@ -10,4 +10,32 @@ sp {wander*propose*move
        ^actions.move.direction forward)
 }
 
+sp {chase*propose*move
+   (state <s> ^name chase
+              ^sound-direction forward
+              ^io.input-link.blocked.forward no )
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name move
+        ^actions.move.direction forward)
+}
+
+
+##Propose Move-Forward Operator
+# If the state is attack and there is a tank on radar that is not in the center, and there is not a tank in the
+# center, and the tank is blocked in that direction then propose move-forward.
+sp {attack*propose*move
+   (state <s> ^name attack
+              ^io.input-link <input>)
+   (<input> ^blocked.<dir> yes
+            ^radar <r>)
+   (<r> ^tank <t>
+       -^tank.position center)
+   (<t> ^position { << left right >> <dir> }
+        ^distance <> 0)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name move
+        ^actions.move.direction forward)
+}
 

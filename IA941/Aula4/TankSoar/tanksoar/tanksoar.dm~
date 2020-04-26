@@ -1,4 +1,4 @@
-70
+76
 SOAR_ID 0
 SOAR_ID 1
 SOAR_ID 2
@@ -69,7 +69,13 @@ SOAR_ID 66
 ENUMERATION 67 1 radar-off
 SOAR_ID 68
 ENUMERATION 69 1 wander
-84
+SOAR_ID 70
+ENUMERATION 71 1 chase
+SOAR_ID 72
+ENUMERATION 73 1 attack
+SOAR_ID 74
+ENUMERATION 75 1 fire
+90
 0 io 1
 0 name 6
 0 operator 44
@@ -78,6 +84,9 @@ ENUMERATION 69 1 wander
 0 operator 58
 0 operator 66
 0 operator 68
+0 operator 70
+0 operator 72
+0 operator 74
 0 superstate 5
 0 top-state 0
 0 type 4
@@ -154,3 +163,6 @@ ENUMERATION 69 1 wander
 64 setting 65
 66 name 67
 68 name 69
+70 name 71
+72 name 73
+74 name 75

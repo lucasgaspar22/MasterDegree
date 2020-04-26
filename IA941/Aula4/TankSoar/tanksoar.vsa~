@@ -7,9 +7,12 @@ VERSION 4
 4	0	FOLDER elaborations elaborations 5
 5	4	FOPERATOR _all _all.soar 6
 6	4	FOPERATOR top-state top-state.soar 7
-7	0	OPERATOR initialize-tanksoar initialize-tanksoar.soar 8
-8	0	OPERATOR move move.soar 9
-9	0	OPERATOR radar-off radar-off.soar 10
-10	0	OPERATOR turn turn.soar 11
-11	0	OPERATOR wander wander.soar 13
+7	0	OPERATOR attack attack.soar 15
+8	0	OPERATOR chase chase.soar 14
+9	0	OPERATOR fire fire.soar 16
+10	0	OPERATOR initialize-tanksoar initialize-tanksoar.soar 8
+11	0	OPERATOR move move.soar 9
+12	0	OPERATOR radar-off radar-off.soar 10
+13	0	OPERATOR turn turn.soar 11
+14	0	OPERATOR wander wander.soar 13
 END

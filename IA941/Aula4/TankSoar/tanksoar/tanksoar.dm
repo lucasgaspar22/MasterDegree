@@ -1,4 +1,4 @@
-68
+70
 SOAR_ID 0
 SOAR_ID 1
 SOAR_ID 2
@@ -64,10 +64,12 @@ ENUMERATION 61 2 left right
 SOAR_ID 62
 ENUMERATION 63 2 off on
 SOAR_ID 64
-INTEGER_RANGE 65 0 13
+INTEGER_RANGE 65 1 14
 SOAR_ID 66
 ENUMERATION 67 1 radar-off
-82
+SOAR_ID 68
+ENUMERATION 69 1 wander
+84
 0 io 1
 0 name 6
 0 operator 44
@@ -75,6 +77,7 @@ ENUMERATION 67 1 radar-off
 0 operator 54
 0 operator 58
 0 operator 66
+0 operator 68
 0 superstate 5
 0 top-state 0
 0 type 4
@@ -150,3 +153,4 @@ ENUMERATION 67 1 radar-off
 62 switch 63
 64 setting 65
 66 name 67
+68 name 69

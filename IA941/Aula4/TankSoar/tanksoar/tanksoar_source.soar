@@ -9,3 +9,4 @@ source initialize-tanksoar.soar
 source move.soar
 source radar-off.soar
 source turn.soar
+source wander.soar

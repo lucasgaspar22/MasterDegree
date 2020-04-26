@@ -10,8 +10,8 @@ sp {elaborate*state*top-state
   (<s> ^top-state <ts>)
 }
 
-#sp {elaborate*state*io
-#   (state <s> ^superstate.io <io>)
-#-->
-#   (<s> ^io <io>)
-#}
+sp {elaborate*state*io
+   (state <s> ^superstate.io <io>)
+-->
+   (<s> ^io <io>)
+}

@@ -11,4 +11,5 @@ VERSION 4
 8	0	OPERATOR move move.soar 9
 9	0	OPERATOR radar-off radar-off.soar 10
 10	0	OPERATOR turn turn.soar 11
+11	0	OPERATOR wander wander.soar 13
 END

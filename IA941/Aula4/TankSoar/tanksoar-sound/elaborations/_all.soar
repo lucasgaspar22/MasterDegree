@@ -32,9 +32,12 @@ sp {elaborate*state*energy*low
 
 sp {elaborate*chase*state*sound-direction
    (state <s> ^name chase
-              ^io.input-link.sound <sound>)
+              ^superstate <ss>)
+   (<ss> ^sound.absolute-direction <abs-direction>
+         ^direction-map.<direction>.<rel-sound> <abs-sound>
+         ^io.input-link.direction <direction>)
 -->
-   (<s> ^sound-direction <sound>)
+   (<s> ^sound-direction <rel-sound>)
 }
 
 sp {elaborate*chase*radar
@@ -105,6 +108,20 @@ sp {elaborate*shields-off
           ^shields-status on)
 -->
    (<a> ^shields.switch off)
+}
+
+sp {elaborate*directions
+   (state <s> ^superstate nil)
+-->
+   (<s> ^direction-map <dm>)
+   (<dm> ^north <north>
+         ^south <south>
+         ^west <west>
+         ^east <east> )
+   (<north> ^right east  ^left west  ^backward south ^forward north)
+   (<south> ^right west  ^left east  ^backward north ^forward south)
+   (<west>  ^right north ^left south ^backward east  ^forward west)
+   (<east>  ^right south ^left north ^backward weast ^forward east)
 }
 
    

@@ -1,0 +1,118 @@
+#mac*propose*move-boat*1
+#If the name of the state is mac and there is one or more cannibals  or
+#missionaries on the same blank of the reiver as the boat, then propose moving
+#that cannibal or missionary across the river.
+sp {mac*propose*move-boat*1
+    (state <s> ^name mac
+              ^<< right-bank left-bank >> <bank>)
+   (<bank> ^{ << cannibals missionaries >> <type> } > 0
+           ^boat 1)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name move-boat
+        ^bank <bank>
+        ^<type> 1 #Type and how many are being moved
+        ^boat 1
+        ^types 1) #Number of how many type of people are being moved
+}
+
+#mac*propose*move-boat*2
+#If the name of the state is mac and there are two or more cannibal and one or
+#missionaries on the same bank of the river as the boat, then propose moving 
+#two of that type across the river.
+sp {mac*propose*move-boat*2
+    (state <s> ^name mac
+              ^<< right-bank left-bank >> <bank>)
+   (<bank> ^{ << cannibals missionaries >> <type> } > 1
+           ^boat 1)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name move-boat
+        ^bank <bank>
+        ^<type> 2 #Type and how many are being moved
+        ^boat 1
+        ^types 1) #Number of how many type of people are being moved
+}
+
+#mac*propose*move-boat*3
+#If the name of the state is mac and there is one or more cannibals  or
+#missionaries on the same blank of the reiver as the boat, then propose moving
+# one cannibal and one missionary across the river. 
+sp {mac*propose*move-boat*3
+   (state <s> ^name mac
+              ^ << right-bank left-bank >> <bank>)
+   (<bank> ^missionaries > 0
+           ^cannibals > 0
+           ^boat 1)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name move-boat
+        ^bank <bank>
+        ^missionaries 1
+        ^cannibals 1
+        ^boat 1
+        ^types 2) 
+}
+
+# mac*apply*move-boat 
+# If there is a move-mac-boat operator selected for a type and number, then  
+# subtract the values of that type on the current bank and add those values
+# to the other bank.
+sp {mac*apply*move-boat
+   (state <s> ^operator <o>)
+   (<o> ^name move-boat
+        ^{ << cannibals missionaries boat >> <type> } <number>
+        ^bank <bank>)
+   (<bank> ^<type> <bank-num>
+           ^other-bank <obank>)
+   (<obank> ^<type> <obank-num>) 
+-->
+   (<bank> ^<type> <bank-num> - (- <bank-num> <number>))
+   (<obank> ^<type> <obank-num> - ( + <obank-num> <number>))
+}
+
+
+#mac*apply*move-boat*record*last-operator*types*1
+#If an operator is selected to move one type of entity, then create an
+#augmentation of the state (last-operator) with the bank of the boat, the type
+#of entity being moved, the number, and that there is one type being moved.
+sp {mac*apply*move-boat*record*last-operator*types*1
+   (state <s> ^name mac
+              ^operator <o>)
+   (<o> ^name move-boat
+        ^bank <bank>
+        ^{ << missionaries cannibals >> <type> } <n>
+        ^types 1)
+-->
+   (<s> ^last-operator <o1>)
+   (<o1> ^types 1
+         ^bank <bank>
+         ^type <type>
+         ^number <n>)
+}
+#mac*apply*move-boat*record*last-operator*types*2
+#If an operator is selected to move two types of entity, then create an
+#augmentation of the state (last-operator) with the bank of the boat, and
+#that there is two types being moved.
+
+sp {mac*apply*move-boat*record*last-operator*types*2
+   (state <s> ^name mac
+              ^operator <o>)
+   (<o> ^name move-boat
+        ^boat <bank>
+        ^types 2)
+-->
+   (<s> ^last-operator <ol>)
+   (<ol> ^types 2
+         ^bank <bank>)
+}
+
+sp {mac*apply*move-boat*remove*old*last-operator
+   (state <s> ^name mac
+              ^operator <o>
+              ^<lr-bank>.other-bank <o-bank>
+              ^last-operator <lo>)
+   (<lo> ^bank <obank>)
+-->
+   (<s> ^last-operator <lo> -)
+}

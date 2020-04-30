@@ -1,0 +1,14 @@
+sp {water-jug*record*operator
+   (state <s> ^name water-jug
+              ^operator.name <name>)
+-->
+   (<s> ^last-operator <name>)
+}
+
+sp {water-jug*remove*last-operator
+   (state <s> ^name water-jug
+              ^last-operator <name>
+              ^operator.name <> <name>)
+-->
+   (<s> ^last-operator <name> -)
+}

@@ -1,0 +1,9 @@
+sp {mac*evaluate*state*number
+   (state <s> ^desired <d>
+              ^tried-tied-operator
+              ^<bank> <ls>)
+   (<ls> ^missionaries <m>
+         ^cannibals <c>)
+   (<d> ^{ << right-bank left-bank >> <bank> } <dls>)
+-->
+   (<s> ^numeric-value (+ <m> <c>))}

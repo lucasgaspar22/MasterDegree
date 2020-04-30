@@ -1,0 +1,32 @@
+sp {water-jug*propose*initialize-water-jug
+   (state <s> ^superstate nil
+             -^name)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name initialize-water-jug)
+}
+
+# Initialize 2 jugs with volume (capacity)
+# and current contents
+# If the initialize water-jug operator is selected,
+# then create an empty 5 gallon jug and an empty 3 gallon jug.
+sp {water-jug*apply*initialize-water-jug
+   (state <s> ^operator.name initialize-water-jug)
+-->
+   (<s> ^name water-jug
+        ^jug <j1>
+        ^jug <j2>)
+   (<j1> ^volume 5
+         ^contents 0)
+   (<j2> ^volume 3
+         ^contents 0)
+}  
+
+sp {water-jug*elaborate*problem-space
+   (state <s> ^name water-jug)
+-->
+   (<s> ^problem-space <p>)
+   (<p> ^name water-jug
+        ^default-state-copy yes
+        ^two-level-attributes jug)
+}

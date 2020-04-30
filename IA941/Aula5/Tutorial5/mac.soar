@@ -1,0 +1,4 @@
+source selection.soar
+pushd mac
+source mac_source.soar
+popd

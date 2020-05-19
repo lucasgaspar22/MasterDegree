@@ -31,7 +31,7 @@ public class Environment
         try {
         w = proxy.getWorld();
         w.reset();
-        //World.createDeliverySpot(0, 0);
+        //World.createDeliverySpot(-15, -15);
         World.setDeliverySpot(0, 0);
         c = proxy.createCreature(100,100,0,1);
         c.start();
@@ -54,6 +54,5 @@ public class Environment
     public Creature getCreature() {
         return(c);
     }
-
     
 }

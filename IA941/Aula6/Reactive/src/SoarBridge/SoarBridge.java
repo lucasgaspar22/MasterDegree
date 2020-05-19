@@ -524,33 +524,39 @@ public class SoarBridge {
         //resetSimulation();
     }
 
-    private void processCommands(List<Command> commandList) throws CommandExecException {
+    private void processCommands(List<Command> commandList){
         String jewelName;
         String foodName;
         if (commandList != null) {
             for (Command command : commandList) {
-                switch (command.getCommandType()) {
-                    case MOVE:
-                        processMoveCommand((CommandMove) command.getCommandArgument());
-                        break;
+                try {
+                    switch (command.getCommandType()) {
+                        case MOVE:
+                            processMoveCommand((CommandMove) command.getCommandArgument());
+                            break;
 
-                    case GET:
-                        processGetCommand((CommandGet) command.getCommandArgument());
-                        break;
-                    case EAT:
-                        processEatCommand((CommandEat) command.getCommandArgument());
-                        break;
-                    case HIDE:
-                        processHideCommand((CommandHide) command.getCommandArgument());
-                        break;
-                    case DELIVER:
-                        processDeliverCommand((CommandDeliver) command.getCommandArgument());
-                        break;
-                    default:
-                        System.out.println("Nenhum comando definido ...");
-                        // Do nothing
-                        break;
+                        case GET:
+                            processGetCommand((CommandGet) command.getCommandArgument());
+                            break;
+                        case EAT:
+                            processEatCommand((CommandEat) command.getCommandArgument());
+                            break;
+                        case HIDE:
+                            processHideCommand((CommandHide) command.getCommandArgument());
+                            break;
+                        case DELIVER:
+                            processDeliverCommand((CommandDeliver) command.getCommandArgument());
+                            break;
+                        default:
+                            System.out.println("Nenhum comando definido ...");
+                            // Do nothing
+                            break;
+                    }
+                }catch(CommandExecException e){
+                    
+                    continue;
                 }
+                
 
             }
         } else {

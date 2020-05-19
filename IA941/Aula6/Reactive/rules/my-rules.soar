@@ -197,9 +197,9 @@ sp {apply*move*food
    (<entityInMemory> ^NAME <entityInMemoryName>)
 -->
    (<ol> ^MOVE <command>)
-   (<command> ^Vel 1)
-   (<command> ^VelR 1)
-   (<command> ^VelL 1)
+   (<command> ^Vel 2)
+   (<command> ^VelR 2)
+   (<command> ^VelL 2)
    (<command> ^X <x>)
    (<command> ^Y <y>)
    #(halt)
@@ -346,9 +346,9 @@ sp {apply*move*jewel
    (<entityInMemory> ^NAME <entityInMemoryName>)
 -->
    (<ol> ^MOVE <command>)
-   (<command> ^Vel 1)
-   (<command> ^VelR 1)
-   (<command> ^VelL 1)
+   (<command> ^Vel 2)
+   (<command> ^VelR 2)
+   (<command> ^VelL 2)
    (<command> ^X <x>)
    (<command> ^Y <y>)
    #(halt)
@@ -554,9 +554,9 @@ sp {apply*move*delivery
    
 -->
    (<ol> ^MOVE <command>)
-   (<command> ^Vel 1)
-   (<command> ^VelR 1)
-   (<command> ^VelL 1)
+   (<command> ^Vel 2)
+   (<command> ^VelR 2)
+   (<command> ^VelL 2)
    (<command> ^X <x>)
    (<command> ^Y <y>)
    #(halt)
@@ -742,7 +742,7 @@ sp {moveJewel*deliver*preferences
 (state <s> ^operator <o> + 
                      <o2> +)
 (<o> ^name getJewel)
-(<o2> ^name << moveJewel moveFood hideJewel eatFood moveDeliverySpot >>)
+(<o2> ^name << moveJewel moveFood hideJewel moveDeliverySpot >>)
 -->
 (<s> ^operator <o> > <o2>)
 }
@@ -752,7 +752,7 @@ sp {moveJewel*hideJewel*preferences
 (state <s> ^operator <o> + 
                      <o2> +)
 (<o> ^name hideJewel)
-(<o2> ^name << moveJewel moveFood moveDeliverySpot eatFood >>)
+(<o2> ^name << moveJewel moveFood moveDeliverySpot >>)
 -->
 (<s> ^operator <o> > <o2>)} 
  
@@ -854,7 +854,7 @@ sp {moveFood*eatFood*preferences
 (state <s> ^operator <o> + 
                      <o2> +)
 (<o> ^name eatFood)
-(<o2> ^name << moveFood moveJewel moveDeliverySpot >>)
+(<o2> ^name << moveFood moveJewel moveDeliverySpot hideJewel getJewel >>)
 -->
 (<s> ^operator <o> > <o2>)} 
 
@@ -904,9 +904,9 @@ sp {moveFood*moveJewel*preferences*moveFoodWins
 (<ss> ^io.input-link <il>)
 (<o> ^name moveFood)
 (<o2> ^name moveJewel)
-#(<il> ^CREATURE.PARAMETERS.MINFUEL <min>)
-#(<il> ^CREATURE.SENSOR.FUEL <fuel>)
-#(<fuel> ^VALUE <value> <= <min>)        
+(<il> ^CREATURE.PARAMETERS.MINFUEL <min>)
+(<il> ^CREATURE.SENSOR.FUEL <fuel>)
+(<fuel> ^VALUE <value> <= <min>)        
 -->
 (<ss> ^operator <o> > <o2>)} 
 

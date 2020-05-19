@@ -166,7 +166,9 @@ sp {propose*move*food
    (<entityInMemory> ^X <entityInMemoryPositionX>)
    (<entityInMemory> ^Y <entityInMemoryPositionY>)
    (<entityInMemory> ^NAME <entityInMemoryName>) 
-   (<creature> ^PARAMETERS.MINFUEL <minFuel>) 
+   (<creature> ^PARAMETERS.MINFUEL <minFuel>)
+   (<creature> ^SENSOR.FUEL <fuel>)
+   (<fuel> ^VALUE <= <minFuel> ) 
 -->
    (<s> ^operator <o> +)
    (<o> ^name moveFood)
@@ -195,9 +197,9 @@ sp {apply*move*food
    (<entityInMemory> ^NAME <entityInMemoryName>)
 -->
    (<ol> ^MOVE <command>)
-   (<command> ^Vel 1)
-   (<command> ^VelR 1)
-   (<command> ^VelL 1)
+   (<command> ^Vel 2)
+   (<command> ^VelR 2)
+   (<command> ^VelL 2)
    (<command> ^X <x>)
    (<command> ^Y <y>)
    #(halt)
@@ -344,9 +346,9 @@ sp {apply*move*jewel
    (<entityInMemory> ^NAME <entityInMemoryName>)
 -->
    (<ol> ^MOVE <command>)
-   (<command> ^Vel 1)
-   (<command> ^VelR 1)
-   (<command> ^VelL 1)
+   (<command> ^Vel 2)
+   (<command> ^VelR 2)
+   (<command> ^VelL 2)
    (<command> ^X <x>)
    (<command> ^Y <y>)
    #(halt)
@@ -552,9 +554,9 @@ sp {apply*move*delivery
    
 -->
    (<ol> ^MOVE <command>)
-   (<command> ^Vel 1)
-   (<command> ^VelR 1)
-   (<command> ^VelL 1)
+   (<command> ^Vel 2)
+   (<command> ^VelR 2)
+   (<command> ^VelL 2)
    (<command> ^X <x>)
    (<command> ^Y <y>)
    #(halt)
@@ -581,7 +583,7 @@ sp {propose*deliver*leaflet
     (state <s> ^io.input-link <il>)
     (<il> ^CREATURE <creature>)
     (<creature> ^DELIVERYSPOT <spot>)
-    (<spot> ^DISTANCE <= 61 )
+    (<spot> ^DISTANCE <= 75 )
     (<creature> ^LEAFLET <leaflet>)
     (<leaflet> ^ID <leafletId>)
     (<leaflet> ^READY > 0)
@@ -688,7 +690,7 @@ sp {moveJewel*seeEntity*preferences
 (state <s> ^operator <o> + 
                      <o2> +)
 (<o> ^name << seeEntityWithMemoryCount seeEntityWithoutMemoryCount >>)
-(<o2> ^name << moveJewel moveFood eatFood moveDeliverySpot >>)
+(<o2> ^name << moveJewel moveFood moveDeliverySpot >>)
 -->
 (<s> ^operator <o> > <o2>)} 
 
@@ -716,17 +718,19 @@ sp {moveJewel*getJewel*preferences
 (state <s> ^operator <o> + 
                      <o2> +)
 (<o> ^name deliverLeaflet)
-(<o2> ^name << moveJewel moveFood hideJewel getJewel seeEntityWithMemoryCount seeEntityWithoutMemoryCount avoidBrick moveDeliverySpot >>)
+(<o2> ^name << moveJewel moveFood hideJewel getJewel eatFood seeEntityWithMemoryCount seeEntityWithoutMemoryCount avoidBrick moveDeliverySpot >>)
 -->
 (<s> ^operator <o> > <o2>)
 }
+
+
 
 #SPOT
 sp {moveDeliverySpot*deliver*preferences
     (state <s> ^operator <o> +
                ^operator <o2> + )
     (<o> ^name moveDeliverySpot)
-    (<o2> ^name << moveJewel moveFood >>)
+    (<o2> ^name << moveJewel >>)
 -->
 (<s> ^operator <o> > <o2>)
 }
@@ -738,7 +742,7 @@ sp {moveJewel*deliver*preferences
 (state <s> ^operator <o> + 
                      <o2> +)
 (<o> ^name getJewel)
-(<o2> ^name << moveJewel moveFood hideJewel >>)
+(<o2> ^name << moveJewel moveFood hideJewel moveDeliverySpot >>)
 -->
 (<s> ^operator <o> > <o2>)
 }
@@ -748,7 +752,7 @@ sp {moveJewel*hideJewel*preferences
 (state <s> ^operator <o> + 
                      <o2> +)
 (<o> ^name hideJewel)
-(<o2> ^name << moveJewel moveFood >>)
+(<o2> ^name << moveJewel moveFood moveDeliverySpot >>)
 -->
 (<s> ^operator <o> > <o2>)} 
  
@@ -850,7 +854,7 @@ sp {moveFood*eatFood*preferences
 (state <s> ^operator <o> + 
                      <o2> +)
 (<o> ^name eatFood)
-(<o2> ^name << moveFood moveJewel >>)
+(<o2> ^name << moveFood moveJewel moveDeliverySpot hideJewel getJewel >>)
 -->
 (<s> ^operator <o> > <o2>)} 
 
@@ -899,10 +903,10 @@ sp {moveFood*moveJewel*preferences*moveFoodWins
            ^superstate <ss>)
 (<ss> ^io.input-link <il>)
 (<o> ^name moveFood)
-(<o> ^parameterFuel <threshold>)
 (<o2> ^name moveJewel)
+(<il> ^CREATURE.PARAMETERS.MINFUEL <min>)
 (<il> ^CREATURE.SENSOR.FUEL <fuel>)
-(<fuel> ^VALUE <value> <= <threshold>)        
+(<fuel> ^VALUE <value> <= <min>)        
 -->
 (<ss> ^operator <o> > <o2>)} 
 
@@ -914,10 +918,10 @@ sp {moveFood*moveJewel*preferences*moveJewelWins
            ^superstate <ss>)
 (<ss> ^io.input-link <il>)
 (<o> ^name moveFood)
-(<o> ^parameterFuel <threshold>)
 (<o2> ^name moveJewel)
+(<il> ^CREATURE.PARAMETERS.MINFUEL <min>)
 (<il> ^CREATURE.SENSOR.FUEL <fuel>)
-(<fuel> ^VALUE <value> > <threshold>)        
+(<fuel> ^VALUE <value> > <min>)               
 -->
 (<ss> ^operator <o2> > <o>)} 
 
@@ -946,7 +950,7 @@ sp {avoidBrick*moveJewel*moveFood*preferences
            ^item-count <itemCount> 2
            ^superstate <ss>)        
 (<o> ^name avoidBrick)
-(<o2> ^name << moveJewel moveFood >>)
+(<o2> ^name << moveJewel moveFood moveDeliverySpot >>)
 (<o2> ^parameter <entity>)
 (<entity> ^NAME <entityName>)
 (<ss> ^io.input-link <il>)

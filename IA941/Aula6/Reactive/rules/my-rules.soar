@@ -60,7 +60,7 @@ sp {propose*see*entity*with*memory*count
    (<entity> ^NAME <name>)
    (<creature> ^MEMORY <memory>)   
    -(<memory> ^ENTITY.NAME <name>)
-   (<memory> ^COUNT <quantity> < 7)
+   (<memory> ^COUNT <quantity> < 1000)
 -->
    (<s> ^operator <o> +)
    (<o> ^name seeEntityWithMemoryCount)

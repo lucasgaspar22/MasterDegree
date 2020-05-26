@@ -31,7 +31,7 @@ public class CommandDeliver {
         this.thingName = thingName;
     }
     
-      public String getParams(){
+    public String getParams(){
        StringBuilder builder = new StringBuilder("Parameters: { ");
        builder.append(" Leaflet ID: ").append(getThingName());
        return builder.append(" }").toString();

@@ -59,12 +59,16 @@ public class SoarBridge {
     Identifier creatureMemory;
     Identifier creatureBag;
 
+    int reactive = 1;
+
     Environment env;
     public Creature c;
     public List<Thing> memory = new ArrayList<Thing>();
     public String input_link_string = "";
     public String output_link_string = "";
     boolean planGenerated = false;
+
+
     /**
      * Constructor class
      *
@@ -175,34 +179,7 @@ public class SoarBridge {
                 Identifier fuel = CreateIdWME(creatureSensor, "FUEL");
                 CreateFloatWME(fuel, "VALUE", c.getFuel());
                 
-                List<Leaflet> leaflets = c.getLeaflets();
-                Leaflet leaflet = getMostValuableLeaflet(leaflets);
-
-                Identifier entityLeaflet = CreateIdWME(creature, "LEAFLET");
-                String leafletId = Long.toString(leaflet.getID());
-                int totalRedJewel = leaflet.getTotalNumberOfType("Red") == -1 ? 0 : leaflet.getTotalNumberOfType("Red");
-                int totalGreenJewel = leaflet.getTotalNumberOfType("Green") == -1 ? 0 : leaflet.getTotalNumberOfType("Green");
-                int totalBlueJewel = leaflet.getTotalNumberOfType("Blue") == -1 ? 0 : leaflet.getTotalNumberOfType("Blue");
-                int totalYellowJewel = leaflet.getTotalNumberOfType("Yellow") == -1 ? 0 : leaflet.getTotalNumberOfType("Yellow");
-                int totalMagentaJewel = leaflet.getTotalNumberOfType("Magenta") == -1 ? 0 : leaflet.getTotalNumberOfType("Magenta");
-                int totalWhiteJewel = leaflet.getTotalNumberOfType("White") == -1 ? 0 : leaflet.getTotalNumberOfType("White");
-                int totalPayment = leaflet.getPayment();
-                int status = leaflet.getSituation();
-                int ready = isLeafletReady(leaflet);
-
-                CreateStringWME(entityLeaflet, "ID", leafletId);
-                CreateFloatWME(entityLeaflet, "Red", totalRedJewel);
-                CreateFloatWME(entityLeaflet, "Green", totalGreenJewel);
-                CreateFloatWME(entityLeaflet, "Blue", totalBlueJewel);
-                CreateFloatWME(entityLeaflet, "Yellow", totalYellowJewel);
-                CreateFloatWME(entityLeaflet, "Magenta", totalMagentaJewel);
-                CreateFloatWME(entityLeaflet, "White", totalWhiteJewel);
-                CreateFloatWME(entityLeaflet, "PAYMENT", totalPayment);
-                CreateFloatWME(entityLeaflet, "SITUATION", status);
-                CreateFloatWME(entityLeaflet, "READY", ready);
-              
-                
-                // Create Visual Sensors
+                                // Create Visual Sensors
                 Identifier visual = CreateIdWME(creatureSensor, "VISUAL");
                 List<Thing> thingsList = (List<Thing>) c.getThingsInVision();
                 for (Thing t : thingsList) addToMemory(t);
@@ -218,10 +195,43 @@ public class SoarBridge {
                     CreateStringWME(entity, "NAME", t.getName());
                     CreateStringWME(entity, "COLOR", Constants.getColorName(t.getMaterial().getColor()));
                 }
+                
+                List<Leaflet> leaflets = c.getLeaflets();
+                Leaflet leaflet = getMostValuableLeaflet(leaflets);
+
+                Identifier entityLeaflet = CreateIdWME(creature, "LEAFLET");
+                String leafletId = Long.toString(leaflet.getID());
+                int totalRedJewel = leaflet.getTotalNumberOfType("Red") == -1 ? 0 : leaflet.getTotalNumberOfType("Red");
+                int totalGreenJewel = leaflet.getTotalNumberOfType("Green") == -1 ? 0 : leaflet.getTotalNumberOfType("Green");
+                int totalBlueJewel = leaflet.getTotalNumberOfType("Blue") == -1 ? 0 : leaflet.getTotalNumberOfType("Blue");
+                int totalYellowJewel = leaflet.getTotalNumberOfType("Yellow") == -1 ? 0 : leaflet.getTotalNumberOfType("Yellow");
+                int totalMagentaJewel = leaflet.getTotalNumberOfType("Magenta") == -1 ? 0 : leaflet.getTotalNumberOfType("Magenta");
+                int totalWhiteJewel = leaflet.getTotalNumberOfType("White") == -1 ? 0 : leaflet.getTotalNumberOfType("White");
+                int totalPayment = leaflet.getPayment();
+                int status = leaflet.getSituation();
+                int ready = isLeafletReady(leaflet);
+                //Define if creature will act reactively or delibratively
+
+                CreateStringWME(entityLeaflet, "ID", leafletId);
+                CreateFloatWME(entityLeaflet, "Red", totalRedJewel);
+                CreateFloatWME(entityLeaflet, "Green", totalGreenJewel);
+                CreateFloatWME(entityLeaflet, "Blue", totalBlueJewel);
+                CreateFloatWME(entityLeaflet, "Yellow", totalYellowJewel);
+                CreateFloatWME(entityLeaflet, "Magenta", totalMagentaJewel);
+                CreateFloatWME(entityLeaflet, "White", totalWhiteJewel);
+                CreateFloatWME(entityLeaflet, "PAYMENT", totalPayment);
+                CreateFloatWME(entityLeaflet, "SITUATION", status);
+                CreateFloatWME(entityLeaflet, "READY", ready);
+              
+                
+
 
                 // Initialize Creature Bag
                 creatureBag = CreateIdWME(creature, "BAG");
                 Bag bag = c.getBag();
+                
+                reactive=isReactive(leaflet);
+                CreateFloatWME(inputLink, "REACTIVE",reactive);
                 
                 CreateFloatWME(creatureBag, "Red", bag.getNumberCrystalPerType("Red"));
                 CreateFloatWME(creatureBag, "Green", bag.getNumberCrystalPerType("Green"));
@@ -230,13 +240,51 @@ public class SoarBridge {
                 CreateFloatWME(creatureBag, "Magenta", bag.getNumberCrystalPerType("Magenta"));
                 CreateFloatWME(creatureBag, "White", bag.getNumberCrystalPerType("White"));
                 
-                
-
             }
         } catch (Exception e) {
             logger.severe("Error while Preparing Input Link");
             e.printStackTrace();
         }
+    }
+
+    private int isReactive(Leaflet leaflet){
+        Bag bag = c.getBag();
+        int redMem=0;
+        int greenMem=0;
+        int blueMem=0;
+        int yellowMem=0;
+        int magentaMem=0;
+        int whiteMem=0;
+
+        for (Thing t : memory){
+            if(getItemType(t.getCategory()).equals("JEWEL")){
+                String color = Constants.getColorName(t.getMaterial().getColor());
+                if(color.equals(Constants.colorRED)) redMem ++;
+                else if (color.equals(Constants.colorGREEN)) greenMem ++;
+                else if (color.equals(Constants.colorBLUE)) blueMem ++;
+                else if (color.equals(Constants.colorYELLOW)) yellowMem ++;
+                else if (color.equals(Constants.colorMAGENTA)) magentaMem ++;
+                else whiteMem ++;
+            }
+        }
+        
+        int knownRed = bag.getNumberCrystalPerType(Constants.colorRED)+redMem;
+        int knownGreen =  bag.getNumberCrystalPerType(Constants.colorGREEN)+greenMem;
+        int knownBlue = bag.getNumberCrystalPerType(Constants.colorBLUE)+blueMem;
+        int knownYellow = bag.getNumberCrystalPerType(Constants.colorYELLOW)+yellowMem;
+        int knownMagenta = bag.getNumberCrystalPerType(Constants.colorMAGENTA)+magentaMem;
+        int knownWhite = bag.getNumberCrystalPerType(Constants.colorWHITE)+whiteMem;
+        
+        int redLeaflet = leaflet.getTotalNumberOfType(Constants.colorRED) == -1 ? 0 : leaflet.getTotalNumberOfType(Constants.colorRED);
+        int greenLeaflet = leaflet.getTotalNumberOfType(Constants.colorGREEN) == -1 ? 0 : leaflet.getTotalNumberOfType(Constants.colorGREEN);
+        int blueLeaflet = leaflet.getTotalNumberOfType(Constants.colorBLUE) == -1 ? 0 : leaflet.getTotalNumberOfType(Constants.colorBLUE);
+        int yellowLeaflet = leaflet.getTotalNumberOfType(Constants.colorYELLOW) == -1 ? 0 : leaflet.getTotalNumberOfType(Constants.colorYELLOW);
+        int magentaLeaflet = leaflet.getTotalNumberOfType(Constants.colorMAGENTA) == -1 ? 0 : leaflet.getTotalNumberOfType(Constants.colorMAGENTA);
+        int whiteLeaflet = leaflet.getTotalNumberOfType(Constants.colorWHITE) == -1 ? 0 : leaflet.getTotalNumberOfType(Constants.colorWHITE);
+        
+        if ( knownRed >= redLeaflet && knownGreen >= greenLeaflet && knownBlue >= blueLeaflet &&
+             knownYellow >= yellowLeaflet && knownMagenta >= magentaLeaflet && knownWhite >= whiteLeaflet ) return 0;
+        else return 1;
     }
     
     private void addToMemory(Thing thing) {
@@ -364,49 +412,156 @@ public class SoarBridge {
         ArrayList<Command> commandList = new ArrayList<Command>();
         try {
             if (agent != null) {
-                List<Wme> outputLink = Wmes.matcher(agent).filter(agent.getInputOutput().getOutputLink());
-                
-                for(Wme workingMemoryElement : outputLink){
-                    if(workingMemoryElement.getAttribute().asString().getValue().equals("WANDER") ){
-                        Float rightVelocity = tryParseFloat(GetParameterValue("VelR"));  
-                        Command command = new Command(Command.CommandType.MOVE);
-                        CommandMove commandMove = (CommandMove) command.getCommandArgument();
-                        if (commandMove != null) {                                
-                            commandMove.setRightVelocity(rightVelocity);
-                            commandMove.setLeftVelocity(0);
-                            commandMove.setLinearVelocity(0);
-                            commandMove.setX(null);
-                            commandMove.setY(null);
-                            commandList.add(command);
-                        }
-                        break;
-                    }
-                    Identifier id = workingMemoryElement.getIdentifier();
-                    Iterator<Wme> iterator  = id.getWmes();
-                    while (iterator.hasNext()) {
-                        Wme wme = iterator.next();
-                        Identifier wmeId = wme.getIdentifier();
-                        Symbol wmeAttribute = wme.getAttribute();
-                        Symbol wmeValue = wme.getValue();
-                        Identifier childWmeId = wmeValue.asIdentifier();
-                        if( childWmeId != null){
-                            Command c = getCommandFromWME(childWmeId);
-                            commandList.add(c);
-                            if(hasNextStep(childWmeId)) iterator = childWmeId.getWmes();
-                        }
-                    }
-                }
-                //if(!planGenerated){
-                    printCreaturesPlan(commandList);
-                  //  planGenerated = true;
-                //}
+                if(reactive == 1) commandList = processOutputLinkReactive();
+                else commandList = processOutputLinkDeliberative();
             }
         } catch (Exception e) {
             logger.severe("Error while processing commands");
             e.printStackTrace();
         }
 
-        return ((commandList.size() > 0) ? commandList : null);
+        return ((commandList.size() > 0 ) ? commandList : null);
+    }
+
+    private ArrayList<Command> processOutputLinkDeliberative(){
+        ArrayList<Command> commandList = new ArrayList<Command>();
+        List<Wme> outputLink = Wmes.matcher(agent).filter(agent.getInputOutput().getOutputLink());
+                
+        for(Wme workingMemoryElement : outputLink){
+            if(workingMemoryElement.getAttribute().asString().getValue().equals("WANDER") ){
+                Float rightVelocity = tryParseFloat(GetParameterValue("VelR"));  
+                Command command = new Command(Command.CommandType.MOVE);
+                CommandMove commandMove = (CommandMove) command.getCommandArgument();
+                if (commandMove != null) {                                
+                        commandMove.setRightVelocity(rightVelocity);
+                        commandMove.setLeftVelocity(0);
+                        commandMove.setLinearVelocity(0);
+                        commandMove.setX(null);
+                        commandMove.setY(null);
+                        commandList.add(command);
+                }
+                break;
+            }
+            Identifier id = workingMemoryElement.getIdentifier();
+            Iterator<Wme> iterator  = id.getWmes();
+            while (iterator.hasNext()) {
+                Wme wme = iterator.next();
+                Identifier wmeId = wme.getIdentifier();
+                Symbol wmeAttribute = wme.getAttribute();
+                Symbol wmeValue = wme.getValue();
+                Identifier childWmeId = wmeValue.asIdentifier();
+                if( childWmeId != null){
+                    Command c = getCommandFromWME(childWmeId);
+                    commandList.add(c);
+                    if(hasNextStep(childWmeId)) iterator = childWmeId.getWmes();
+                }
+            }
+        }
+            
+        if (commandList.size()> 0) printCreaturesPlan(commandList);
+
+        return commandList;
+    }
+
+    private ArrayList<Command> processOutputLinkReactive (){
+        ArrayList<Command> commandList = new ArrayList<Command>();
+        List<Wme> Commands = Wmes.matcher(agent).filter(agent.getInputOutput().getOutputLink());
+
+        for (Wme com : Commands) {
+            String name = com.getAttribute().asString().getValue();
+            Command.CommandType commandType = Enum.valueOf(Command.CommandType.class, name);
+            Command command = null;
+
+            switch (commandType) {
+                case MOVE:
+                    Float rightVelocity = null;
+                    Float leftVelocity = null;
+                    Float linearVelocity = null;
+                    Float xPosition = null;
+                    Float yPosition = null;
+                    rightVelocity = tryParseFloat(GetParameterValue("VelR"));
+                    leftVelocity = tryParseFloat(GetParameterValue("VelL"));
+                    linearVelocity = tryParseFloat(GetParameterValue("Vel"));
+                    xPosition = tryParseFloat(GetParameterValue("X"));
+                    yPosition = tryParseFloat(GetParameterValue("Y"));
+                    command = new Command(Command.CommandType.MOVE);
+                    CommandMove commandMove = (CommandMove) command.getCommandArgument();
+                    if (commandMove != null) {
+                        if (rightVelocity != null) {
+                            commandMove.setRightVelocity(rightVelocity);
+                        }
+                        if (leftVelocity != null) {
+                            commandMove.setLeftVelocity(leftVelocity);
+                        }
+                        if (linearVelocity != null) {
+                            commandMove.setLinearVelocity(linearVelocity);
+                        }
+                        if (xPosition != null) {
+                            commandMove.setX(xPosition);
+                        }
+                        if (yPosition != null) {
+                            commandMove.setY(yPosition);
+                        }
+                        commandList.add(command);
+                    } else {
+                        logger.severe("Error processing MOVE command");
+                    }
+                    break;
+                case GET:
+                    String thingNameToGet = null;
+                    command = new Command(Command.CommandType.GET);
+                    CommandGet commandGet = (CommandGet) command.getCommandArgument();
+                    if (commandGet != null) {
+                        thingNameToGet = GetParameterValue("Name");
+                        if (thingNameToGet != null) {
+                            commandGet.setThingName(thingNameToGet);
+                        }
+                        commandList.add(command);
+                    }
+                    break;
+                case EAT:
+                    String thingNameToEat = null;
+                    command = new Command(Command.CommandType.EAT);
+                    CommandEat commandEat = (CommandEat) command.getCommandArgument();
+                    if (commandEat != null) {
+                        thingNameToEat = GetParameterValue("Name");
+                        if (thingNameToEat != null) {
+                            commandEat.setThingName(thingNameToEat);
+                        }
+                        commandList.add(command);
+                    }
+                    break;
+                case HIDE:
+                    String thingNameToHide = null;
+                    command = new Command(Command.CommandType.HIDE);
+                    CommandHide commandHide = (CommandHide) command.getCommandArgument();
+                    if (commandHide != null) {
+                        thingNameToHide = GetParameterValue("Name");
+                        if (thingNameToHide != null) {
+                            commandHide.setThingName(thingNameToHide);
+                        }
+                        commandList.add(command);
+                    }
+                    break;
+                case DELIVER:
+                    String leafletToDeliver = null;
+                    command = new Command(Command.CommandType.DELIVER);
+                    CommandDeliver commandDeliver = (CommandDeliver) command.getCommandArgument();
+                    if (commandDeliver != null){
+                        leafletToDeliver = GetParameterValue("ID");
+                        if (leafletToDeliver != null){
+                            commandDeliver.setThingName(leafletToDeliver);
+                        }
+                        commandList.add(command);
+                    }
+                    break;    
+                default:
+                    break;
+            }
+            
+        }
+
+        return commandList; 
     }
     
     private void printCreaturesPlan(ArrayList<Command> commandList){

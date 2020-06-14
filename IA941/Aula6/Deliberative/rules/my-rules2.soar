@@ -507,7 +507,7 @@ sp {propose*get*jewel*deliberative
    (<s> ^DESIRED <desired>)
    (<s> ^CURRENT <current>)
    (<desired> ^<jewelColor> <dcolor> > 0)
-   (<current> ^<jewelColor> <ccolor> < <dcolor>)
+   #(<current> ^<jewelColor> <ccolor> < <dcolor>)
 -->
    (write (crlf) |Propose GET jewel: | <jewelName> | color: | <jewelColor> )
    (<s> ^operator <o> +) 
@@ -836,7 +836,7 @@ sp {detect*state*success
    )
    
 -->
-   (<ol> ^TESTE <begin>)
+   (<ol> ^PLAN <begin>)
    (write (crlf) |LEAFLET COMPLETED| )  
    (halt)
 }

@@ -6,3 +6,11 @@
 /home/lucas/Downloads/DemoClarion-v0.8/DemoClarion/ClarionApp/obj/x86/Release/ClarionFixedRules.csproj.CopyComplete
 /home/lucas/Downloads/DemoClarion-v0.8/DemoClarion/ClarionApp/obj/x86/Release/ClarionApp.exe
 /home/lucas/Downloads/DemoClarion-v0.8/DemoClarion/ClarionApp/obj/x86/Release/ClarionApp.pdb
+/home/lucas/MasterDegree/IA941/Aula9-Aula10/FixedRules/ClarionApp/bin/Release/ClarionApp.exe
+/home/lucas/MasterDegree/IA941/Aula9-Aula10/FixedRules/ClarionApp/bin/Release/ClarionApp.pdb
+/home/lucas/MasterDegree/IA941/Aula9-Aula10/FixedRules/ClarionApp/bin/Release/ClarionLibrary.dll
+/home/lucas/MasterDegree/IA941/Aula9-Aula10/FixedRules/ClarionApp/obj/x86/Release/ClarionFixedRules.csprojAssemblyReference.cache
+/home/lucas/MasterDegree/IA941/Aula9-Aula10/FixedRules/ClarionApp/obj/x86/Release/ClarionFixedRules.csproj.CoreCompileInputs.cache
+/home/lucas/MasterDegree/IA941/Aula9-Aula10/FixedRules/ClarionApp/obj/x86/Release/ClarionFixedRules.csproj.CopyComplete
+/home/lucas/MasterDegree/IA941/Aula9-Aula10/FixedRules/ClarionApp/obj/x86/Release/ClarionApp.exe
+/home/lucas/MasterDegree/IA941/Aula9-Aula10/FixedRules/ClarionApp/obj/x86/Release/ClarionApp.pdb

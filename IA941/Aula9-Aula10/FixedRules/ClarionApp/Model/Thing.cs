@@ -1,12 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ClarionApp.Model
-{
-    public class Thing
-    {
+namespace ClarionApp.Model {
+    public class Thing {
         public const int CATEGORY_CREATURE = 0;
         public const int CATEGORY_BRICK = 1;
         public const int CATEGORY_FOOD = 2;
@@ -27,12 +25,11 @@ namespace ClarionApp.Model
         public Material3d Material { get; set; }
         public double Reward { get; set; }
         public double DistanceToCreature { get; set; }
-		public double comX { get; set; }
-		public double comY { get; set; }
+        public double comX { get; set; }
+        public double comY { get; set; }
 
-		public static implicit operator Thing (LeafletItem v)
-		{
-			throw new NotImplementedException ();
-		}
-	}
+        public static implicit operator Thing (LeafletItem v) {
+            throw new NotImplementedException ();
+        }
+    }
 }

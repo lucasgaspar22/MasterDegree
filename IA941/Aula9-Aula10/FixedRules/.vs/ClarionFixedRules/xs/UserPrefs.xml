@@ -1,10 +1,8 @@
 ﻿<Properties StartupConfiguration="{C103EE32-51CA-49DA-94AD-999A10BB4308}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="ClarionApp/ClarionAgent.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ClarionApp/Model/Creature.cs">
     <Files>
-      <File FileName="ClarionApp/ClarionAgent.cs" Line="272" Column="7" />
       <File FileName="ClarionApp/WSProxy.cs" Line="1362" Column="70" />
-      <File FileName="ClarionApp/MainClass.cs" Line="91" Column="34" />
-      <File FileName="ClarionApp/Model/Thing.cs" Line="16" Column="44" />
+      <File FileName="ClarionApp/Model/Creature.cs" Line="75" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -13,11 +11,15 @@
             <Node name="ClarionFixedRules" expanded="True">
               <Node name="UserInterface" expanded="True" />
               <Node name="Exceptions" expanded="True" />
-              <Node name="Model" expanded="True" />
-              <Node name="ClarionAgent.cs" selected="True" />
+              <Node name="Model" expanded="True">
+                <Node name="Creature.cs" selected="True" />
+              </Node>
             </Node>
           </Node>
         </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

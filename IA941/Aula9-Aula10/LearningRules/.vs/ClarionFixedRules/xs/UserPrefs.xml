@@ -1,0 +1,29 @@
+﻿<Properties StartupConfiguration="{C103EE32-51CA-49DA-94AD-999A10BB4308}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ClarionApp/WSProxy.cs">
+    <Files>
+      <File FileName="ClarionApp/ClarionAgent.cs" Line="452" Column="69" />
+      <File FileName="ClarionApp/MainClass.cs" Line="34" Column="23" />
+      <File FileName="ClarionApp/WSProxy.cs" Line="1113" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="ClarionFixedRules" expanded="True">
+            <Node name="ClarionFixedRules" expanded="True">
+              <Node name="WSProxy.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.ClarionFixedRules PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|x86" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint enabled="false" file="/home/rgudwin/Local/Cursos/IA941/DemoClarion/ClarionApp/gtk-gui/ClarionSimulation.Mind.cs" line="9" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

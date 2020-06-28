@@ -384,7 +384,7 @@ namespace ClarionApp {
 					double n = rand.NextDouble ();
 					// If there's nothing interesting ahead
 					if (n < 0.143) {
-						si.Add (inputNothingDesiredAhead, 0.3);
+						si.Add (inputNothingDesiredAhead, CurrentAgent.Parameters.MAX_ACTIVATION);
 						si.Add (inputWallAhead, CurrentAgent.Parameters.MIN_ACTIVATION);
 						si.Add (inputDesiredJewelAhead, CurrentAgent.Parameters.MIN_ACTIVATION);
 						si.Add (inputDesiredJewelAway, CurrentAgent.Parameters.MIN_ACTIVATION);
@@ -444,8 +444,8 @@ namespace ClarionApp {
 					}
 					//If tdeliver leaflet
 					else {
-						si.Add (inputDeliverLeaflet, CurrentAgent.Parameters.MIN_ACTIVATION);
-						si.Add (inputUndesiredJewelAhead, CurrentAgent.Parameters.MAX_ACTIVATION);
+						si.Add (inputDeliverLeaflet, CurrentAgent.Parameters.MAX_ACTIVATION);
+						si.Add (inputUndesiredJewelAhead, CurrentAgent.Parameters.MIN_ACTIVATION);
 						si.Add (inputNothingDesiredAhead, CurrentAgent.Parameters.MIN_ACTIVATION);
 						si.Add (inputWallAhead, CurrentAgent.Parameters.MIN_ACTIVATION);
 						si.Add (inputDesiredJewelAhead, CurrentAgent.Parameters.MIN_ACTIVATION);
@@ -482,7 +482,18 @@ namespace ClarionApp {
 							CorrectCounter++;
 							CurrentAgent.ReceiveFeedback (si, 1.0);
 						} else CurrentAgent.ReceiveFeedback (si, 0.0);
-					}
+					}else if(chosen == outputGoToDeliverySpot){
+                        if (si [inputDeliverySpotAhead] == CurrentAgent.Parameters.MAX_ACTIVATION) {
+							CorrectCounter++;
+							CurrentAgent.ReceiveFeedback (si, 1.0);
+						} else CurrentAgent.ReceiveFeedback (si, 0.0);
+                    }
+                    else if(chosen == outputDeliverLeaflet){
+                        if (si [inputDeliverLeaflet] == CurrentAgent.Parameters.MAX_ACTIVATION) {
+							CorrectCounter++;
+							CurrentAgent.ReceiveFeedback (si, 1.0);
+						} else CurrentAgent.ReceiveFeedback (si, 0.0);
+                    }
 
 					double progress = (int)(((double)(i + 1) / (double)numberOfTries) * 100);
 					Console.Write ("> "+progress+"%");

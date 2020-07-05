@@ -10,7 +10,11 @@ Acesse o tutorial do LIDA [aqui](http://ccrg.cs.memphis.edu/tutorial/index.html)
 
 ## Atividade 2
 
+<<<<<<< HEAD
 A atividade 1 nos dará uma bagagem teórica inicial para começarmos o tutorial do software, propriamente dito. Para seguir esse tutorial, obtenha o PDF com o tutorial [aqui](http://ccrg.cs.memphis.edu/assets/framework/The-LIDA-Tutorial.pdf). Siga o tutorial até o final. Neste tutorial ainda não haverá nenhuma atividade de programação. O tutorial somente introduz elementos sobre a estrutura do framework de software. Algum apoio adicional pode ser obtido a partir de algumas transparências que eu elaborei sumarizando a [arquitetura LIDA](http://faculty.dca.fee.unicamp.br/gudwin/sites/faculty.dca.fee.unicamp.br.gudwin/files/ia006/LIDA.pdf). Documente sua compreensão do tutorial no seu relatório de atividades.
+=======
+A atividade 1 nos dará uma bagagem teórica inicial para começarmos o tutorial do software, propriamente dito. Para seguir esse tutorial, obtenha o PDF com o tutorial aqui. Siga o tutorial até o final. Neste tutorial ainda não haverá nenhuma atividade de programação. O tutorial somente introduz elementos sobre a estrutura do framework de software. Algum apoio adicional pode ser obtido a partir de algumas transparências que eu elaborei sumarizando a [arquitetura LIDA](http://faculty.dca.fee.unicamp.br/gudwin/sites/faculty.dca.fee.unicamp.br.gudwin/files/ia006/LIDA.pdf). Documente sua compreensão do tutorial no seu relatório de atividades.
+>>>>>>> cffc9cc8a28de9a9bb7edc1fcaf4d2bd4bdfb96b
 
 ## Atividade 3
 

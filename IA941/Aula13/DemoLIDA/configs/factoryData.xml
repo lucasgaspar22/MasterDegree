@@ -106,12 +106,6 @@
             <associatedmodule>SensoryMemory</associatedmodule>
             <associatedmodule>PerceptualAssociativeMemory</associatedmodule>
         </task>
-        <task name="FoodDetector">
-            <class>detectors.FoodDetector</class>
-            <ticksperrun>3</ticksperrun>
-            <associatedmodule>SensoryMemory</associatedmodule>
-            <associatedmodule>PerceptualAssociativeMemory</associatedmodule>
-        </task>
         <task name="WallDetector">
             <class>detectors.WallDetector</class>
             <ticksperrun>3</ticksperrun>

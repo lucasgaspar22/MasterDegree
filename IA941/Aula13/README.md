@@ -8,7 +8,7 @@ O objetivo desta aula é estudar o exemplo DemoLIDA do uso da arquitetura cognit
 
 Antes de mais nada, faça o "Pull from ..."  do GitHub da versão mais nova do [WorldServer3D](https://github.com/CST-Group/ws3d). Foram modificadas algumas funções do mesmo para ele funcionar com o DemoLIDA e portanto a versão antiga pode não funcionar a contento. Se necessário, faça também o "Pull from" do [WS3DProxy](https://github.com/CST-Group/WS3DProxy).
 
-Faça o download do código do [DemoLIDA](http://faculty.dca.fee.unicamp.br/gudwin/sites/faculty.dca.fee.unicamp.br.gudwin/files/ia006/DemoLIDA.**zip**) e estude o código do mesmo com o auxílio do Netbeans.
+Faça o download do código do [DemoLIDA](http://faculty.dca.fee.unicamp.br/gudwin/sites/faculty.dca.fee.unicamp.br.gudwin/files/ia006/DemoLIDA.zip) e estude o código do mesmo com o auxílio do Netbeans.
 
 Observe atentamente os arquivos no diretório configs do DemoLIDA. Ali estão os arquivos de configuração que são imprescindíveis para o framework LIDA conseguir funcionar.
 

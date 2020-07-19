@@ -71,25 +71,25 @@ public class Environment extends EnvironmentImpl {
             //World.createBrick(0, 0, 600, 800, 620);
             //World.createBrick(0, -20, 0, 0, 600);
 
-            World.createBrick(0, 790, 0, 800, 600);
-            World.createBrick(0, 0, 0, 800, 10);
-            World.createBrick(0, 0, 590, 800, 600);
-            World.createBrick(0, 0, 0, 10, 600);
+            World.createBrick(0, 798, 0, 800, 600);
+            World.createBrick(0, 0, 0, 800, 2);
+            World.createBrick(0, 0, 598, 800, 600);
+            World.createBrick(0, 0, 0, 2, 600);
             
             //GENERATE MAZE
-            World.createBrick(0, 400, 120, 410, 250);
-            World.createBrick(0, 180, 250, 550, 260);
-            //World.createBrick(0, 180, 120, 190, 250);
-            //World.createBrick(0, 180, 120, 280, 130);
-            //World.createBrick(0, 280, 250, 290, 400);
-            World.createBrick(0, 120, 500, 400, 510);
-            World.createBrick(0,   0, 400, 180, 410);
-            //World.createBrick(0, 400, 400, 410, 510);
-            World.createBrick(0, 500, 500, 510, 600);
-            World.createBrick(0, 550, 400, 700, 410);
-            World.createBrick(0, 700, 500, 800, 510);
-            //World.createBrick(0, 640, 150, 650, 300);
-            World.createBrick(0, 550, 150, 650, 160);
+            World.createBrick(0, 400, 120, 402, 250);
+            World.createBrick(0, 180, 250, 550, 252);
+            //World.createBrick(0, 180, 120, 182, 250);
+            //World.createBrick(0, 180, 120, 280, 122);
+            //World.createBrick(0, 280, 250, 282, 400);
+            World.createBrick(0, 120, 500, 400, 502);
+            World.createBrick(0,   0, 400, 180, 402);
+            World.createBrick(0, 400, 400, 402, 510);
+            World.createBrick(0, 500, 500, 502, 600);
+            World.createBrick(0, 550, 400, 700, 402);
+            World.createBrick(0, 700, 500, 800, 502);
+            World.createBrick(0, 640, 150, 642, 300);
+            World.createBrick(0, 550, 150, 650, 152);
             
             generateJewel();
 
@@ -164,7 +164,7 @@ public class Environment extends EnvironmentImpl {
                 
         for (Thing thing : creature.getThingsInVision()) {
             if (thing.getCategory() == Constants.categoryBRICK){
-                if(creature.calculateDistanceTo(thing) <= 65){
+                if(creature.calculateDistanceTo(thing) <= 95){
                     if (wall == null ) {
                         wall = thing;
                         thingAhead.add(thing);
@@ -175,7 +175,7 @@ public class Environment extends EnvironmentImpl {
                     if(wallAway == null) wallAway = thing; 
                 }      
             }
-            else if (creature.calculateDistanceTo(thing) <= Constants.OFFSET) { //OFFSET = 50
+            else if (creature.calculateDistanceTo(thing) <= 60) { //OFFSET = 50
                 // Identifica o objeto proximo que não seja parede
                 thingAhead.add(thing);
                 break;
@@ -209,11 +209,13 @@ public class Environment extends EnvironmentImpl {
             //System.out.println("Action: "+currentAction);
             switch (currentAction) {
                 case "rotate":
-                    //creature.rotate(2.0);
-                    CommandUtility.sendSetTurn(creature.getIndex(), 3, -3, 3);
+                    
+                        creature.rotate(2.0);
+                        //CommandUtility.sendSetTurn(creature.getIndex(), 2, -2, 2);
+                    
                     break;
                 case "forward":
-                    if(wall ==  null ){
+                    if(wallAway !=  null ){
                         creature.move(3.0 , 3.0, 0);
                     }
                     break;

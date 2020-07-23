@@ -2,6 +2,7 @@ package modules;
 
 import edu.memphis.ccrg.lida.environment.EnvironmentImpl;
 import edu.memphis.ccrg.lida.framework.tasks.FrameworkTaskImpl;
+import edu.memphis.ccrg.lida.framework.tasks.TaskManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,8 @@ public class Environment extends EnvironmentImpl {
     private Thing wallAway;
     private List<Thing> thingAhead;
     private String currentAction;   
+    private BackgroundTask backgroundTask;
+    private int lastPressedButton =0;
     
     public Environment() {
         this.ticksPerRun = DEFAULT_TICKS_PER_RUN;
@@ -66,10 +69,6 @@ public class Environment extends EnvironmentImpl {
     private void setupEnvironment(){
         try {
             // SETUP BORDERS
-            //World.createBrick(0, 800, 0, 820, 600);
-            //World.createBrick(0, 0, -20, 800, 0);
-            //World.createBrick(0, 0, 600, 800, 620);
-            //World.createBrick(0, -20, 0, 0, 600);
 
             World.createBrick(0, 798, 0, 800, 600);
             World.createBrick(0, 0, 0, 800, 2);
@@ -79,9 +78,6 @@ public class Environment extends EnvironmentImpl {
             //GENERATE MAZE
             World.createBrick(0, 400, 120, 402, 250);
             World.createBrick(0, 180, 250, 550, 252);
-            //World.createBrick(0, 180, 120, 182, 250);
-            //World.createBrick(0, 180, 120, 280, 122);
-            //World.createBrick(0, 280, 250, 282, 400);
             World.createBrick(0, 120, 500, 400, 502);
             World.createBrick(0,   0, 400, 180, 402);
             World.createBrick(0, 400, 400, 402, 510);
@@ -118,13 +114,18 @@ public class Environment extends EnvironmentImpl {
         @Override
         protected void runThisFrameworkTask() {
             updateEnvironment();
-            performAction(currentAction);
+            processAction(currentAction);
+            performAction(currentAction);   
         }
     }
 
     @Override
     public void resetState() {
         currentAction = "rotate";
+    }
+    
+    public int getLastPressedButton() {
+        return lastPressedButton;
     }
 
     @Override
@@ -163,11 +164,16 @@ public class Environment extends EnvironmentImpl {
         thingAhead.clear();
                 
         for (Thing thing : creature.getThingsInVision()) {
-            if (thing.getCategory() == Constants.categoryBRICK){
+            if(creature.calculateDistanceTo(thing) <=60 && thing.getCategory() != Constants.categoryBRICK){
+                // Identifica o objeto proximo que não seja parede
+                thingAhead.add(thing);
+                break;
+            }
+            else if (thing.getCategory() == Constants.categoryBRICK){
                 if(creature.calculateDistanceTo(thing) <= 95){
                     if (wall == null ) {
                         wall = thing;
-                        thingAhead.add(thing);
+                        thingAhead.add(wall);
                         break;
                     }
 
@@ -175,23 +181,11 @@ public class Environment extends EnvironmentImpl {
                     if(wallAway == null) wallAway = thing; 
                 }      
             }
-            else if (creature.calculateDistanceTo(thing) <= 60) { //OFFSET = 50
-                // Identifica o objeto proximo que não seja parede
-                thingAhead.add(thing);
-                break;
-            }
             else if (thing.getCategory() == Constants.categoryJEWEL) {
                 if (jewel == null) {
                     // Identifica joia
                     jewel = thing;
                 } 
-            } else if (food == null && creature.getFuel() <= 300.0
-                        && (thing.getCategory() == Constants.categoryFOOD
-                        || thing.getCategory() == Constants.categoryPFOOD
-                        || thing.getCategory() == Constants.categoryNPFOOD)) {
-                
-                    // Identifica qualquer tipo de comida
-                    food = thing;
             }
         }
     }
@@ -202,20 +196,33 @@ public class Environment extends EnvironmentImpl {
     public void processAction(Object action) {
         String actionName = (String) action;
         currentAction = actionName.substring(actionName.indexOf(".") + 1);
+        switch (currentAction) {
+            case "forward":
+                lastPressedButton=1;
+                break;
+            case "rotate":
+                lastPressedButton=2;
+                break;
+            case "gotoJewel":
+                lastPressedButton=3;
+                break;
+            case "get":
+                lastPressedButton=4;
+                break;
+        }
+                    
     }
 
     private void performAction(String currentAction) {
         try {
-            //System.out.println("Action: "+currentAction);
+            System.out.println("Action: "+currentAction);
             switch (currentAction) {
                 case "rotate":
-                    
                         creature.rotate(2.0);
                         //CommandUtility.sendSetTurn(creature.getIndex(), 2, -2, 2);
-                    
                     break;
                 case "forward":
-                    if(wallAway !=  null ){
+                    if(wall ==  null ){
                         creature.move(3.0 , 3.0, 0);
                     }
                     break;

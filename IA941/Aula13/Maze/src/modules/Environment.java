@@ -165,7 +165,7 @@ public class Environment extends EnvironmentImpl {
                 
         for (Thing thing : creature.getThingsInVision()) {
             if(creature.calculateDistanceTo(thing) <=50 && thing.getCategory() != Constants.categoryBRICK){
-                // Identifica o objeto proximo que não seja parede
+                // Identifica o objeto proximo que nï¿½o seja parede
                 thingAhead.add(thing);
                 break;
             }

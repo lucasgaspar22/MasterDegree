@@ -23,26 +23,24 @@ public class Environment extends EnvironmentImpl {
     private int ticksPerRun;
     private WS3DProxy proxy;
     private Creature creature;
-    private Thing food;
-    private Thing jewel;
     private Thing wall;
-    private Thing wallAway;
     private List<Thing> thingAhead;
-    private String currentAction;   
-    private BackgroundTask backgroundTask;
+    private String currentAction;
     private int lastPressedButton = 0;
-    private Landmarks landmarks = new Landmarks();
+    public Landmarks landmarks = new Landmarks();
+    private int landmarkDirection;
+    private double wallX;
+    private double wallY;
+    
+    
     
     public Environment() {
         this.ticksPerRun = DEFAULT_TICKS_PER_RUN;
         this.proxy = new WS3DProxy();
         this.creature = null;
-        this.food = null;
-        this.jewel = null;
         this.wall = null;
-        this.wallAway = null;
         this.thingAhead = new ArrayList<>();
-        this.currentAction = "rotate";
+        this.currentAction = "goToLandmark";
     }
 
     @Override
@@ -55,11 +53,10 @@ public class Environment extends EnvironmentImpl {
             System.out.println("Reseting the WS3D World ...");
             World world = proxy.getWorld();
             world.reset();
-            setupEnvironment();
-            creature = proxy.createCreature(100, 100, 0);
+            creature = proxy.createCreature(800, 600, 0);
             creature.start();
             System.out.println("Starting the WS3D Resource Generator ... ");
-            //World.grow(1);
+            setupEnvironment();
             Thread.sleep(4000);
             creature.updateState();
             System.out.println("DemoLIDA has started...");
@@ -70,25 +67,12 @@ public class Environment extends EnvironmentImpl {
 
     private void setupEnvironment(){
         try {
-            // SETUP BORDERS
-
-            World.createBrick(0, 798, 0, 800, 600);
-            World.createBrick(0, 0, 0, 800, 2);
-            World.createBrick(0, 0, 598, 800, 600);
-            World.createBrick(0, 0, 0, 2, 600);
-            
             //GENERATE MAZE
-            World.createBrick(0, 400, 120, 402, 250);
-            World.createBrick(0, 180, 250, 550, 252);
-            World.createBrick(0, 120, 500, 400, 502);
-            World.createBrick(0,   0, 400, 180, 402);
-            World.createBrick(0, 400, 400, 402, 510);
-            World.createBrick(0, 500, 500, 502, 600);
-            World.createBrick(0, 550, 400, 700, 402);
-            World.createBrick(0, 700, 500, 800, 502);
-            World.createBrick(0, 640, 150, 642, 300);
-            World.createBrick(0, 550, 150, 650, 152);
-            
+            World.createBrick(0, 100, 0, 150, 450);
+            World.createBrick(1, 250, 150, 300, 600);
+            World.createBrick(0, 400, 0, 450, 450); 
+            World.createBrick(1, 550, 150, 600, 600); 
+            //World.createBrick(0, 750, 0, 800, 350);
             generateJewel();
 
         } catch (Exception e) {
@@ -98,8 +82,11 @@ public class Environment extends EnvironmentImpl {
 
     private void generateJewel(){
         try {
-            World.createJewel(2, landmarks.getNextX(), landmarks.getNextY());//7
-            landmarks.incLandMark();
+            World.createJewel(2, landmarks.getX(), landmarks.getY());
+            landmarkDirection = landmarks.getLandMarkDirection();
+            this.resetState();
+            System.out.println(landmarkDirection);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -114,14 +101,14 @@ public class Environment extends EnvironmentImpl {
         @Override
         protected void runThisFrameworkTask() {
             updateEnvironment();
-            processAction(currentAction);
+            //processAction(currentAction);
             performAction(currentAction);   
         }
     }
 
     @Override
     public void resetState() {
-        currentAction = "rotate";
+        currentAction = "goToLandmark";
     }
     
     public int getLastPressedButton() {
@@ -133,17 +120,8 @@ public class Environment extends EnvironmentImpl {
         Object requestedObject = null;
         String mode = (String) params.get("mode");
         switch (mode) {
-            case "food":
-                requestedObject = food;
-                break;
-            case "jewel":
-                requestedObject = jewel;
-                break;
             case "wall":
                 requestedObject = wall;
-                break;
-            case "wallAway":
-                requestedObject = wallAway;
                 break;
             case "thingAhead":
                 requestedObject = thingAhead;
@@ -157,37 +135,74 @@ public class Environment extends EnvironmentImpl {
     
     public void updateEnvironment() {
         creature.updateState();
-        food = null;
-        jewel = null;
-        wall = null;
-        wallAway = null;
-        thingAhead.clear();
-                
+        
+        thingAhead.clear();        
+        double xRef = 99999;
+        
         for (Thing thing : creature.getThingsInVision()) {
-            if(creature.calculateDistanceTo(thing) <=50 && thing.getCategory() != Constants.categoryBRICK){
-                // Identifica o objeto proximo que n�o seja parede
-                thingAhead.add(thing);
-                break;
-            }
-            else if (thing.getCategory() == Constants.categoryJEWEL) {
-                if (jewel == null) {
-                    // Identifica joia
-                    jewel = thing;
-                } 
-            }
-            else if (thing.getCategory() == Constants.categoryBRICK){
-                if(creature.calculateDistanceTo(thing) <= 95){
-                    if (wall == null ) {
-                        wall = thing;
-                        thingAhead.add(wall);
-                        break;
+            if(creature.calculateDistanceTo(thing) <= 60 ){
+                if(thing.getCategory() == Constants.categoryBRICK){
+                    if(landmarkDirection == 0){ //Going Down
+                        if(thing.getX2() < xRef){
+                            if(wall == null || (thing.getX1() > wall.getX1() && thing.getX1() < creature.getAttributes().getX1()) ){
+                                wall = thing;
+                                xRef = thing.getX2();
+                            }
+                        }  
                     }
+                    else{ //Going UP
+                        if(thing.getX1() < xRef){
+                            if(wall == null || (thing.getX2() > wall.getX2() && thing.getX2() > creature.getAttributes().getX1()) ){
+                                wall = thing;
+                                xRef = thing.getX1();
+                            }
+                        }
+                    }
+                    
+                }
+                else{
+                    thingAhead.add(thing);
+                }
+            }  
+        }
+        
+        if(wall != null){
+                if (wall.getY1() < 10)  avoidWallFromLeft(wall); 
+                else avoidWallFromRight(wall);
 
-                }else {
-                    if(wallAway == null) wallAway = thing; 
-                }      
+        }
+   
+        if(landmarkDirection == 0 ){
+            if( wall != null && wall.getX1()-40 > creature.getAttributes().getX1()){ 
+                wall = null;
             }
-            
+        }else{
+           if( wall != null && wall.getX2()+40 < creature.getAttributes().getX1()){ 
+                wall = null;
+            } 
+        }
+    
+    }
+        
+    private void avoidWallFromLeft(Thing wall){
+       
+        if(landmarkDirection == 0){
+            wallX = (creature.getAttributes().getY1() > wall.getY2() + 30) ? wall.getX1()-50 : wall.getX2() + 60;
+            wallY = wall.getY2() + 60;
+        }else{
+            wallX = (creature.getAttributes().getY1() > wall.getY2() + 30) ?  wall.getX2()+ 60 : wall.getX1() - 50;
+            wallY = wall.getY2() + 60;
+        }
+    }
+    
+    private void avoidWallFromRight(Thing wall){
+        
+        if(landmarkDirection == 0){
+            wallX = (creature.getAttributes().getY1() < wall.getY1() - 50) ? wall.getX1()-50 : wall.getX2() + 60;
+            wallY = wall.getY1() - 60;
+        }else{
+            wallX = (creature.getAttributes().getY1() < wall.getY1() - 50) ?  wall.getX2()+ 60 : wall.getX1() - 50 ;
+            wallY = wall.getY1() - 60;
         }
     }
     
@@ -198,61 +213,45 @@ public class Environment extends EnvironmentImpl {
         String actionName = (String) action;
         currentAction = actionName.substring(actionName.indexOf(".") + 1);
         switch (currentAction) {
-            case "forward":
+            case "goToLandmark":
                 lastPressedButton=1;
                 break;
-            case "rotate":
+            case "avoidWall":
                 lastPressedButton=2;
                 break;
-            case "gotoJewel":
+            case "get":
                 lastPressedButton=3;
                 break;
-            case "get":
-                lastPressedButton=4;
-                break;
         }
-                    
     }
 
+    
     private void performAction(String currentAction) {
         try {
             switch (currentAction) {
-                case "rotate":
-                        creature.rotate(2.0);
-                        //CommandUtility.sendSetTurn(creature.getIndex(), 2, -2, 2);
+                case "avoidWall":
+                    if(wall != null)
+                        creature.moveto(2.0, wallX, wallY);
                     break;
-                case "forward":
-                    if(wall ==  null ){
-                        creature.move(3.0 , 3.0, 0);
-                    }
+                case "goToLandmark":
+                    creature.moveto(2.0, landmarks.getX(), landmarks.getY());
                     break;
-                case "gotoFood":
-                    if (food != null) 
-                        creature.moveto(3.0, food.getX1(), food.getY1());
-                        //CommandUtility.sendGoTo(creature.getIndex(), 3.0, 3.0, food.getX1(), food.getY1());
-                    break;
-                case "gotoJewel":
-                    if (jewel != null)
-                        creature.moveto(3.0, jewel.getX1(), jewel.getY1());
-                        //CommandUtility.sendGoTo(creature.getIndex(), 3.0, 3.0, leafletJewel.getX1(), leafletJewel.getY1());
-                    break;                    
                 case "get":
                     creature.move(0.0, 0.0, 0.0);
-                    //CommandUtility.sendSetTurn(creature.getIndex(), 0.0, 0.0, 0.0);
                     if (thingAhead != null) {
                         for (Thing thing : thingAhead) {
                             if (thing.getCategory() == Constants.categoryJEWEL) {
                                 creature.putInSack(thing.getName());
-                                thingAhead.remove(thing);
+                                landmarks.incLandMark();
                                 generateJewel();
-                                break;
+                            } else if (thing.getCategory() == Constants.categoryFOOD || thing.getCategory() == Constants.categoryNPFOOD || thing.getCategory() == Constants.categoryPFOOD) {
+                                creature.eatIt(thing.getName());
                             }
                         }
                     }
                     this.resetState();
                     break;
                 default:
-                    this.resetState();
                     break;
             }
         } catch (Exception e) {

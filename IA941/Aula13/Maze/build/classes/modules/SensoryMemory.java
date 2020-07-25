@@ -10,39 +10,27 @@ import ws3dproxy.model.Thing;
 public class SensoryMemory extends SensoryMemoryImpl {
 
     private Map<String, Object> sensorParam;
-    private Thing food;
-    private Thing jewel;
     private Thing wall;
-    private Thing wallAway;
-    private List<Thing> thingAhead;
+    private List<Thing> things;
 
     public SensoryMemory() {
         this.sensorParam = new HashMap<>();
-        this.food = null;
-        this.jewel = null;
         this.wall = null;
-        this.wallAway = null;
-        this.thingAhead = new ArrayList<>();
+        this.things = new ArrayList<>();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public void runSensors() {
         sensorParam.clear();
-        sensorParam.put("mode", "food");
-        food = (Thing) environment.getState(sensorParam);
-        sensorParam.clear();
-        sensorParam.put("mode", "jewel");
-        jewel = (Thing) environment.getState(sensorParam);
-        sensorParam.clear();
         sensorParam.put("mode", "wall");
         wall = (Thing) environment.getState(sensorParam);
         sensorParam.clear();
-        sensorParam.put("mode", "wallAway");
-        wallAway = (Thing) environment.getState(sensorParam);
-        sensorParam.clear();
         sensorParam.put("mode", "thingAhead");
-        thingAhead = (List<Thing>) environment.getState(sensorParam);
+        things = (List<Thing>) environment.getState(sensorParam);
+        sensorParam.clear();
+        sensorParam.put("mode", "nowall");
+        sensorParam.clear();
     }
 
     @Override
@@ -50,20 +38,11 @@ public class SensoryMemory extends SensoryMemoryImpl {
         Object requestedObject = null;
         String mode = (String) params.get("mode");
         switch (mode) {
-            case "food":
-                requestedObject = food;
-                break;
-            case "jewel":
-                requestedObject = jewel;
-                break;
             case "wall":
                 requestedObject = wall;
                 break;
-            case "wallAway":
-                requestedObject = wallAway;
-                break;
             case "thingAhead":
-                requestedObject = thingAhead;
+                requestedObject = things;
                 break;
             default:
                 break;

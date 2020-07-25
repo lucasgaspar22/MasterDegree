@@ -41,10 +41,11 @@ public class ActionPanel extends GuiPanelImpl {
         panel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         actionLabel = new javax.swing.JLabel();
-        rotateButton = new javax.swing.JToggleButton();
-        forwardButton = new javax.swing.JToggleButton();
-        getJewelButton = new javax.swing.JToggleButton();
-        goToJewelButton = new javax.swing.JToggleButton();
+        landMarkLabel = new javax.swing.JLabel();
+        AvoidWallButton = new javax.swing.JToggleButton();
+        goToLandMarkButton = new javax.swing.JToggleButton();
+        getButton = new javax.swing.JToggleButton();
+        jLabel3 = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
@@ -52,21 +53,25 @@ public class ActionPanel extends GuiPanelImpl {
         jLabel2.setText("Chosen Action:");
 
         actionLabel.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
-        actionLabel.setText("Forward");
+        actionLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        actionLabel.setText("None");
+
+        landMarkLabel.setText("[ 0 ; 0 ]");
 
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                 .addContainerGap(46, Short.MAX_VALUE)
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(39, 39, 39))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                        .addComponent(actionLabel)
-                        .addGap(49, 49, 49))))
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(actionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(39, 39, 39))
+            .addGroup(panelLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(landMarkLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -75,16 +80,17 @@ public class ActionPanel extends GuiPanelImpl {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45)
                 .addComponent(actionLabel)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addComponent(landMarkLabel))
         );
 
-        rotateButton.setText("Rotate");
+        AvoidWallButton.setText("Avoid Wall");
 
-        forwardButton.setText("Forward");
+        goToLandMarkButton.setText("Go to Landmark");
 
-        getJewelButton.setText("Get jewel");
+        getButton.setText("Get");
 
-        goToJewelButton.setText("Go to jewel");
+        jLabel3.setText("Current LandMark  >");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -93,10 +99,12 @@ public class ActionPanel extends GuiPanelImpl {
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(forwardButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(rotateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(goToJewelButton, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
-                    .addComponent(getJewelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(goToLandMarkButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(AvoidWallButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(getButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43))
@@ -105,17 +113,17 @@ public class ActionPanel extends GuiPanelImpl {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(5, 5, 5)
-                        .addComponent(forwardButton)
+                        .addComponent(goToLandMarkButton)
                         .addGap(18, 18, 18)
-                        .addComponent(rotateButton)
+                        .addComponent(AvoidWallButton)
                         .addGap(18, 18, 18)
-                        .addComponent(goToJewelButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(getJewelButton)))
+                        .addComponent(getButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3)))
                 .addContainerGap(81, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -135,51 +143,42 @@ public class ActionPanel extends GuiPanelImpl {
         @Override
     public void refresh() {
         int lastPressedButton = environment.getLastPressedButton();
+        landMarkLabel.setText("[ "+environment.landmarks.getX()+" ; "+environment.landmarks.getY()+" ]");
         switch(lastPressedButton){
             case 1:
-                forwardButton.setSelected(true);
-                rotateButton.setSelected(false);
-                goToJewelButton.setSelected(false);
-                getJewelButton.setSelected(false);
-                actionLabel.setText("Forward");
+                goToLandMarkButton.setSelected(true);
+                AvoidWallButton.setSelected(false);
+                getButton.setSelected(false);
+                actionLabel.setText("Go to Land Mark");
                 break;
             case 2:
-                forwardButton.setSelected(false);
-                rotateButton.setSelected(true);
-                goToJewelButton.setSelected(false);
-                getJewelButton.setSelected(false);
-                actionLabel.setText("Rotate");
+                goToLandMarkButton.setSelected(false);
+                AvoidWallButton.setSelected(true);
+                getButton.setSelected(false);
+                actionLabel.setText("Avoid Wall");
                 break;
             case 3:
-                forwardButton.setSelected(false);
-                rotateButton.setSelected(false);
-                goToJewelButton.setSelected(true);
-                getJewelButton.setSelected(false);
-                actionLabel.setText("Go to Jewel");
-                break;
-            case 4:
-                forwardButton.setSelected(false);
-                rotateButton.setSelected(false);
-                goToJewelButton.setSelected(false);
-                getJewelButton.setSelected(true);
-                actionLabel.setText("Get Jewel");
+                goToLandMarkButton.setSelected(false);
+                AvoidWallButton.setSelected(false);
+                getButton.setSelected(true);
+                actionLabel.setText("Get");
                 break;
             default:
-                forwardButton.setSelected(false);
-                rotateButton.setSelected(false);
-                goToJewelButton.setSelected(false);
-                getJewelButton.setSelected(false);
+                goToLandMarkButton.setSelected(false);
+                AvoidWallButton.setSelected(false);
+                getButton.setSelected(false);
                 actionLabel.setText("None");
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton AvoidWallButton;
     private javax.swing.JLabel actionLabel;
-    private javax.swing.JToggleButton forwardButton;
-    private javax.swing.JToggleButton getJewelButton;
-    private javax.swing.JToggleButton goToJewelButton;
+    private javax.swing.JToggleButton getButton;
+    private javax.swing.JToggleButton goToLandMarkButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel landMarkLabel;
     private javax.swing.JPanel panel;
-    private javax.swing.JToggleButton rotateButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -45,14 +45,14 @@
             <param name="pam.propagationTicksPerRun" type="int">1</param>
             <param name="pam.propagateActivationThreshold" type="double">0.05</param>
             <param name="nodes">
-                nearObject,jewel,wall,wallAway
+                nowall,wall,nearObject
             </param>
             <taskspawner>defaultTS</taskspawner>
             <initialTasks>
-                <task name="WallAwayDetector">
-                    <tasktype>WallAwayDetector</tasktype>
+                <task name="WallDetector">
+                    <tasktype>NoWallDetector</tasktype>
                     <ticksperrun>3</ticksperrun>
-                    <param name="node" type="string">wallAway</param>
+                    <param name="node" type="string">nowall</param>
                     <param name="learnable.baseLevelActivation" type="double">0.0</param>
                     <param name="learnable.baseLevelRemovalThreshold" type="double">-1.0</param>
                     <param name="learnable.baseLevelDecayStrategy" type="string">defaultDecay</param>
@@ -73,16 +73,6 @@
                     <tasktype>ThingAheadDetector</tasktype>
                     <ticksperrun>3</ticksperrun>
                     <param name="node" type="string">nearObject</param>
-                    <param name="learnable.baseLevelActivation" type="double">0.0</param>
-                    <param name="learnable.baseLevelRemovalThreshold" type="double">-1.0</param>
-                    <param name="learnable.baseLevelDecayStrategy" type="string">defaultDecay</param>
-                    <param name="learnable.baseLevelExciteStrategy" type="string">defaultExcite</param>
-                    <param name="learnable.totalActivationStrategy" type="string">DefaultTotalActivationStrategy</param>
-                </task>
-                <task name="JewelDetector">
-                    <tasktype>JewelDetector</tasktype>
-                    <ticksperrun>3</ticksperrun>
-                    <param name="node" type="string">jewel</param>
                     <param name="learnable.baseLevelActivation" type="double">0.0</param>
                     <param name="learnable.baseLevelRemovalThreshold" type="double">-1.0</param>
                     <param name="learnable.baseLevelDecayStrategy" type="string">defaultDecay</param>
@@ -143,30 +133,6 @@
 	    <param name="attentionModule.codeletReinforcement" type="double">0.1</param>
             <taskspawner>defaultTS</taskspawner>
             <initialTasks>
-                 <task name="WallAttentionCodelet">
-                    <tasktype>BasicAttentionCodelet</tasktype>
-                    <ticksperrun>5</ticksperrun>
-                    <param name="nodes" type="string">wall</param>
-                    <param name="refractoryPeriod" type="int">150</param>
-                    <param name="initialActivation" type="double">1.0</param>
-                    <param name="learnable.baseLevelActivation" type="double">1.0</param>
-                    <param name="learnable.baseLevelRemovalThreshold" type="double">-1.0</param>
-                    <param name="learnable.baseLevelDecayStrategy" type="string">defaultDecay</param>
-                    <param name="learnable.baseLevelExciteStrategy" type="string">defaultExcite</param>
-                    <param name="learnable.totalActivationStrategy" type="string">DefaultTotalActivationStrategy</param>
-                </task>
-                <task name="WallAwayAttentionCodelet">
-                    <tasktype>BasicAttentionCodelet</tasktype>
-                    <ticksperrun>5</ticksperrun>
-                    <param name="nodes" type="string">wallAway</param>
-                    <param name="refractoryPeriod" type="int">200</param>
-                    <param name="initialActivation" type="double">1.0</param>
-                    <param name="learnable.baseLevelActivation" type="double">1.0</param>
-                    <param name="learnable.baseLevelRemovalThreshold" type="double">-1.0</param>
-                    <param name="learnable.baseLevelDecayStrategy" type="string">defaultDecay</param>
-                    <param name="learnable.baseLevelExciteStrategy" type="string">defaultExcite</param>
-                    <param name="learnable.totalActivationStrategy" type="string">DefaultTotalActivationStrategy</param>
-                </task>
                 <task name="NearObjectAttentionCodelet">
                     <tasktype>BasicAttentionCodelet</tasktype>
                     <ticksperrun>5</ticksperrun>
@@ -179,11 +145,23 @@
                     <param name="learnable.baseLevelExciteStrategy" type="string">defaultExcite</param>
                     <param name="learnable.totalActivationStrategy" type="string">DefaultTotalActivationStrategy</param>
                 </task>
-                <task name="JewelAttentionCodelet">
+                <task name="NoWallAttentionCodelet">
                     <tasktype>BasicAttentionCodelet</tasktype>
                     <ticksperrun>5</ticksperrun>
-                    <param name="nodes" type="string">jewel</param>
-                    <param name="refractoryPeriod" type="int">100</param>
+                    <param name="nodes" type="string">nowall</param>
+                    <param name="refractoryPeriod" type="int">50</param>
+                    <param name="initialActivation" type="double">1.0</param>
+                    <param name="learnable.baseLevelActivation" type="double">1.0</param>
+                    <param name="learnable.baseLevelRemovalThreshold" type="double">-1.0</param>
+                    <param name="learnable.baseLevelDecayStrategy" type="string">defaultDecay</param>
+                    <param name="learnable.baseLevelExciteStrategy" type="string">defaultExcite</param>
+                    <param name="learnable.totalActivationStrategy" type="string">DefaultTotalActivationStrategy</param>
+                </task>
+                <task name="WallAttentionCodelet">
+                    <tasktype>BasicAttentionCodelet</tasktype>
+                    <ticksperrun>5</ticksperrun>
+                    <param name="nodes" type="string">wall</param>
+                    <param name="refractoryPeriod" type="int">50</param>
                     <param name="initialActivation" type="double">1.0</param>
                     <param name="learnable.baseLevelActivation" type="double">1.0</param>
                     <param name="learnable.baseLevelRemovalThreshold" type="double">-1.0</param>
@@ -223,11 +201,9 @@
             <param name="proceduralMemory.addingListWeight"  type="double">1.0</param>
             <param name="proceduralMemory.schemeClass">edu.memphis.ccrg.lida.proceduralmemory.SchemeImpl</param>
             <!--   ____scheme_name__ _____ scheme_label_______|_context______|__action_name____|result|baseLabelActiv. -->
-            <param name="scheme.1">if wallAway, forward|(wallAway)()|action.forward|()()|0.3</param>
-            <param name="scheme.2">if wall, rotate|(wall)()|action.rotate|()()|0.01</param>
-            <param name="scheme.3">if jewel, goto jewel|(jewel)()|action.gotoJewel|()()|0.3</param>
-            <param name="scheme.4">if nearObject, get object|(nearObject)()|action.get|()()|0.01</param>
-        
+            <param name="scheme.1">if nearObject, get object|(nearObject)()|action.get|()()|0.01</param>
+            <param name="scheme.2">Always go to Origin|(nowall)()|action.goToLandmark|()()|0.3</param>
+            <param name="scheme.3">if wall avoid wall|(wall)()|action.avoidWall|()()|0.2</param>
             <taskspawner>defaultTS</taskspawner>                      
             <initializerclass>edu.memphis.ccrg.lida.proceduralmemory.BasicProceduralMemoryInitializer</initializerclass>
         </module>
@@ -246,11 +222,9 @@
             <class>edu.memphis.ccrg.lida.sensorymotormemory.BasicSensoryMotorMemory</class>
             <associatedmodule>Environment</associatedmodule>
             <param name="smm.processActionTaskTicks" type="int">1</param>
-            <param name="smm.mapping.1">action.forward,algorithm.forward</param>
-            <param name="smm.mapping.2">action.rotate,algorithm.rotate</param>
-            <param name="smm.mapping.3">action.gotoJewel,algorithm.gotoJewel</param>
-            <param name="smm.mapping.4">action.get,algorithm.get</param>
-           
+            <param name="smm.mapping.1">action.get,algorithm.get</param>
+            <param name="smm.mapping.2">action.goToLandmark,algorithm.goToLandmark</param>
+            <param name="smm.mapping.3">action.avoidWall,algorithm.avoidWall</param>
             <taskspawner>defaultTS</taskspawner>
             <initializerclass>edu.memphis.ccrg.lida.sensorymotormemory.BasicSensoryMotorMemoryInitializer</initializerclass>
         </module>

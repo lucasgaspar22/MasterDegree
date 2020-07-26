@@ -1,8 +1,0 @@
-/home/lucas/Área de Trabalho/LearningRules/ClarionApp/bin/Release/ClarionApp.exe
-/home/lucas/Área de Trabalho/LearningRules/ClarionApp/bin/Release/ClarionApp.pdb
-/home/lucas/Área de Trabalho/LearningRules/ClarionApp/bin/Release/ClarionLibrary.dll
-/home/lucas/Área de Trabalho/LearningRules/ClarionApp/obj/x86/Release/ClarionLearningRules.csprojAssemblyReference.cache
-/home/lucas/Área de Trabalho/LearningRules/ClarionApp/obj/x86/Release/ClarionLearningRules.csproj.CoreCompileInputs.cache
-/home/lucas/Área de Trabalho/LearningRules/ClarionApp/obj/x86/Release/ClarionLearningRules.csproj.CopyComplete
-/home/lucas/Área de Trabalho/LearningRules/ClarionApp/obj/x86/Release/ClarionApp.exe
-/home/lucas/Área de Trabalho/LearningRules/ClarionApp/obj/x86/Release/ClarionApp.pdb

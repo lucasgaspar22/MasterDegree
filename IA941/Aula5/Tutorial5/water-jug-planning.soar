@@ -1,4 +1,0 @@
-source selection.soar
-pushd water-jug-planning
-source water-jug-planning_source.soar
-popd

@@ -85,8 +85,6 @@ public class Environment extends EnvironmentImpl {
             World.createJewel(2, landmarks.getX(), landmarks.getY());
             landmarkDirection = landmarks.getLandMarkDirection();
             this.resetState();
-            System.out.println(landmarkDirection);
-            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -231,10 +229,10 @@ public class Environment extends EnvironmentImpl {
             switch (currentAction) {
                 case "avoidWall":
                     if(wall != null)
-                        creature.moveto(2.0, wallX, wallY);
+                        creature.moveto(1.0, wallX, wallY);
                     break;
                 case "goToLandmark":
-                    creature.moveto(2.0, landmarks.getX(), landmarks.getY());
+                    creature.moveto(1.0, landmarks.getX(), landmarks.getY());
                     break;
                 case "get":
                     creature.move(0.0, 0.0, 0.0);

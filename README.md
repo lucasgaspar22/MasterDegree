@@ -16,6 +16,6 @@ The structure of it will be according to discitncts subjects coursed.
     ![Generic badge](https://img.shields.io/badge/Status-On%20Going-yellow.svg)
 ---
 ## Contact information
-Author: Lucas Gaspar
-E-mail: lucasprgaspar@gmail.com
 
+* Author: Lucas Gaspar
+* E-mail: lucasprgaspar@gmail.com

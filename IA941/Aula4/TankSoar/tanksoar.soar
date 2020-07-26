@@ -1,3 +1,0 @@
-pushd tanksoar
-source tanksoar_source.soar
-popd

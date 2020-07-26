@@ -1,3 +1,0 @@
-pushd tanksoar-sound
-source tanksoar-sound_source.soar
-popd

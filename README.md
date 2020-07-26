@@ -6,19 +6,14 @@ This repository aims to store all assigments, codes, reports and other activitie
 The structure of it will be according to discitncts subjects coursed.
 
 ---
-
 ## Subjects:
 * [Laboratório de Arquiteturas Cognitivas - IA941 - Ricardo Gudwin](https://github.com/lucasgaspar22/MasterDegree/tree/IA941/IA941)
 
-<<<<<<< HEAD
-    [![Generic badge](https://img.shields.io/badge/BRANCH-IA941-blue.svg)](https://github.com/lucasgaspar22/MasterDegree/tree/IA941)
-    ![Generic badge](https://img.shields.io/badge/CREDITS-4-blue.svg)
-    ![Generic badge](https://img.shields.io/badge/YEAR-1/2020-blue.svg)
-=======
-    [![Generic badge](https://img.shields.io/badge/BRANCH-IA941-blue.svg)](https://shields.io/)
-    [![Generic badge](https://img.shields.io/badge/CREDITS-4-blue.svg)](https://shields.io/)
-    [![Generic badge](https://img.shields.io/badge/YEAR-1/2020-blue.svg)](https://shields.io/)
->>>>>>> 9c70ae25ce81f42fcf2f9dce929a211647e2d940
+
+    [![Generic badge](https://img.shields.io/badge/Branch-IA941-blue.svg)](https://github.com/lucasgaspar22/MasterDegree/tree/IA941)
+    ![Generic badge](https://img.shields.io/badge/Credits-4-blue.svg)
+    ![Generic badge](https://img.shields.io/badge/Year-1/2020-blue.svg)
+    ![Generic badge](https://img.shields.io/badge/Status-On%20Going-yellow.svg)
 ---
 ## Contact information
 Author: Lucas Gaspar

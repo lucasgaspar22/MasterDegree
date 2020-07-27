@@ -40,6 +40,7 @@ public class Environment {
             w.reset();
             World.grow(1);
             creature = proxy.createCreature(100,100,0);
+            creature.updateBag();
             creature.start();   
         } catch (CommandExecException e) {
               System.err.println("Something went wrong\n"+e.getMessage());

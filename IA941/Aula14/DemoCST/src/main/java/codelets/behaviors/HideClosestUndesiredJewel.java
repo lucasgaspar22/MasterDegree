@@ -5,7 +5,6 @@
  */
 package codelets.behaviors;
 
-
 import java.awt.Point;
 import java.awt.geom.Point2D;
 
@@ -34,7 +33,7 @@ public class HideClosestUndesiredJewel extends Codelet {
     private CreatureInnerSense creatureInnerSense;
     private List<Thing> knownJewels;
 
-    public HideClosestUndesiredJewel (int reachDistance){
+    public HideClosestUndesiredJewel(int reachDistance) {
         setTimeStep(50);
         this.reachDistance = reachDistance;
     }
@@ -49,49 +48,54 @@ public class HideClosestUndesiredJewel extends Codelet {
 
     @Override
     public void proc() {
-        String undesiredJewelName="";
+        String undesiredJewelName = "";
         closestUndesiredJewel = (Thing) closestUndesiredJewelMO.getI();
         creatureInnerSense = (CreatureInnerSense) innerSenseMO.getI();
         knownJewels = (List<Thing>) knownJewelsMO.getI();
 
-        if(closestUndesiredJewel != null){
+        if (closestUndesiredJewel != null &&
+            !creatureInnerSense.isJewelDesired(closestUndesiredJewel.getMaterial().getColorName())) {
             double undesiredJewelX = 0;
             double undesiredJewelY = 0;
 
-            try{
+            try {
                 undesiredJewelX = closestUndesiredJewel.getX1();
                 undesiredJewelY = closestUndesiredJewel.getY1();
                 undesiredJewelName = closestUndesiredJewel.getName();
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
-                System.err.println("Something went wrong\n"+e.getMessage());
+                System.err.println("Something went wrong\n" + e.getMessage());
             }
 
             double creatureInnerSenseX = creatureInnerSense.position.getX();
             double creatureInnerSenseY = creatureInnerSense.position.getY();
 
             Point2D undesiredJewelPoint = new Point();
-            undesiredJewelPoint.setLocation(undesiredJewelX,undesiredJewelY);
+            undesiredJewelPoint.setLocation(undesiredJewelX, undesiredJewelY);
 
             Point2D creatureInnerSensePoint = new Point();
-            creatureInnerSensePoint.setLocation(creatureInnerSenseX,creatureInnerSenseY);
+            creatureInnerSensePoint.setLocation(creatureInnerSenseX, creatureInnerSenseY);
 
             double distance = creatureInnerSensePoint.distance(undesiredJewelPoint);
             JSONObject message = new JSONObject();
 
-            try{
-                if(distance < reachDistance){
+            try {
+                if (distance < reachDistance) {
                     message.put("OBJECT", undesiredJewelName);
                     message.put("ACTION", "BURY");
                     handsMO.setI(message.toString());
                     DestroyClosestUndesiredJewel();
-                }else handsMO.setI("");
-            }catch (JSONException e){
+                } else {
+                    handsMO.setI("");
+                }
+            } catch (JSONException e) {
                 e.printStackTrace();
-                System.err.println("Something went wrong\n"+e.getMessage());
+                System.err.println("Something went wrong\n" + e.getMessage());
 
             }
-        }else handsMO.setI("");
+        } else {
+            handsMO.setI("");
+        }
     }
 
     @Override
@@ -101,16 +105,20 @@ public class HideClosestUndesiredJewel extends Codelet {
     public void DestroyClosestUndesiredJewel() {
         int curIndex = -1;
         int jewelIndex = 0;
-        synchronized(knownJewels) {
-            CopyOnWriteArrayList<Thing> myKnownJewels = new CopyOnWriteArrayList<>(knownJewels);  
+        synchronized (knownJewels) {
+            CopyOnWriteArrayList<Thing> myKnownJewels = new CopyOnWriteArrayList<>(knownJewels);
             for (Thing thing : knownJewels) {
-                if (closestUndesiredJewel != null) 
-                    if (thing.getName().equals(closestUndesiredJewel.getName())) curIndex = jewelIndex;
-                    jewelIndex++;
-                }   
-                if (curIndex != -1) knownJewels.remove(curIndex);
+                if (closestUndesiredJewel != null) {
+                    if (thing.getName().equals(closestUndesiredJewel.getName())) {
+                        curIndex = jewelIndex;
+                    }
+                }
+                jewelIndex++;
+            }
+            if (curIndex != -1) {
+                knownJewels.remove(curIndex);
                 closestUndesiredJewel = null;
             }
         }
+    }
 }
-

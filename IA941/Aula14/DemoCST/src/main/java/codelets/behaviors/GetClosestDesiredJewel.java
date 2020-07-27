@@ -22,9 +22,9 @@ import ws3dproxy.model.Thing;
  *
  * @author lucas
  */
-public class GetClosestDesiredJewel  extends Codelet {
+public class GetClosestDesiredJewel extends Codelet {
 
-    private Memory closestDesiredJewelMO;
+    private Memory closestJewelMO;
     private Memory innerSenseMO;
     private Memory knownJewelsMO;
     private Memory handsMO;
@@ -33,14 +33,14 @@ public class GetClosestDesiredJewel  extends Codelet {
     private CreatureInnerSense creatureInnerSense;
     private List<Thing> knownJewels;
 
-    public GetClosestDesiredJewel (int reachDistance){
+    public GetClosestDesiredJewel(int reachDistance) {
         setTimeStep(50);
         this.reachDistance = reachDistance;
     }
 
     @Override
     public void accessMemoryObjects() {
-        closestDesiredJewelMO = (MemoryObject) this.getInput("CLOSEST_JEWEL");
+        closestJewelMO = (MemoryObject) this.getInput("CLOSEST_JEWEL");
         innerSenseMO = (MemoryObject) this.getInput("INNER");
         handsMO = (MemoryObject) this.getOutput("HANDS");
         knownJewelsMO = (MemoryObject) this.getOutput("KNOWN_JEWELS");
@@ -48,49 +48,54 @@ public class GetClosestDesiredJewel  extends Codelet {
 
     @Override
     public void proc() {
-        String desiredJewelName="";
-        closestDesiredJewel = (Thing) closestDesiredJewelMO.getI();
+        String desiredJewelName = "";
+        closestDesiredJewel = (Thing) closestJewelMO.getI();
         creatureInnerSense = (CreatureInnerSense) innerSenseMO.getI();
         knownJewels = (List<Thing>) knownJewelsMO.getI();
 
-        if(closestDesiredJewel != null){
+        if (closestDesiredJewel != null &&
+             creatureInnerSense.isJewelDesired(closestDesiredJewel.getMaterial().getColorName())) {
             double desiredJewelX = 0;
             double desiredJewelY = 0;
 
-            try{
+            try {
                 desiredJewelX = closestDesiredJewel.getX1();
                 desiredJewelY = closestDesiredJewel.getY1();
                 desiredJewelName = closestDesiredJewel.getName();
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
-                System.err.println("Something went wrong\n"+e.getMessage());
+                System.err.println("Something went wrong\n" + e.getMessage());
             }
 
             double creatureInnerSenseX = creatureInnerSense.position.getX();
             double creatureInnerSenseY = creatureInnerSense.position.getY();
 
             Point2D desiredJewelPoint = new Point();
-            desiredJewelPoint.setLocation(desiredJewelX,desiredJewelY);
+            desiredJewelPoint.setLocation(desiredJewelX, desiredJewelY);
 
             Point2D creatureInnerSensePoint = new Point();
-            creatureInnerSensePoint.setLocation(creatureInnerSenseX,creatureInnerSenseY);
+            creatureInnerSensePoint.setLocation(creatureInnerSenseX, creatureInnerSenseY);
 
             double distance = creatureInnerSensePoint.distance(desiredJewelPoint);
             JSONObject message = new JSONObject();
 
-            try{
-                if(distance < reachDistance){
+            try {
+                if (distance < reachDistance) {
                     message.put("OBJECT", desiredJewelName);
                     message.put("ACTION", "PICKUP");
                     handsMO.setI(message.toString());
                     DestroyClosestDesiredJewel();
-                }else handsMO.setI("");
-            }catch (JSONException e){
+                } else {
+                    handsMO.setI("");
+                }
+            } catch (JSONException e) {
                 e.printStackTrace();
-                System.err.println("Something went wrong\n"+e.getMessage());
+                System.err.println("Something went wrong\n" + e.getMessage());
 
             }
-        }else handsMO.setI("");
+        } else {
+            handsMO.setI("");
+        }
     }
 
     @Override
@@ -100,15 +105,20 @@ public class GetClosestDesiredJewel  extends Codelet {
     public void DestroyClosestDesiredJewel() {
         int curIndex = -1;
         int jewelIndex = 0;
-        synchronized(knownJewels) {
-            CopyOnWriteArrayList<Thing> myKnownJewels = new CopyOnWriteArrayList<>(knownJewels);  
+        synchronized (knownJewels) {
+            CopyOnWriteArrayList<Thing> myKnownJewels = new CopyOnWriteArrayList<>(knownJewels);
             for (Thing thing : knownJewels) {
-                if (closestDesiredJewel != null) 
-                    if (thing.getName().equals(closestDesiredJewel.getName())) curIndex = jewelIndex;
-                    jewelIndex++;
-                }   
-                if (curIndex != -1) knownJewels.remove(curIndex);
-                closestDesiredJewel = null;
+                if (closestDesiredJewel != null) {
+                    if (thing.getName().equals(closestDesiredJewel.getName())) {
+                        curIndex = jewelIndex;
+                    }
+                }
             }
+            jewelIndex++;
         }
+        if (curIndex != -1) {
+            knownJewels.remove(curIndex);
+            closestDesiredJewel = null;
+        }
+    }
 }

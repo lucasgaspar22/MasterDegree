@@ -20,39 +20,41 @@ import ws3dproxy.model.Thing;
  *
  * @author lucas
  */
-public class GoToClosestDesiredJewel extends Codelet{
+public class GoToClosestDesiredJewel extends Codelet {
 
-    private Memory closestDesiredJewelMO;
+    private Memory closestJewelMO;
     private Memory selfInfoMO;
     private Memory legsMO;
     private int creatureBasicSpeed;
     private double reachDistance;
 
-    public GoToClosestDesiredJewel(int creatureBasicSpeed, int reachDistance){
+    public GoToClosestDesiredJewel(int creatureBasicSpeed, int reachDistance) {
         this.creatureBasicSpeed = creatureBasicSpeed;
         this.reachDistance = reachDistance;
     }
 
     @Override
     public void accessMemoryObjects() {
-        closestDesiredJewelMO = (MemoryObject) this.getInput("CLOSEST_JEWEL");
+        closestJewelMO = (MemoryObject) this.getInput("CLOSEST_JEWEL");
         selfInfoMO = (MemoryObject) this.getInput("INNER");
         legsMO = (MemoryObject) this.getOutput("LEGS");
     }
 
     @Override
     public void proc() {
-        Thing closestDesiredJewel = (Thing) closestDesiredJewelMO.getI();
+        Thing closestDesiredJewel = (Thing) closestJewelMO.getI();
         CreatureInnerSense creatureInnerSense = (CreatureInnerSense) selfInfoMO.getI();
 
-        if(closestDesiredJewel != null){
+        if (closestDesiredJewel != null &&
+            creatureInnerSense.isJewelDesired(closestDesiredJewel.getMaterial().getColorName())) {
+            
             double desiredJewelX = 0;
             double desiredJewelY = 0;
 
-            try{
+            try {
                 desiredJewelX = closestDesiredJewel.getX1();
                 desiredJewelY = closestDesiredJewel.getY1();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 System.err.println("Something went wrong\n" + e.getMessage());
             }
@@ -61,36 +63,36 @@ public class GoToClosestDesiredJewel extends Codelet{
             double creatureInnerSenseY = creatureInnerSense.position.getY();
 
             Point2D desiredJewelPoint = new Point();
-            desiredJewelPoint.setLocation(desiredJewelX,desiredJewelY);
+            desiredJewelPoint.setLocation(desiredJewelX, desiredJewelY);
 
             Point2D creatureInnerSensePoint = new Point();
-            creatureInnerSensePoint.setLocation(creatureInnerSenseX,creatureInnerSenseY);
+            creatureInnerSensePoint.setLocation(creatureInnerSenseX, creatureInnerSenseY);
 
             double distance = creatureInnerSensePoint.distance(desiredJewelPoint);
             JSONObject message = new JSONObject();
 
-            try{
-                if (distance > reachDistance){
+            try {
+                if (distance > reachDistance) {
                     message.put("ACTION", "GOTO");
                     message.put("X", (int) desiredJewelX);
                     message.put("Y", (int) desiredJewelY);
                     message.put("SPEED", creatureBasicSpeed);
-                }else{
+                } else {
                     message.put("ACTION", "GOTO");
                     message.put("X", (int) desiredJewelX);
                     message.put("Y", (int) desiredJewelY);
                     message.put("SPEED", 0.0);
                 }
                 legsMO.setI(message.toString());
-            }catch (JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
                 System.err.println("Something went wrong\n" + e.getMessage());
             }
         }
     }
-    
+
     @Override
     public void calculateActivation() {
     }
-    
+
 }

@@ -51,20 +51,18 @@ public class Forage extends Codelet {
 
 	@Override
 	public void proc() {
-            knownApples = (List<Thing>) knownApplesMO.getI();
-            knownJewels = (List<Thing>) knownJewelsMO.getI();
-            if (knownJewels.size() == 0 || knownApples.size() == 0) {
-		JSONObject message=new JSONObject();
+        knownApples = (List<Thing>) knownApplesMO.getI();
+        knownJewels = (List<Thing>) knownJewelsMO.getI();
+        
+		if (knownJewels.size() == 0 || knownApples.size() == 0) {
+			JSONObject message=new JSONObject();
 			try {
 				message.put("ACTION", "FORAGE");
 				legsMO.setI(message.toString());
-			
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-            }            
-		
+        }            
 	}
 
 	@Override

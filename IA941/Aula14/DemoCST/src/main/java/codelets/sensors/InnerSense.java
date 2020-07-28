@@ -58,7 +58,7 @@ public class InnerSense extends Codelet {
         creatureInnerSense.FOV = creature.getFOV();
         creatureInnerSense.leaflets = creature.getLeaflets();
         creatureInnerSense.bag = creature.getBag();
-        creatureInnerSense.leaflet = getMostValuableLeaflet(creatureInnerSense.leaflets);
+        creatureInnerSense.leaflet = getMostValuableLeaflet(creature.getLeaflets());
     }
 
     @Override

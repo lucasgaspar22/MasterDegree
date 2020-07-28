@@ -20,16 +20,16 @@
 import br.unicamp.cst.core.entities.Codelet;
 import br.unicamp.cst.core.entities.Memory;
 import br.unicamp.cst.core.entities.Mind;
-import codelets.behaviors.EatClosestApple;
+import codelets.behaviors.EatClosestFood;
 import codelets.behaviors.Forage;
 import codelets.behaviors.GetClosestDesiredJewel;
-import codelets.behaviors.GoToClosestApple;
+import codelets.behaviors.GoToClosestFood;
 import codelets.behaviors.GoToClosestDesiredJewel;
 import codelets.behaviors.HideClosestUndesiredJewel;
 import codelets.motor.HandsActionCodelet;
 import codelets.motor.LegsActionCodelet;
-import codelets.perception.AppleDetector;
-import codelets.perception.ClosestAppleDetector;
+import codelets.perception.FoodDetector;
+import codelets.perception.ClosestFoodDetector;
 import codelets.perception.ClosestJewelDetector;
 import codelets.perception.JewelDetector;
 import codelets.sensors.InnerSense;
@@ -47,8 +47,8 @@ import ws3dproxy.model.Thing;
  */
 public class AgentMind extends Mind {
 
-    private static int creatureBasicSpeed = 3;
-    private static int reachDistance = 50;
+    private static int creatureBasicSpeed = 2;
+    private static int reachDistance = 60;
 
     public AgentMind(Environment env) {
         super();
@@ -58,10 +58,12 @@ public class AgentMind extends Mind {
         Memory handsMO;
         Memory visionMO;
         Memory innerSenseMO;
-        Memory closestAppleMO;
-        Memory knownApplesMO;
-        Memory closestJewelMO;
+        Memory closestFoodMO;
+        Memory knownFoodsMO;
         Memory knownJewelsMO;
+        Memory closestDesiredJewelMO;
+        //Memory closestUndesiredJewelMO;
+        
 
         //Initialize Memory Objects
         legsMO = createMemoryObject("LEGS", "");
@@ -72,23 +74,25 @@ public class AgentMind extends Mind {
         CreatureInnerSense creatureInnerSense = new CreatureInnerSense();
         innerSenseMO = createMemoryObject("INNER", creatureInnerSense);
 
-        Thing closestApple = null;
-        closestAppleMO = createMemoryObject("CLOSEST_APPLE", closestApple);
-        List<Thing> knownApples = Collections.synchronizedList(new ArrayList<Thing>());
-        knownApplesMO = createMemoryObject("KNOWN_APPLES", knownApples);
+        Thing closestFood = null;
+        closestFoodMO = createMemoryObject("CLOSEST_FOOD", closestFood);
+        List<Thing> knownFoods = Collections.synchronizedList(new ArrayList<Thing>());
+        knownFoodsMO = createMemoryObject("KNOWN_FOODS", knownFoods);
 
         Thing closestJewel = null;
-        closestJewelMO = createMemoryObject("CLOSEST_JEWEL", closestJewel);
+        closestDesiredJewelMO = createMemoryObject("CLOSEST_JEWEL", closestJewel);
+        //closestUndesiredJewelMO = createMemoryObject("CLOSEST_UNDESIRED_JEWEL", closestJewel);
         List<Thing> knownJewels = Collections.synchronizedList(new ArrayList<Thing>());
         knownJewelsMO = createMemoryObject("KNOWN_JEWELS", knownJewels);
 
         // Create and Populate MindViewer
         MindView mv = new MindView("MindView");
-        mv.addMO(knownApplesMO);
+        mv.addMO(knownFoodsMO);
         mv.addMO(knownJewelsMO);
         mv.addMO(visionMO);
-        mv.addMO(closestAppleMO);
-        mv.addMO(closestJewelMO);
+        mv.addMO(closestFoodMO);
+        mv.addMO(closestDesiredJewelMO);
+        //mv.addMO(closestUndesiredJewelMO);
         mv.addMO(innerSenseMO);
         mv.addMO(handsMO);
         mv.addMO(legsMO);
@@ -114,16 +118,16 @@ public class AgentMind extends Mind {
         insertCodelet(hands);
 
         // Create Perception Codelets
-        Codelet appleDetector = new AppleDetector();
-        appleDetector.addInput(visionMO);
-        appleDetector.addOutput(knownApplesMO);
-        insertCodelet(appleDetector);
+        Codelet foodDetector = new FoodDetector();
+        foodDetector.addInput(visionMO);
+        foodDetector.addOutput(knownFoodsMO);
+        insertCodelet(foodDetector);
 
-        Codelet closestAppleDetector = new ClosestAppleDetector();
-        closestAppleDetector.addInput(knownApplesMO);
-        closestAppleDetector.addInput(innerSenseMO);
-        closestAppleDetector.addOutput(closestAppleMO);
-        insertCodelet(closestAppleDetector);
+        Codelet closestFoodDetector = new ClosestFoodDetector();
+        closestFoodDetector.addInput(knownFoodsMO);
+        closestFoodDetector.addInput(innerSenseMO);
+        closestFoodDetector.addOutput(closestFoodMO);
+        insertCodelet(closestFoodDetector);
 
         Codelet jewelDetector = new JewelDetector();
         jewelDetector.addInput(visionMO);
@@ -133,38 +137,38 @@ public class AgentMind extends Mind {
         Codelet closestJewelDetector = new ClosestJewelDetector();
         closestJewelDetector.addInput(knownJewelsMO);
         closestJewelDetector.addInput(innerSenseMO);
-        closestJewelDetector.addOutput(closestJewelMO);
+        closestJewelDetector.addOutput(closestDesiredJewelMO);
         insertCodelet(closestJewelDetector);
 
         // Create Behavior Codelets
-        Codelet goToClosestApple = new GoToClosestApple(creatureBasicSpeed, reachDistance);
-        goToClosestApple.addInput(closestAppleMO);
-        goToClosestApple.addInput(innerSenseMO);
-        goToClosestApple.addOutput(legsMO);
-        insertCodelet(goToClosestApple);
+        Codelet goToClosestFood = new GoToClosestFood(creatureBasicSpeed, reachDistance);
+        goToClosestFood.addInput(closestFoodMO);
+        goToClosestFood.addInput(innerSenseMO);
+        goToClosestFood.addOutput(legsMO);
+        insertCodelet(goToClosestFood);
 
         Codelet goToClosestDesiredJewel = new GoToClosestDesiredJewel(creatureBasicSpeed, reachDistance);
-        goToClosestDesiredJewel.addInput(closestJewelMO);
+        goToClosestDesiredJewel.addInput(closestDesiredJewelMO);
         goToClosestDesiredJewel.addInput(innerSenseMO);
         goToClosestDesiredJewel.addOutput(legsMO);
         insertCodelet(goToClosestDesiredJewel);
 
-        Codelet eatApple = new EatClosestApple(reachDistance);
-        eatApple.addInput(closestAppleMO);
-        eatApple.addInput(innerSenseMO);
-        eatApple.addOutput(handsMO);
-        eatApple.addOutput(knownApplesMO);
-        insertCodelet(eatApple);
+        Codelet eatFood = new EatClosestFood(reachDistance);
+        eatFood.addInput(closestFoodMO);
+        eatFood.addInput(innerSenseMO);
+        eatFood.addOutput(handsMO);
+        eatFood.addOutput(knownFoodsMO);
+        insertCodelet(eatFood);
 
         Codelet getDesiredJewel = new GetClosestDesiredJewel(reachDistance);
-        getDesiredJewel.addInput(closestJewelMO);
+        getDesiredJewel.addInput(closestDesiredJewelMO);
         getDesiredJewel.addInput(innerSenseMO);
         getDesiredJewel.addOutput(handsMO);
         getDesiredJewel.addOutput(knownJewelsMO);
         insertCodelet(getDesiredJewel);
 
         Codelet hideUndesiredJewel = new HideClosestUndesiredJewel(reachDistance);
-        hideUndesiredJewel.addInput(closestJewelMO);
+        hideUndesiredJewel.addInput(closestDesiredJewelMO);
         hideUndesiredJewel.addInput(innerSenseMO);
         hideUndesiredJewel.addOutput(handsMO);
         hideUndesiredJewel.addOutput(knownJewelsMO);
@@ -172,8 +176,9 @@ public class AgentMind extends Mind {
 
 
         Codelet forage = new Forage();
-        forage.addInput(knownApplesMO);
+        forage.addInput(knownFoodsMO);
         forage.addInput(knownJewelsMO);
+        forage.addInput(visionMO);
         forage.addOutput(legsMO);
         insertCodelet(forage);
 

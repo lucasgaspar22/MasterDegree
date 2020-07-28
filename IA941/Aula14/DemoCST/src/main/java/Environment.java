@@ -17,6 +17,8 @@
  *    Klaus Raizer, Andre Paraense, Ricardo Ribeiro Gudwin
  *****************************************************************************/
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import ws3dproxy.CommandExecException;
 import ws3dproxy.WS3DProxy;
 import ws3dproxy.model.Creature;
@@ -39,8 +41,15 @@ public class Environment {
             World w = World.getInstance();
             w.reset();
             World.grow(1);
+            //World.createDeliverySpot(0, 0);
             creature = proxy.createCreature(100,100,0);
+            creature.genLeaflet();
             creature.updateBag();
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Environment.class.getName()).log(Level.SEVERE, null, ex);
+            }
             creature.start();   
         } catch (CommandExecException e) {
               System.err.println("Something went wrong\n"+e.getMessage());

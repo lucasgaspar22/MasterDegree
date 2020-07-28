@@ -53,8 +53,8 @@ public class GetClosestDesiredJewel extends Codelet {
         creatureInnerSense = (CreatureInnerSense) innerSenseMO.getI();
         knownJewels = (List<Thing>) knownJewelsMO.getI();
 
-        if (closestDesiredJewel != null &&
-             creatureInnerSense.isJewelDesired(closestDesiredJewel.getMaterial().getColorName())) {
+        if (closestDesiredJewel != null
+          && creatureInnerSense.isJewelDesired(closestDesiredJewel.getMaterial().getColorName())) {
             double desiredJewelX = 0;
             double desiredJewelY = 0;
 
@@ -80,9 +80,10 @@ public class GetClosestDesiredJewel extends Codelet {
             JSONObject message = new JSONObject();
 
             try {
-                if (distance < reachDistance) {
+                if (distance < reachDistance+10 ){//&& creatureInnerSense.isJewelDesired(closestDesiredJewel.getMaterial().getColorName())) {
                     message.put("OBJECT", desiredJewelName);
                     message.put("ACTION", "PICKUP");
+                    //System.out.println(message.toString());
                     handsMO.setI(message.toString());
                     DestroyClosestDesiredJewel();
                 } else {
@@ -93,7 +94,8 @@ public class GetClosestDesiredJewel extends Codelet {
                 System.err.println("Something went wrong\n" + e.getMessage());
 
             }
-        } else {
+        }
+        else {
             handsMO.setI("");
         }
     }
@@ -103,22 +105,24 @@ public class GetClosestDesiredJewel extends Codelet {
     }
 
     public void DestroyClosestDesiredJewel() {
-        int curIndex = -1;
-        int jewelIndex = 0;
+        int auxIndex = -1;
+        int index = 0;
         synchronized (knownJewels) {
-            CopyOnWriteArrayList<Thing> myKnownJewels = new CopyOnWriteArrayList<>(knownJewels);
+            CopyOnWriteArrayList<Thing> myknown = new CopyOnWriteArrayList<>(knownJewels);
             for (Thing thing : knownJewels) {
                 if (closestDesiredJewel != null) {
-                    if (thing.getName().equals(closestDesiredJewel.getName())) {
-                        curIndex = jewelIndex;
+                    if (thing.equals(closestDesiredJewel)) {
+                        auxIndex = index;
                     }
                 }
+                index++;
             }
-            jewelIndex++;
-        }
-        if (curIndex != -1) {
-            knownJewels.remove(curIndex);
+            if (auxIndex != -1) {
+                knownJewels.remove(auxIndex);
+                //closestJewelMO.setI(null);
+            }
             closestDesiredJewel = null;
         }
     }
+
 }

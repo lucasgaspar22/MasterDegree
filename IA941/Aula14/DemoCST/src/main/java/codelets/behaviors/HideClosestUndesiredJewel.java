@@ -34,7 +34,7 @@ public class HideClosestUndesiredJewel extends Codelet {
     private List<Thing> knownJewels;
 
     public HideClosestUndesiredJewel(int reachDistance) {
-        setTimeStep(50);
+        setTimeStep(100);
         this.reachDistance = reachDistance;
     }
 
@@ -53,8 +53,8 @@ public class HideClosestUndesiredJewel extends Codelet {
         creatureInnerSense = (CreatureInnerSense) innerSenseMO.getI();
         knownJewels = (List<Thing>) knownJewelsMO.getI();
 
-        if (closestUndesiredJewel != null &&
-            !creatureInnerSense.isJewelDesired(closestUndesiredJewel.getMaterial().getColorName())) {
+        if (closestUndesiredJewel != null
+            && !creatureInnerSense.isJewelDesired(closestUndesiredJewel.getMaterial().getColorName())) {
             double undesiredJewelX = 0;
             double undesiredJewelY = 0;
 
@@ -80,7 +80,7 @@ public class HideClosestUndesiredJewel extends Codelet {
             JSONObject message = new JSONObject();
 
             try {
-                if (distance < reachDistance) {
+                if (distance < reachDistance + 20) {
                     message.put("OBJECT", undesiredJewelName);
                     message.put("ACTION", "BURY");
                     handsMO.setI(message.toString());
@@ -93,7 +93,8 @@ public class HideClosestUndesiredJewel extends Codelet {
                 System.err.println("Something went wrong\n" + e.getMessage());
 
             }
-        } else {
+        }
+        else {
             handsMO.setI("");
         }
     }
@@ -115,10 +116,9 @@ public class HideClosestUndesiredJewel extends Codelet {
                 }
                 jewelIndex++;
             }
-            if (curIndex != -1) {
-                knownJewels.remove(curIndex);
-                closestUndesiredJewel = null;
-            }
+            if (curIndex != -1) knownJewels.remove(curIndex);
+            closestUndesiredJewel = null;
+            
         }
     }
 }

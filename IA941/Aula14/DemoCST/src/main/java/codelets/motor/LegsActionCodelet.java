@@ -77,7 +77,7 @@ public class LegsActionCodelet extends Codelet {
                             log.info("Sending Forage command to agent");
                         }
                         try {
-                            c.rotate(2);
+                            c.rotate(1);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -97,7 +97,6 @@ public class LegsActionCodelet extends Codelet {
                             previousTargetx = targetx;
                             previousTargety = targety;
                         }
-
                     } else {
                         log.info("Sending stop command to agent");
                         try {

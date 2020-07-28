@@ -21,6 +21,7 @@ package memory;
 import java.awt.Polygon;
 import java.util.List;
 import ws3dproxy.model.Bag;
+import ws3dproxy.model.Environment;
 import ws3dproxy.model.Leaflet;
 import ws3dproxy.model.WorldPoint;
 
@@ -48,14 +49,14 @@ public class CreatureInnerSense {
     }
 
     public boolean isJewelDesired(String color){
-        int bagQuantity = bag.getNumberCrystalPerType(color);
         int leafletQuantity = leaflet.getTotalNumberOfType(color);
-
-        if(bagQuantity >= leafletQuantity) return false;
-        else return true;
+        
+        if(leafletQuantity > 0) return true;
+        else return false;
     }
 
     public boolean isLeafletReady(){
+        
         int redBag = bag.getNumberCrystalPerType("Red");
         int greenBag =  bag.getNumberCrystalPerType("Green");
         int blueBag = bag.getNumberCrystalPerType("Blue");

@@ -27,6 +27,7 @@ public class GoToClosestDesiredJewel extends Codelet {
     private Memory legsMO;
     private int creatureBasicSpeed;
     private double reachDistance;
+    Thing closestDesiredJewel;
 
     public GoToClosestDesiredJewel(int creatureBasicSpeed, int reachDistance) {
         this.creatureBasicSpeed = creatureBasicSpeed;
@@ -42,11 +43,11 @@ public class GoToClosestDesiredJewel extends Codelet {
 
     @Override
     public void proc() {
-        Thing closestDesiredJewel = (Thing) closestJewelMO.getI();
+        closestDesiredJewel = (Thing) closestJewelMO.getI();
         CreatureInnerSense creatureInnerSense = (CreatureInnerSense) selfInfoMO.getI();
 
-        if (closestDesiredJewel != null &&
-            creatureInnerSense.isJewelDesired(closestDesiredJewel.getMaterial().getColorName())) {
+        if (closestDesiredJewel != null && creatureInnerSense.fuel>=400){
+            //&& creatureInnerSense.isJewelDesired(closestDesiredJewel.getMaterial().getColorName())) {
             
             double desiredJewelX = 0;
             double desiredJewelY = 0;
@@ -74,15 +75,18 @@ public class GoToClosestDesiredJewel extends Codelet {
             try {
                 if (distance > reachDistance) {
                     message.put("ACTION", "GOTO");
-                    message.put("X", (int) desiredJewelX);
-                    message.put("Y", (int) desiredJewelY);
+                    message.put("X",  desiredJewelX);
+                    message.put("Y",  desiredJewelY);
                     message.put("SPEED", creatureBasicSpeed);
+                    
                 } else {
                     message.put("ACTION", "GOTO");
-                    message.put("X", (int) desiredJewelX);
-                    message.put("Y", (int) desiredJewelY);
+                    message.put("X",  desiredJewelX);
+                    message.put("Y",  desiredJewelY);
                     message.put("SPEED", 0.0);
                 }
+
+                //System.out.println(message.toString());
                 legsMO.setI(message.toString());
             } catch (JSONException e) {
                 e.printStackTrace();

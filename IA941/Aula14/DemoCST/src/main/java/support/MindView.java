@@ -83,24 +83,26 @@ public class MindView extends javax.swing.JFrame {
                     //Object k = cl.cast(mo.getI());
                     Object k = mo.getI();
                     String moName = mo.getName();
-                    if (moName.equals("KNOWN_JEWELS") || moName.equals("KNOWN_APPLES") || moName.equals("VISION")) {
+                    if (moName.equals("KNOWN_JEWELS") || moName.equals("KNOWN_FOODS") || moName.equals("VISION")) {
                         //alltext += mo.getName()+": "+k+"<-> ";
                         alltext += mo.getName()+": [ ";
                         CopyOnWriteArrayList<Thing> l = new CopyOnWriteArrayList<>((List<Thing>)k);
                         for (Thing t : l) {
                             String kindofthing = "t";
-                            if (t.getCategory() == Constants.categoryPFOOD) kindofthing = "a";
+                            if (t.getCategory() == Constants.categoryPFOOD || t.getCategory() == Constants.categoryNPFOOD) kindofthing = "f";
                             else if(t.getCategory() == Constants.categoryJEWEL) kindofthing="j";
                             alltext += kindofthing+"("+(int)(t.getX1()+t.getX2())/2+","+(int)(t.getY1()+t.getY2())/2+") ";
                         }    
                         alltext += "]\n";
                     }
-                    else if (moName.equals("CLOSEST_APPLE") || moName.equals("CLOSEST_JEWEL")) {
+                    else if (moName.equals("CLOSEST_FOOD") || moName.equals("CLOSEST_JEWEL")) {
                         Thing t = (Thing)k;
                         String kindofthing = "t";
-                        if (t.getCategory() == Constants.categoryPFOOD) kindofthing = "a";
+                        if (t.getCategory() == Constants.categoryPFOOD || t.getCategory() == Constants.categoryNPFOOD) kindofthing = "f";
                         else if(t.getCategory() == Constants.categoryJEWEL) kindofthing="j";
-                        alltext += moName+": "+kindofthing+"("+(int)(t.getX1()+t.getX2())/2+","+(int)(t.getY1()+t.getY2())/2+")\n";
+                        
+                        if(t.getCategory() == Constants.categoryJEWEL) alltext += moName+": "+kindofthing+"("+(int)(t.getX1()+t.getX2())/2+","+(int)(t.getY1()+t.getY2())/2+") "+t.getMaterial().getColorName()+"\n";
+                        else alltext += moName+": "+kindofthing+"("+(int)(t.getX1()+t.getX2())/2+","+(int)(t.getY1()+t.getY2())/2+")\n";
                     }
                     else     
                     alltext += mo.getName()+": "+k+"\n";
@@ -113,7 +115,7 @@ public class MindView extends javax.swing.JFrame {
         j++;
         if (j == 7) {
             try {
-              //World.createFood(0,r.nextInt(800) , r.nextInt(600));
+              //World.createJewel(r.nextInt(6),r.nextInt(800) , r.nextInt(600));
             } catch (Exception e) {
                 e.printStackTrace();
             }

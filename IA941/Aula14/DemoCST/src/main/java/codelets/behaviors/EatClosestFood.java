@@ -90,7 +90,7 @@ public class EatClosestFood extends Codelet {
             double distance = pSelf.distance(pFood);
             JSONObject message = new JSONObject();
             try {
-                if (distance < reachDistance) { //eat it						
+                if (distance < reachDistance + 20) { //eat it						
                     message.put("OBJECT", closestFood);
                     message.put("ACTION", "EATIT");
                     handsMO.setI(message.toString());

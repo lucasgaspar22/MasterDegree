@@ -46,7 +46,7 @@ public class GoToClosestDesiredJewel extends Codelet {
         closestDesiredJewel = (Thing) closestJewelMO.getI();
         CreatureInnerSense creatureInnerSense = (CreatureInnerSense) selfInfoMO.getI();
 
-        if (closestDesiredJewel != null && creatureInnerSense.fuel>=400){
+        if (closestDesiredJewel != null && creatureInnerSense.fuel>=400 && !creatureInnerSense.isLeafletReady()){
             //&& creatureInnerSense.isJewelDesired(closestDesiredJewel.getMaterial().getColorName())) {
             
             double desiredJewelX = 0;

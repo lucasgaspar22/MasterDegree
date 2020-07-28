@@ -80,7 +80,7 @@ public class GetClosestDesiredJewel extends Codelet {
             JSONObject message = new JSONObject();
 
             try {
-                if (distance < reachDistance+10 ){//&& creatureInnerSense.isJewelDesired(closestDesiredJewel.getMaterial().getColorName())) {
+                if (distance < reachDistance ){//&& creatureInnerSense.isJewelDesired(closestDesiredJewel.getMaterial().getColorName())) {
                     message.put("OBJECT", desiredJewelName);
                     message.put("ACTION", "PICKUP");
                     //System.out.println(message.toString());

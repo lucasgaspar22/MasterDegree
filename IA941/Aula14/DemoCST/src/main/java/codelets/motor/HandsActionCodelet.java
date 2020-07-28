@@ -39,12 +39,12 @@ public class HandsActionCodelet extends Codelet {
 
     private Memory handsMO;
     private String previousHandsAction = "";
-    private Creature c;
+    private Creature creature;
     private Random r = new Random();
     static Logger log = Logger.getLogger(HandsActionCodelet.class.getCanonicalName());
 
     public HandsActionCodelet(Creature nc) {
-        c = nc;
+        creature = nc;
     }
 
     @Override
@@ -65,53 +65,47 @@ public class HandsActionCodelet extends Codelet {
                     String objectName = jsonAction.getString("OBJECT");
                     if (action.equals("PICKUP")) {
                         try {
-                            c.putInSack(objectName);
+                            creature.putInSack(objectName);
                         } catch (Exception e) {
-
+                            e.printStackTrace();
+                            System.err.println("Something went wrong\n" + e.getMessage());
                         }
                         log.info("Sending Put In Sack command to agent:****** " + objectName + "**********");
-
-                        //							}
                     }
-                    if (action.equals("EATIT")) {
+                    else if (action.equals("EATIT")) {
                         try {
-                            c.eatIt(objectName);
+                            creature.eatIt(objectName);
                         } catch (Exception e) {
-
+                            e.printStackTrace();
+                            System.err.println("Something went wrong\n" + e.getMessage());
                         }
                         log.info("Sending Eat command to agent:****** " + objectName + "**********");
                     }
-                    if (action.equals("BURY")) {
+                    else if (action.equals("BURY")) {
                         try {
-                            c.hideIt(objectName);
+                            creature.hideIt(objectName);
                         } catch (Exception e) {
-
+                            e.printStackTrace();
+                            System.err.println("Something went wrong\n" + e.getMessage());
                         }
                         log.info("Sending Bury command to agent:****** " + objectName + "**********");
                     }
+                    else if(action.equals("DELIVER")){
+                        try{
+                            creature.deliverLeaflet(objectName);
+                        }catch(Exception e){
+                            
+                        }
+                    }
                 }
-//                                else if (jsonAction.has("ACTION")) {
-//                                    int x=0,y=0;
-//                                    String action=jsonAction.getString("ACTION");
-//                                    if(action.equals("FORAGE")){
-//                                                try {
-//                                                      x = r.nextInt(600);
-//                                                      y = r.nextInt(800);
-//                                                 c.moveto(1, x,y );
-//                                                } catch (Exception e) {
-//                                                    
-//                                                }
-//						System.out.println("Sending Forage command to agent:****** ("+x+","+y+") **********");							
-//					}
-//                                }
             } catch (JSONException e) {
                 e.printStackTrace();
+                System.err.println("Something went wrong\n" + e.getMessage());
             }
 
         }
-//		System.out.println("OK_hands");
         previousHandsAction = (String) handsMO.getI();
-    }//end proc
+    }
 
     @Override
     public void calculateActivation() {

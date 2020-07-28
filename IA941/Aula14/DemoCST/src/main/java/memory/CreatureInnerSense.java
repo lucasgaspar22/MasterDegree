@@ -50,6 +50,7 @@ public class CreatureInnerSense {
 
     public boolean isJewelDesired(String color){
         int leafletQuantity = leaflet.getTotalNumberOfType(color);
+        int bagQuantity = bag.getNumberCrystalPerType(color);
         
         if(leafletQuantity > 0) return true;
         else return false;

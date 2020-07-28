@@ -20,20 +20,10 @@
 import br.unicamp.cst.core.entities.Codelet;
 import br.unicamp.cst.core.entities.Memory;
 import br.unicamp.cst.core.entities.Mind;
-import codelets.behaviors.EatClosestFood;
-import codelets.behaviors.Forage;
-import codelets.behaviors.GetClosestDesiredJewel;
-import codelets.behaviors.GoToClosestFood;
-import codelets.behaviors.GoToClosestDesiredJewel;
-import codelets.behaviors.HideClosestUndesiredJewel;
-import codelets.motor.HandsActionCodelet;
-import codelets.motor.LegsActionCodelet;
-import codelets.perception.FoodDetector;
-import codelets.perception.ClosestFoodDetector;
-import codelets.perception.ClosestJewelDetector;
-import codelets.perception.JewelDetector;
-import codelets.sensors.InnerSense;
-import codelets.sensors.Vision;
+import codelets.behaviors.*;
+import codelets.motor.*;
+import codelets.perception.*;
+import codelets.sensors.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -48,7 +38,7 @@ import ws3dproxy.model.Thing;
 public class AgentMind extends Mind {
 
     private static int creatureBasicSpeed = 2;
-    private static int reachDistance = 60;
+    private static int reachDistance = 70;
 
     public AgentMind(Environment env) {
         super();
@@ -153,6 +143,12 @@ public class AgentMind extends Mind {
         goToClosestDesiredJewel.addOutput(legsMO);
         insertCodelet(goToClosestDesiredJewel);
 
+        Codelet goToDeliverySpot = new GoToDeliverySpot(creatureBasicSpeed, reachDistance);
+        //goToDeliverySpot.addInput(closestDesiredJewelMO);
+        goToDeliverySpot.addInput(innerSenseMO);
+        goToDeliverySpot.addOutput(legsMO);
+        insertCodelet(goToDeliverySpot);
+
         Codelet eatFood = new EatClosestFood(reachDistance);
         eatFood.addInput(closestFoodMO);
         eatFood.addInput(innerSenseMO);
@@ -173,6 +169,12 @@ public class AgentMind extends Mind {
         hideUndesiredJewel.addOutput(handsMO);
         hideUndesiredJewel.addOutput(knownJewelsMO);
         insertCodelet(hideUndesiredJewel);
+        
+        Codelet deliverLeaflet = new DeliverLeaflet(reachDistance);
+        //goToDeliverySpot.addInput(closestDesiredJewelMO);
+        deliverLeaflet.addInput(innerSenseMO);
+        deliverLeaflet.addOutput(handsMO);
+        insertCodelet(deliverLeaflet);
 
 
         Codelet forage = new Forage();

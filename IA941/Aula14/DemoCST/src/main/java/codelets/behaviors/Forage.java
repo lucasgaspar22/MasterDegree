@@ -55,7 +55,7 @@ public class Forage extends Codelet {
         knownJewels = (List<Thing>) knownJewelsMO.getI();
         vision = (List<Thing>) visionMO.getI();
 
-        if ( (knownJewels.size() == 0 || vision.size() == 0|| knownFoods.size() == 0)) {
+        if ( vision.size() == 0 || (knownJewels.size() == 0 && knownFoods.size() == 0)) {
             JSONObject message = new JSONObject();
             try {
                 message.put("ACTION", "FORAGE");

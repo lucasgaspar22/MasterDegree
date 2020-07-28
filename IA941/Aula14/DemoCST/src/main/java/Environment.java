@@ -41,7 +41,7 @@ public class Environment {
             World w = World.getInstance();
             w.reset();
             World.grow(1);
-            //World.createDeliverySpot(0, 0);
+            World.createCage(-15, -30);
             creature = proxy.createCreature(100,100,0);
             creature.genLeaflet();
             creature.updateBag();

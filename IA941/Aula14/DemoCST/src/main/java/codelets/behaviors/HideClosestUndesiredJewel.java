@@ -85,17 +85,12 @@ public class HideClosestUndesiredJewel extends Codelet {
                     message.put("ACTION", "BURY");
                     handsMO.setI(message.toString());
                     DestroyClosestUndesiredJewel();
-                } else {
-                    handsMO.setI("");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
                 System.err.println("Something went wrong\n" + e.getMessage());
 
             }
-        }
-        else {
-            handsMO.setI("");
         }
     }
 

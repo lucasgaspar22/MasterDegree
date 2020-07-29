@@ -77,14 +77,10 @@ public class DeliverLeaflet extends Codelet {
                     message.put("ACTION", "DELIVER");
                     //System.out.println(message.toString());
                     handsMO.setI(message.toString());
-                } else {
-                    handsMO.setI("");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }else {
-            handsMO.setI("");
         }
     }
 

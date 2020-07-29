@@ -41,19 +41,16 @@ public class Environment {
             World w = World.getInstance();
             w.reset();
             World.grow(1);
-            World.createCage(-15, -30);
+            //World.createCage(-40, -40);
             creature = proxy.createCreature(100,100,0);
+            System.out.println("Robot "+creature.getName()+" is ready to go.");
+            Thread.sleep(4000);
             creature.genLeaflet();
             creature.updateBag();
-            try {
-                Thread.sleep(4000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Environment.class.getName()).log(Level.SEVERE, null, ex);
-            }
             creature.start();   
-        } catch (CommandExecException e) {
+        } catch (Exception e) {
               System.err.println("Something went wrong\n"+e.getMessage());
         }
-        System.out.println("Robot "+creature.getName()+" is ready to go.");
+        
     }
 }

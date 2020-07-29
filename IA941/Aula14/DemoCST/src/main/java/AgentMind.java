@@ -38,7 +38,7 @@ import ws3dproxy.model.Thing;
 public class AgentMind extends Mind {
 
     private static int creatureBasicSpeed = 2;
-    private static int reachDistance = 70;
+    private static int reachDistance = 50;
 
     public AgentMind(Environment env) {
         super();

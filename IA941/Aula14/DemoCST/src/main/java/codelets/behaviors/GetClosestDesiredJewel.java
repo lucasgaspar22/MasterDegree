@@ -86,17 +86,12 @@ public class GetClosestDesiredJewel extends Codelet {
                     //System.out.println(message.toString());
                     handsMO.setI(message.toString());
                     DestroyClosestDesiredJewel();
-                } else {
-                    handsMO.setI("");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
                 System.err.println("Something went wrong\n" + e.getMessage());
 
             }
-        }
-        else {
-            handsMO.setI("");
         }
     }
 

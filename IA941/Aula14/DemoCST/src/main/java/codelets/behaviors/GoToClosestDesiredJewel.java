@@ -81,8 +81,8 @@ public class GoToClosestDesiredJewel extends Codelet {
                     
                 } else {
                     message.put("ACTION", "GOTO");
-                    message.put("X",  desiredJewelX);
-                    message.put("Y",  desiredJewelY);
+                    message.put("X",  creatureInnerSenseX);
+                    message.put("Y",  creatureInnerSenseY);
                     message.put("SPEED", 0.0);
                 }
 

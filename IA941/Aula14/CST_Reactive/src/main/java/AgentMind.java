@@ -48,11 +48,12 @@ public class AgentMind extends Mind {
         Memory handsMO;
         Memory visionMO;
         Memory innerSenseMO;
-        Memory closestFoodMO;
         Memory knownFoodsMO;
         Memory knownJewelsMO;
+        Memory knownWallsMO;
         Memory closestDesiredJewelMO;
-        //Memory closestUndesiredJewelMO;
+        Memory closestFoodMO;
+        Memory closestWallMO;
         
 
         //Initialize Memory Objects
@@ -71,9 +72,13 @@ public class AgentMind extends Mind {
 
         Thing closestJewel = null;
         closestDesiredJewelMO = createMemoryObject("CLOSEST_JEWEL", closestJewel);
-        //closestUndesiredJewelMO = createMemoryObject("CLOSEST_UNDESIRED_JEWEL", closestJewel);
         List<Thing> knownJewels = Collections.synchronizedList(new ArrayList<Thing>());
         knownJewelsMO = createMemoryObject("KNOWN_JEWELS", knownJewels);
+
+        Thing closestWall = null;
+        closestWallMO = createMemoryObject("CLOSEST_WALL", closestWall);
+        List<Thing> knownWalls = Collections.synchronizedList(new ArrayList<Thing>());
+        knownWallsMO = createMemoryObject("KNOWN_WALLS", knownJewels);
 
         // Create and Populate MindViewer
         MindView mv = new MindView("MindView");
@@ -82,7 +87,7 @@ public class AgentMind extends Mind {
         mv.addMO(visionMO);
         mv.addMO(closestFoodMO);
         mv.addMO(closestDesiredJewelMO);
-        //mv.addMO(closestUndesiredJewelMO);
+        mv.addMO(closestWallMO);
         mv.addMO(innerSenseMO);
         mv.addMO(handsMO);
         mv.addMO(legsMO);
@@ -130,6 +135,18 @@ public class AgentMind extends Mind {
         closestJewelDetector.addOutput(closestDesiredJewelMO);
         insertCodelet(closestJewelDetector);
 
+
+        Codelet wallDtector = new WallDetector();
+        wallDtector.addInput(visionMO);
+        wallDtector.addOutput(knownWallsMO);
+        insertCodelet(wallDtector);
+
+        Codelet closestWallDetector = new ClosestWallDetector();
+        closestWallDetector.addInput(knownWallsMO);
+        closestWallDetector.addInput(innerSenseMO);
+        closestWallDetector.addOutput(closestWallMO);
+        insertCodelet(closestWallDetector);
+
         // Create Behavior Codelets
         Codelet goToClosestFood = new GoToClosestFood(creatureBasicSpeed, reachDistance);
         goToClosestFood.addInput(closestFoodMO);
@@ -144,7 +161,6 @@ public class AgentMind extends Mind {
         insertCodelet(goToClosestDesiredJewel);
 
         Codelet goToDeliverySpot = new GoToDeliverySpot(creatureBasicSpeed, reachDistance);
-        //goToDeliverySpot.addInput(closestDesiredJewelMO);
         goToDeliverySpot.addInput(innerSenseMO);
         goToDeliverySpot.addOutput(legsMO);
         insertCodelet(goToDeliverySpot);
@@ -171,16 +187,22 @@ public class AgentMind extends Mind {
         insertCodelet(hideUndesiredJewel);
         
         Codelet deliverLeaflet = new DeliverLeaflet(reachDistance);
-        //goToDeliverySpot.addInput(closestDesiredJewelMO);
         deliverLeaflet.addInput(innerSenseMO);
         deliverLeaflet.addOutput(handsMO);
         insertCodelet(deliverLeaflet);
+
+        Codelet avoidWall = new AvoidWall(creatureBasicSpeed,reachDistance);
+        avoidWall.addInput(closestWallMO);
+        avoidWall.addInput(innerSenseMO);
+        avoidWall.addOutput(legsMO);
+        insertCodelet(avoidWall);
 
 
         Codelet forage = new Forage();
         forage.addInput(knownFoodsMO);
         forage.addInput(knownJewelsMO);
         forage.addInput(visionMO);
+        forage.addInput(innerSenseMO);
         forage.addOutput(legsMO);
         insertCodelet(forage);
 

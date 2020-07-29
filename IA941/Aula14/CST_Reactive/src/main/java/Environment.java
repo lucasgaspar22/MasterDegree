@@ -41,7 +41,6 @@ public class Environment {
             World w = World.getInstance();
             w.reset();
             World.grow(1);
-            //World.createCage(-40, -40);
             creature = proxy.createCreature(100,100,0);
             System.out.println("Robot "+creature.getName()+" is ready to go.");
             Thread.sleep(4000);

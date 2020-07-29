@@ -22,6 +22,7 @@ import br.unicamp.cst.core.entities.Codelet;
 import br.unicamp.cst.core.entities.Memory;
 import br.unicamp.cst.core.entities.MemoryObject;
 import java.util.List;
+import memory.CreatureInnerSense;
 import org.json.JSONException;
 import org.json.JSONObject;
 import ws3dproxy.model.Thing;
@@ -38,6 +39,7 @@ public class Forage extends Codelet {
     private Memory knownJewelsMO;
     private Memory visionMO;
     private Memory legsMO;
+    private Memory innerSenseMO;
     private List<Thing> knownFoods;
     private List<Thing> vision;
     private List<Thing> knownJewels;
@@ -54,8 +56,9 @@ public class Forage extends Codelet {
         knownFoods = (List<Thing>) knownFoodsMO.getI();
         knownJewels = (List<Thing>) knownJewelsMO.getI();
         vision = (List<Thing>) visionMO.getI();
+        CreatureInnerSense creatureInnerSense = (CreatureInnerSense) innerSenseMO.getI();
 
-        if ( vision.size() == 0 || (knownJewels.size() == 0 && knownFoods.size() == 0)) {
+        if ( !creatureInnerSense.isLeafletReady() && (vision.size() == 0 || (knownJewels.size() == 0 && knownFoods.size() == 0))) {
             JSONObject message = new JSONObject();
             try {
                 message.put("ACTION", "FORAGE");
@@ -72,6 +75,7 @@ public class Forage extends Codelet {
         knownFoodsMO = (MemoryObject) this.getInput("KNOWN_FOODS");
         visionMO = (MemoryObject)  this.getInput("VISION");
         legsMO = (MemoryObject) this.getOutput("LEGS");
+        innerSenseMO = (MemoryObject) this.getInput("INNER");
         // TODO Auto-generated method stub
     }
 

@@ -21,6 +21,7 @@ package memory;
 import java.awt.Polygon;
 import java.util.List;
 import ws3dproxy.model.Bag;
+import ws3dproxy.model.Creature;
 import ws3dproxy.model.Environment;
 import ws3dproxy.model.Leaflet;
 import ws3dproxy.model.WorldPoint;
@@ -39,7 +40,8 @@ public class CreatureInnerSense {
     public List<Leaflet> leaflets;
     public Leaflet leaflet;
     public Bag bag;
-
+    public Creature creature;
+    
     public String toString() {
         if (position != null) {
             return ("Position: (" + (int) position.getX() + "," + (int) position.getY() + ")\nPitch: " + (int) pitch + " \nFuel: " + fuel + "\nScore: "+ score +"\nLeaflet: " + leaflet);

@@ -59,6 +59,7 @@ public class InnerSense extends Codelet {
         creatureInnerSense.leaflets = creature.getLeaflets();
         creatureInnerSense.bag = creature.updateBag();
         creatureInnerSense.leaflet = getMostValuableLeaflet(creature.getLeaflets());
+        creatureInnerSense.creature = this.creature;
     }
 
     @Override

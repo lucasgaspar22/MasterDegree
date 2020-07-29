@@ -72,7 +72,7 @@ public class DeliverLeaflet extends Codelet {
             double distance = pSelf.distance(pDeliverySpot);
             JSONObject message = new JSONObject();
             try {
-                if (distance < reachDistance +20 ){
+                if (distance < reachDistance ){
                     message.put("OBJECT", leafletId);
                     message.put("ACTION", "DELIVER");
                     //System.out.println(message.toString());

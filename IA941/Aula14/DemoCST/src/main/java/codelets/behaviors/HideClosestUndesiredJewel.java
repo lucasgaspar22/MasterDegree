@@ -80,7 +80,7 @@ public class HideClosestUndesiredJewel extends Codelet {
             JSONObject message = new JSONObject();
 
             try {
-                if (distance < reachDistance + 20) {
+                if (distance < reachDistance) {
                     message.put("OBJECT", undesiredJewelName);
                     message.put("ACTION", "BURY");
                     handsMO.setI(message.toString());

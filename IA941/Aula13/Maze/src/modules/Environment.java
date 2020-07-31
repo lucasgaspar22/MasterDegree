@@ -53,7 +53,7 @@ public class Environment extends EnvironmentImpl {
             System.out.println("Reseting the WS3D World ...");
             World world = proxy.getWorld();
             world.reset();
-            creature = proxy.createCreature(800, 600, 0);
+            creature = proxy.createCreature(0, 0, 0);
             creature.start();
             System.out.println("Starting the WS3D Resource Generator ... ");
             setupEnvironment();
